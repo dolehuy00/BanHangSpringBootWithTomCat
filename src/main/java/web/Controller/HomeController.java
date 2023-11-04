@@ -10,14 +10,14 @@ import web.Service.UserService;
 @Controller
 public class HomeController {
     
-    @Autowired
-    private UserService userServ;
+//    @Autowired
+//    private UserService userServ;
    
     @GetMapping("/")
     public String Index(Model model){
         
-        model.addAttribute("items", userServ.findAllUser());
+        //model.addAttribute("items", userServ.findAllUser());
         
-        return "index";
+        return "index/index";
     }
 }

@@ -1,0 +1,17 @@
+body {
+    max-width: 100%;
+    font: normal 300 1.4rem/1.86 "Poppins",sans-serif;
+    color: #666;
+    background-color: #fff;
+}
+
+a{
+    color: inherit;
+    font-family: 'Poppins';
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover { 
+    color: #39f;
+}
