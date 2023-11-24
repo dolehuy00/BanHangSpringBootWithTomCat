@@ -64,21 +64,15 @@
                     Danh mục sản phẩm
                     </button>
                     <ul class="dropdown-menu ">
-                    <li><a class="dropdown-item" href="#">Link 1</a></li>
-                    <li><a class="dropdown-item" href="#">Link 2</a></li>
-                    <li><a class="dropdown-item" href="#">Link 3</a></li>
+                        <c:forEach var="row" items="${listSupplier}">
+                            <li><a class="dropdown-i tem" href="#">${row.name}</a></li>
+                        </c:forEach> 
                     </ul>
                 </div>
                 <div class="col menu-page">
                     <ul class="menu-page sf-arrows">
                         <li>
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li>
-                            <a href="index.html">About Us</a>
-                        </li>
-                        <li>
-                            <a href="index.html">Contact</a>
+                            <a href="/banhang">Home</a>
                         </li>
                     </ul>
                 </div>

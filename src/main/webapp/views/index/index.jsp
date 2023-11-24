@@ -39,13 +39,13 @@
                 <h2 class="title text-center mb-4">Danh mục loại sản phẩm</h2>
                 <div class="cat-blocks-container">
                     <div class="row">
-                        
-                        <jsp:include page="item-category.jsp">
-                            <jsp:param name="image" value="images/1.png"/>
-                            <jsp:param name="title" value="Laptop ABC"/>
-                            <jsp:param name="link" value=""/>
-                        </jsp:include>   
-                        
+                        <c:forEach var="row" items="${listSupplier}">
+                            <jsp:include page="item-category.jsp">
+                                <jsp:param name="image" value="images/1.png"/>
+                                <jsp:param name="title" value="${row.name}"/>
+                                <jsp:param name="link" value=""/>
+                            </jsp:include>
+                        </c:forEach>
                     </div><!-- End .row -->
                 </div><!-- End .cat-blocks-container -->
             </div> <!--end container danh mục loại sản phẩm-->
