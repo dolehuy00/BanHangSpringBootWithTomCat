@@ -3,7 +3,7 @@
 <div class="product product-2">
     <figure class="product-media">  
         <a href="${param.linkDetail}">
-            <img src="${param.image}" alt="Product image" class="product-image">
+            <img src="${param.image}" alt="Product image" width="235px" height="235px" class="product-image">
         </a>
         <div class="product-action-vertical">
             <a href="#" class="btn-product-icon fa-regular fa-heart" title="Add to wishlist"></a>
@@ -13,9 +13,6 @@
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
     <div class="product-body">
-        <div class="product-cat">
-            <a href="${param.linkCategory}">${param.category}</a>
-        </div><!-- End .product-cat -->
         <h3 class="product-title"><a href="product.html">${param.title}</a></h3><!-- End .product-title -->
         <div class="product-price">
             ${param.price}

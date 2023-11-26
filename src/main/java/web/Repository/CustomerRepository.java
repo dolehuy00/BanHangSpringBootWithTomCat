@@ -10,8 +10,7 @@ import web.Model.Customer;
 
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Integer>{
-    
-    
+
     @Query("FROM Customer c WHERE c.username = :userName")
     public Customer findByUserName(@Param("userName")String userName);
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -38,12 +39,12 @@ public class Orders implements Serializable {
     private Integer orderID;
     
     @Basic(optional = false)
-    @Column(name = "Date")
+    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private LocalDateTime date;
     
     @Basic(optional = false)
-    @Column(name = "TotalPrice")
+    @Column(name = "total_price")
     private BigInteger totalPrice;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")

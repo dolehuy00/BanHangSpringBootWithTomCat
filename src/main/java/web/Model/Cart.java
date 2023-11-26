@@ -16,11 +16,13 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor
@@ -29,8 +31,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "carts")
 public class Cart implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -38,22 +38,22 @@ public class Cart implements Serializable {
     private Integer cartID;
     
     @Basic(optional = false)
-    @Column(name = "TotalPrice")
+    @Column(name = "total_price")
     private BigInteger totalPrice;
     
     @Basic(optional = false)
-    @Column(name = "TotalQuantity")
+    @Column(name = "total_quantity")
     private int totalQuantity;
     
     @Basic(optional = false)
-    @Column(name = "CreateAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+    @Column(name = "create_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private LocalDateTime createAt;
     
     @Basic(optional = false)
-    @Column(name = "UpdateAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+    @Column(name = "update_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private LocalDateTime updateAt;
     
     @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID")
     @ManyToOne(optional = false)
@@ -62,6 +62,9 @@ public class Cart implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<Cartitem> cartitemList;
 
+    public Cart(Integer cartID) {
+        this.cartID = cartID;
+    }
     
     @Override
     public int hashCode() {

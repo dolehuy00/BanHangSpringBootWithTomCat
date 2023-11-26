@@ -13,8 +13,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,6 +56,7 @@ public class Product implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductColor> productColorList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Cartitem> cartitemList;
     
@@ -63,6 +67,16 @@ public class Product implements Serializable {
     @JoinColumn(name = "SupplierID", referencedColumnName = "SupplierID")
     @ManyToOne(optional = false)
     private Supplier supplierID;
+    
+    @Basic(optional = false)
+    @Column(name = "create_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private LocalDateTime createAt;
+    
+    @Basic(optional = false)
+    @Column(name = "update_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private LocalDateTime updateAt;
 
     @Override
     public int hashCode() {

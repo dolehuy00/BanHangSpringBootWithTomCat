@@ -32,7 +32,7 @@ public class Supplier implements Serializable {
     @Column(name = "Name")
     private String name;
 
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
