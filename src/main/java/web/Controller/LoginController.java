@@ -15,6 +15,7 @@ import web.Service.CustomerService;
 @Controller
 public class LoginController {
     
+    
     @Autowired CustomerService cusServ;
     @Autowired HttpSession session;
     
@@ -29,7 +30,9 @@ public class LoginController {
             @RequestParam("singin-password") String password,
             Model model){  
         if (isValidAccount(username, password)) {
-            session.setAttribute("CUSTOMER", cusServ.findCustomerByUserName(username));
+            Customer  customer = cusServ.findCustomerByUserName(username);
+            customer.setPassword("");
+            session.setAttribute("CUSTOMER", customer);
             return "redirect:/"; 
         } else {
             model.addAttribute("messageLogin", "Sai thông tin đăng nhập");
