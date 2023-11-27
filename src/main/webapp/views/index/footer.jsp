@@ -13,15 +13,8 @@
                                 <div class="widget widget-about">
                                         <img src="images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
                                         <p>Cảm ơn quý khách hàng đã ủng hộ sản phẩm của chúng tôi.</p>
-
-                                        <div class="widget-call">
-                            <i class="fas fa-phone"></i>
-                            Hotline
-                            <a href="tel:#">+0123 456 789</a>         
-                        </div><!-- End .widget-call -->
                                 </div><!-- End .widget about-widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
-
                         <div class="col-sm-6 col-lg-3">
                                 <div class="widget">
                                         <h4 class="widget-title">Thông tin về chúng tôi</h4><!-- End .widget-title -->

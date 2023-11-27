@@ -48,16 +48,11 @@
                                     <input type="password" class="form-control" id="singin-password" name="singin-password" required>
                                 </div><!-- End .form-group -->
 
-                                <div class="form-footer">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                        <label class="custom-control-label" for="signin-remember">Ghi nhớ</label>
-                                    </div><!-- End .custom-checkbox -->
-                                    
+                                <div class="form-footer"> 
                                     <p class="message-error">${messageLogin}</p>
                                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                                     <br>
-                                    <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                                    <a href="/banhang/forgot" class="forgot-link">Quên mật khẩu?</a>
                                 </div><!-- End .form-footer -->
                             </form>
                         </div><!-- .End .tab-pane -->

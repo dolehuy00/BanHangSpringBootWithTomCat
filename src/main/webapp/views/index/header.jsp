@@ -4,9 +4,6 @@
     <div class="header-top">
         <div class="row align-items-start">
             <div class="col">
-              <a href="#" class="icon-phone">
-                <i class="fas fa-phone" ></i>
-                Call: +84 12345678</a>
             </div>
             <div class="col text-end">
               <a href="/banhang/login">

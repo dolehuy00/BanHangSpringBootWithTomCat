@@ -13,4 +13,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer>{
 
     @Query("FROM Customer c WHERE c.username = :userName")
     public Customer findByUserName(@Param("userName")String userName);
+    
+    @Query("FROM Customer c WHERE c.email = :email")
+    public Customer findByEmail(@Param("email") String email);
 }

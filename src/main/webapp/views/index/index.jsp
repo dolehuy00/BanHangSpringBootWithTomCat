@@ -17,9 +17,7 @@
 </head>
 <body>
     <div class="container">
-        <jsp:include page="header.jsp">
-            <jsp:param name="" value=""/>
-        </jsp:include>
+        <jsp:include page="header.jsp"></jsp:include>
         <main>
             <div class="intro-slider-container mb-5">
                 <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl">     
