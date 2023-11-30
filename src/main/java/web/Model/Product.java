@@ -66,7 +66,7 @@ public class Product implements Serializable {
     
     @JoinColumn(name = "SupplierID", referencedColumnName = "SupplierID")
     @ManyToOne(optional = false)
-    private Supplier supplierID;
+    private Supplier supplier;
     
     @Basic(optional = false)
     @Column(name = "create_at")

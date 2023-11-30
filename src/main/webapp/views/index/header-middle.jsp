@@ -8,9 +8,9 @@
           </div>
 
           <div class="col header-middle-middle">
-            <form acction="" method="get">
+            <form action="/banhang/search-product" method="get">
                 <div class="search-bar">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm ...">
+                    <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm ...">
                     <button class="btn" type="submit">
                         <i class="fas fa-search"></i>
                     </button>

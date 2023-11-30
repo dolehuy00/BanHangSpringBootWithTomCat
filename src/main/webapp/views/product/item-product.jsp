@@ -6,10 +6,10 @@
             <img src="${param.image}" alt="Product image" width="235px" height="235px" class="product-image">
         </a>
         <div class="product-action-vertical">
-            <a href="#" class="btn-product-icon fa-regular fa-heart" title="Add to wishlist"></a>
+            <a href="#" class="btn-product-icon fa-regular fa-heart" style="display: flex" title="Add to wishlist"></a>
         </div><!-- End .product-action -->
         <div class="product-action">
-            <a href="#" class="btn-product fas fa-shopping-cart" title="Add to cart"><span>add to cart</span></a>
+            <a href="#" class="btn-product fas fa-shopping-cart text-center" title="Add to cart"><span>add to cart</span></a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
     <div class="product-body">
