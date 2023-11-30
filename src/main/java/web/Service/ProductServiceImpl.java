@@ -16,5 +16,10 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getTenProductNewest() {
         return productRepo.getProductNewest(10);
     }
+
+    @Override
+    public List<Product> findAllProduct() {
+        return (List<Product>) productRepo.findAll();
+    }
     
 }

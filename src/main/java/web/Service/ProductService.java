@@ -9,5 +9,5 @@ import web.Model.Product;
 public interface ProductService {
     
     public List<Product> getTenProductNewest();
-    
+    public List<Product> findAllProduct();
 }

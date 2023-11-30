@@ -27,7 +27,7 @@
                         <fmt:formatNumber value="${row.product.price}" pattern="###,###,###" var="formattedPrice" />
                         <jsp:include page="item-slider.jsp">
                             <jsp:param name="image" value="${row.image}"/>
-                            <jsp:param name="subTitle" value="Hàng mới về"/>
+                            <jsp:param name="subTitle" value="${row.title}"/>
                             <jsp:param name="titleTop" value="${row.product.name}"/>
                             <jsp:param name="titleBottom" value=""/>
                             <jsp:param name="oldPrice" value=""/>
@@ -66,7 +66,7 @@
                                     }
                                 }
                             }'>
-                            <jsp:include page="item-product-2.jsp">
+                            <jsp:include page="../product/item-product.jsp">
                                 <jsp:param name="image" value="images/product-1.jpg" />
                                 <jsp:param name="linkDetail" value="" />
                                 <jsp:param name="title" value="MacBook Pro 13inch Display, i5" />
@@ -110,7 +110,7 @@
                             }'>
                             <c:forEach var="row" items="${listNewestProduct}">
                                 <fmt:formatNumber value="${row.price}" pattern="###,###,###" var="formattedPrice" />
-                                <jsp:include page="item-product-2.jsp">
+                                <jsp:include page="../product/item-product.jsp">
                                     <jsp:param name="image" value="${row.productColorList[0].images}" />
                                     <jsp:param name="linkDetail" value="" />
                                     <jsp:param name="title" value="${row.name}" />
@@ -168,7 +168,6 @@
     </div>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>

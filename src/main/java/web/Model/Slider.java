@@ -10,8 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -36,6 +34,10 @@ public class Slider implements Serializable {
     @Column(name = "Image")
     private String image;
 
+    @Basic(optional = false)
+    @Column(name = "Title")
+    private String title;
+    
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Product product;

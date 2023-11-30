@@ -385,7 +385,8 @@ a:hover {
 .product.product-2{
   background-color:#fff;
   border:.1rem solid #ebebeb;
-  margin-bottom:2rem
+  width: 262px;
+  margin: 5px;
 }
 
 .product-cat{
