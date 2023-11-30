@@ -1,29 +1,19 @@
-<%-- 
-    Document   : login
-    Created on : Nov 4, 2023, 7:15:23 PM
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Đăng nhập</title>
-        
-        <!-- Plugins CSS File -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <!-- Main CSS File -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/login-register.css"> 
     </head>
     <body> 
-        <jsp:include page="../index/header.jsp">
-            <jsp:param name="" value=""/>
-        </jsp:include>
-        <hr>
+        <header>
+            <jsp:include page="../index/header-top.jsp"></jsp:include>
+            <jsp:include page="../index/header-middle.jsp"></jsp:include>
+        </header>
         <main>
             <div class="container container-login">
                 <div class="form-tab">
@@ -61,9 +51,7 @@
             </div><!-- End .form-box -->
         </main>
         <hr>                            
-        <jsp:include page="../index/footer.jsp">
-            <jsp:param name="" value=""/>
-        </jsp:include>
+        <jsp:include page="../index/footer.jsp"></jsp:include>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>

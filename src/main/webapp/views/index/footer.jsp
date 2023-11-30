@@ -1,8 +1,3 @@
-<%-- 
-    Document   : footer
-    Created on : Nov 4, 2023, 10:05:17 AM
-    Author     : PC
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <footer class="footer">

@@ -1,8 +1,6 @@
 body {
     max-width: 100%;
-    font: normal 300 1.4rem/1.86 "Poppins",sans-serif;
     color: #666;
-    background-color: #fff;
 }
 
 a{
@@ -15,15 +13,11 @@ a{
 a:hover { 
     color: #39f;
 }
-header{
-  background-color: #f5f6f9;
-}
 
 .header-top {
   font-weight: 400;
   font-size: 1.4rem;
   line-height: 1;
-  background-color: #f5f6f9;
   margin-bottom: 0;
   letter-spacing: -.01em;
   padding-top: 10px;
@@ -86,6 +80,7 @@ header{
 .header-middle-middle{
   margin-bottom: 10px;
   max-width: 80%;
+  font: normal 300 1.4rem/1.86 "Poppins",sans-serif;
 }
  
 .wishlist-count {
@@ -160,7 +155,6 @@ header{
 
 
 .footer{
-  background-color:#f5f6f9
 }
 
 .footer .footer-middle{

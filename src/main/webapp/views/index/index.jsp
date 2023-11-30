@@ -6,18 +6,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Huy Do</title>
-    
-    <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <!-- Main CSS File -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <jsp:include page="header.jsp"></jsp:include>
+        <header>
+            <jsp:include page="header-top.jsp"></jsp:include>
+            <jsp:include page="header-middle.jsp"></jsp:include>
+            <jsp:include page="header-bottom.jsp"></jsp:include>
+        </header>
         <main>
             <div class="intro-slider-container mb-5">
                 <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl">     

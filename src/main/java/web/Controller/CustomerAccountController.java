@@ -2,32 +2,34 @@
 package web.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import web.Model.Customer;
+import web.Model.Orders;
 import web.Service.CustomerService;
 import web.Service.EmailSenderService;
+import web.Service.OrderService;
 import web.Service.StatusService;
-import web.Service.SupplierService;
 
 @Controller
 public class CustomerAccountController {
-    @Autowired CustomerService cusServ;
-    @Autowired StatusService statusServ;
-    @Autowired HttpSession session;
-    @Autowired EmailSenderService emailServ;
-    @Autowired private SupplierService supplierServ;
+    @Autowired private CustomerService cusServ;
+    @Autowired private StatusService statusServ;
+    @Autowired private HttpSession session;
+    @Autowired private EmailSenderService emailServ;
+    @Autowired private OrderService orderServ;
     
     @GetMapping("register")
-    public String Register(Model model){
-        model.addAttribute("listSupplier", supplierServ.getAllSupplier());
+    public String Register(){
         return "account/register";
     }
-    
     
     @PostMapping("register")
     public String Register(
@@ -57,7 +59,7 @@ public class CustomerAccountController {
             if(address.length() > 0){
                 customer.setAddress(address);
             }else{
-                customer.setAddress("Chưa cung cấp.");
+                customer.setAddress("Chưa cung cấp");
             }
             Customer newCustomer = cusServ.addNewCustomer(customer);
             session.setAttribute("CUSTOMER", newCustomer);
@@ -66,8 +68,7 @@ public class CustomerAccountController {
     }
     
     @GetMapping("login")
-    public String Login(Model model){
-        model.addAttribute("listSupplier", supplierServ.getAllSupplier());
+    public String Login(){
         return "account/login";
     }
 
@@ -77,13 +78,23 @@ public class CustomerAccountController {
             Model model){  
         if (cusServ.isValidAccount(username, password)) {
             Customer customer = cusServ.findCustomerByUserName(username);
-            customer.setPassword("");
-            session.setAttribute("CUSTOMER", customer);
-            return "redirect:/"; 
+            if (customer.getStatus().getStatusID()!=1) {
+                model.addAttribute("messageLogin", "Tài khoản này đã bị khóa");
+                return "account/login";
+            } else {
+                session.setAttribute("CUSTOMER", customer);
+                return "redirect:/"; 
+            }
         } else {
             model.addAttribute("messageLogin", "Sai thông tin đăng nhập");
             return "account/login";
         } 
+    }
+    
+    @GetMapping("logout")
+    public String Logout(){
+        session.removeAttribute("CUSTOMER");
+        return "redirect:/";
     }
     
     @GetMapping("forgot")
@@ -104,10 +115,71 @@ public class CustomerAccountController {
             String subject = "Yêu cầu lấy lại mật khẩu";
             emailServ.sendMail(customer.getEmail(), subject, bodyEmail);
             //Thông báo
-            model.addAttribute("message", "Email đã được gửi, vui lòng kiểm tra hộp thư của bạn!");
+            model.addAttribute("message", "Email đã được gửi,"
+                    + " vui lòng kiểm tra hộp thư của bạn!");
         }else{
             model.addAttribute("message", "Email này chưa được đăng ký!");
         }
         return "account/customer-forgot-password";
+    }
+    
+    @GetMapping("profile")
+    public String Profile(Model model){
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        List<Orders> order = orderServ.findOrdersByCustomer(customer);
+        model.addAttribute("ListOrder", order);
+        return "account/account-customer-info";
+    }
+    
+    @PostMapping("profile/change-pass")
+    @ResponseBody
+    public String ChangePass(Model model,
+            @RequestParam("old-pass")String oldPass,
+            @RequestParam("new-pass")String newPass,
+            @RequestParam("confirm-pass")String confirmPass){
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(!customer.getPassword().equals(oldPass)){
+            JSONObject responseData = new JSONObject();
+            responseData.put("MessageOldPassNotMatch","Mật khẩu hiện tại không đúng!");
+            return responseData.toString();
+        }
+        else if (newPass.length() < 6) {
+            JSONObject responseData = new JSONObject();
+            responseData.put("MessageNotLong","Mật khẩu ít nhất 6 ký tự!");
+            return responseData.toString();
+        }else if(!newPass.equals(confirmPass)){
+            JSONObject responseData = new JSONObject();
+            responseData.put("MessageNotMatch","Hai mật khẩu không khớp nhau!");
+            return responseData.toString();
+        }else{
+            customer.setPassword(newPass);
+            Customer newCustomer = cusServ.updateCustomer(customer);
+            session.setAttribute("CUSTOMER", newCustomer);
+            JSONObject responseData = new JSONObject();
+            responseData.put("MessageChangePass","Đã đổi thành công!");
+            return responseData.toString();
+        }
+    }
+    
+    @PostMapping("profile/change-info")
+    public String ChangeInfo(Model model,
+            @RequestParam("name")String name,
+            @RequestParam("email")String email,
+            @RequestParam("address")String address){
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(!email.equals(customer.getEmail()) && cusServ.checkExitsAccoutByEmail(email)){
+            model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
+            return "account/account-customer-info";
+        }
+        customer.setName(name);
+        customer.setEmail(email);
+        if(address.length() > 0){
+            customer.setAddress(address);
+        }else{
+            customer.setAddress("Chưa cung cấp");
+        }
+        Customer newCustomer = cusServ.updateCustomer(customer);
+        session.setAttribute("CUSTOMER", newCustomer);
+        return "redirect:/profile";
     }
 }

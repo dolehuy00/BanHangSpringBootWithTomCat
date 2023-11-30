@@ -17,7 +17,6 @@ import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;

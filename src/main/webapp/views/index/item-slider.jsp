@@ -1,8 +1,3 @@
-<%-- 
-    Document   : item-slider
-    Created on : Nov 4, 2023, 7:48:11 AM
-    Author     : PC
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="intro-slide" style="background-image: url(${param.image});">
