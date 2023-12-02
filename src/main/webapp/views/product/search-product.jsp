@@ -31,6 +31,11 @@
             color: black;
             margin-top: 5px;
         }
+        #btnFilterPrice{
+            margin-top: 10px;
+            margin-left: 30px;
+            width: 100px;
+        }
     </style>
 
 </head>
@@ -46,6 +51,8 @@
                
                 <div id="aside" class="col-md-2">
                     <form method="get">
+                        <h3>Tong ${CountProduct}</h3>
+                        <h3>Trang ${CountPage}</h3>
                     <h3 class="aside-title">Nhà cung cấp</h3>
                     <c:forEach var="row" items="${ListSupplier}">
                         <div class="form-check">
@@ -61,8 +68,7 @@
                         <label class="lable-input-lower" for="input-number-lower">Từ</label>
                         <input id="input-number-lower" name="lower"/>
                         <label class="lable-input-upper" for="input-number-upper">Đến</label>
-                        <input id="input-number-upper" name="upper"/>
-                        <button class="btn btn-primary" type="submit" >Lọc giá</button>
+                        <input id="input-number-upper" name="upper"/> 
                     </div>
                     
                     
@@ -75,6 +81,7 @@
                             </label>
                         </div>
                     </c:forEach>  
+                    <button class="btn btn-success" type="button" id="btnFilterPrice">Lọc</button>
                     </form>
                 </div>   
             
@@ -91,7 +98,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" id="container-product">
                         <!-- product -->
                         <c:forEach var="row" items="${ListProduct}">
                             <fmt:formatNumber value="${row.price}" pattern="###,###,###" var="formattedPrice" />
@@ -115,9 +122,9 @@
                                   <span aria-hidden="true">&laquo;</span>
                                 </a>
                               </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><button class="page-link" name="page" type="button" value="1">1</button></li>
+                              <li class="page-item"><button class="page-link" name="page" type="button" value="2">2</button></li>
+                              <li class="page-item"><button class="page-link" name="page" type="button" value="3">3</button></li>
                               <li class="page-item">
                                 <a class="page-link" href="#" aria-label="Next">
                                   <span aria-hidden="true">&raquo;</span>
@@ -138,6 +145,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <!--setup slider price-->
     <script>
         var html5Slider = document.getElementById('slider');
         var max = ${MaxPrice};
@@ -151,6 +159,7 @@
             }
         });
     </script>
+    <!--update input slider price-->
     <script>
         var inputNumberUpper = document.getElementById('input-number-upper');
         var inputNumberLower= document.getElementById('input-number-lower')
@@ -172,6 +181,57 @@
 
         inputNumberUpper.addEventListener('change', function () {
             html5Slider.noUiSlider.set([null, this.value]);
+        });
+    </script>
+    <!--ajax search product-->
+    <script>
+        const button = document.getElementById('btnFilterPrice');
+        button.addEventListener('click', function(event) {
+            const keyword = document.getElementById('keyword').value;
+            const inputNumberUpper = document.getElementById('input-number-upper').value;
+            const inputNumberLower = document.getElementById('input-number-lower').value;
+            const suppliers = document.querySelectorAll('input[name="suppliers"]:checked');
+            const colors = document.querySelectorAll('input[name="colors"]:checked');
+            var querysupplier = '';
+            var querycolor = '';
+            suppliers.forEach((checkbox) => {
+                querysupplier += '&suppliers='+checkbox.value;
+            });
+            
+            colors.forEach((checkbox) => {
+                querycolor += '&colors='+checkbox.value;
+            });
+            
+            fetch('search-product-ajax?keyword='+ keyword +
+                    querysupplier + querycolor + '&lower='+
+                    inputNumberLower + '&upper=' + inputNumberUpper, {
+              method: 'GET',
+            })
+            .then(response => response.text())
+            .then(data => {
+                const responseContainer = document.createElement('div');
+                responseContainer.innerHTML = data;
+                
+                const specificElement = responseContainer.querySelector('#container-product');
+                
+                const containerProduct = document.querySelector('#container-product');
+                containerProduct.innerHTML = specificElement.innerHTML;
+            })
+            .catch(error => {
+               console.error('Error:', error);
+            });
+        });
+    </script>
+    <!--click button page-->
+    <script>
+        var buttons = document.querySelectorAll('.page-link');
+
+        buttons.forEach(function(button) {
+          button.addEventListener('click', function() {
+            var value = this.value;
+            console.log(value);
+            // Thực hiện các thao tác khác với giá trị đã lấy được
+          });
         });
     </script>
 </body>

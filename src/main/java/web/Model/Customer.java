@@ -9,8 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
@@ -52,8 +54,12 @@ public class Customer implements Serializable {
     @Column(name = "Address")
     private String address;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
-    private List<Cart> cartList;
+    @Column(name = "SearchLatest")
+    @Lob
+    private String searchLatest;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Cart cart;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
     private List<Orders> ordersList;
@@ -72,7 +78,6 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }

@@ -8,7 +8,7 @@ $(document).ready(function () {
             var owlSettings = {
                 items: 1,
                 loop: true,
-                margin: 0,
+                margin: 10,
                 responsiveClass: true,
                 nav: true,
                 navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
@@ -17,7 +17,7 @@ $(document).ready(function () {
                 autoplay: false,
                 autoplayTimeout: 5000,
                 responsive: {
-                    1200: {
+                    1250: {
                         nav: true,
                         dots: false
                     }

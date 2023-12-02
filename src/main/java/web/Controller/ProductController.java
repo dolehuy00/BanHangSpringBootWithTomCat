@@ -1,16 +1,19 @@
 
 package web.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.Model.Color;
-import web.Model.Supplier;
+import web.Model.Customer;
+import web.Model.Product;
 import web.Service.ColorService;
+import web.Service.CustomerService;
 import web.Service.ProductService;
 import web.Service.SupplierService;
 
@@ -19,35 +22,53 @@ public class ProductController {
     @Autowired private ProductService productServ;
     @Autowired private ColorService colorServ;
     @Autowired private SupplierService supplierServ;
+    @Autowired private HttpSession session;
+    @Autowired private CustomerService customerServ;
     
     @GetMapping("search-product")
     public String SearchProduct(Model model,
                 @RequestParam(defaultValue = "")String keyword,
-                @RequestParam(defaultValue = "")Integer[] suppliers,
-                @RequestParam(defaultValue = "")Integer[] colors,
-                @RequestParam(defaultValue = "0")BigInteger lower,
-                @RequestParam(defaultValue = "999999999")BigInteger upper)
+                @RequestParam(defaultValue = "")List<Integer> suppliers,
+                @RequestParam(defaultValue = "")List<Integer> colors,
+                @RequestParam(defaultValue = "")BigInteger lower,
+                @RequestParam(defaultValue = "")BigInteger upper)
     {
-        List<Supplier> listSupplier = supplierServ.getAllSupplier();
-        List<Color> listColor = colorServ.findAllColor();
-        if(suppliers.length==0){
-            suppliers = new Integer[listSupplier.size()];
-            for (int i = 0; i < listSupplier.size(); i++) {
-                suppliers[i] = listSupplier.get(i).getSupplierID();
-            }
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(customer != null){
+            customer.setSearchLatest(keyword);
+            session.setAttribute("CUSTOMER", customer);
+            customerServ.updateSearchLastest(customer.getCustomerID(), keyword);
         }
-        if(colors.length==0){
-            colors = new Integer[listColor.size()];
-            for (int i = 0; i < listColor.size(); i++) {
-                colors[i] = listColor.get(i).getColorID();
-            }
-        }
+        model.addAttribute("keyword", keyword);
         model.addAttribute("MaxPrice", productServ.getMaxPrice());
         model.addAttribute("MinPrice", productServ.getMinPrice());
-        model.addAttribute("ListSupplier", listSupplier);
-        model.addAttribute("ListColor", listColor);
-        model.addAttribute("ListProduct", productServ.searchProductByName(
-                "%"+keyword+"%", suppliers, lower, upper, colors));
+        model.addAttribute("ListSupplier", supplierServ.getAllSupplier());
+        model.addAttribute("ListColor", colorServ.findAllColor());
+        Page<Product> page = productServ.searchProduct("%"+keyword+"%",
+                suppliers, lower, upper, colors, 0);
+        model.addAttribute("CountProduct", page.getTotalElements());
+        model.addAttribute("CountPage", page.getTotalPages());
+        model.addAttribute("ListProduct", page.getContent());
         return "product/search-product";
+    }
+    
+    @GetMapping("search-product-ajax")
+    public String SearchProductAjax(Model model,
+                @RequestParam(defaultValue = "")String keyword,
+                @RequestParam(defaultValue = "")List<Integer> suppliers,
+                @RequestParam(defaultValue = "")List<Integer> colors,
+                @RequestParam(defaultValue = "")BigInteger lower,
+                @RequestParam(defaultValue = "")BigInteger upper,
+                @RequestParam(defaultValue = "1")Integer page)
+    {
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(customer!=null){
+            customer.setSearchLatest(keyword);
+            session.setAttribute("CUSTOMER", customer);
+            customerServ.updateSearchLastest(customer.getCustomerID(), keyword);
+        }
+        model.addAttribute("ListProduct", productServ.searchProduct(
+                "%"+keyword+"%", suppliers, lower, upper, colors, page-1).getContent());
+        return "product/list-product-ajax";
     }
 }

@@ -3,6 +3,7 @@ package web.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import web.Model.Product;
 
@@ -13,8 +14,9 @@ public interface ProductService {
     public List<Product> findAllProduct();
     public BigInteger getMaxPrice();
     public BigInteger getMinPrice();
-    public List<Product> searchProductByName(
-            String name, Integer[] suppliers,
+    public Page<Product> searchProduct(
+            String name, List<Integer> suppliers,
             BigInteger lower, BigInteger upper,
-            Integer[] colors);
+            List<Integer> colors, Integer page);
+    public List<Product> search10ProductRandomByName(String keywordLatest);
 }

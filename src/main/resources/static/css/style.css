@@ -1,6 +1,6 @@
 body {
     max-width: 100%;
-    color: #666;
+    color: black;
 }
 
 a{
@@ -361,6 +361,7 @@ a:hover {
 
 .title{
   margin-bottom:1rem;
+  margin-top: 50px;
 }
 
 
@@ -392,7 +393,6 @@ a:hover {
 .product-cat{
   color:#ccc
 }
-.product-title{max-width:240px;margin-bottom:.7rem}
 
 .ratings-container{margin-bottom:1.5rem}
 
@@ -496,12 +496,14 @@ a:hover {
 }
 
 .product-title {
+  max-width:240px;
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 1.4;
   letter-spacing: -.01em;
   color: #333333;
   margin-bottom: .2rem;
+  min-height: 80px;
 }
 .product-price {
   display: flex;

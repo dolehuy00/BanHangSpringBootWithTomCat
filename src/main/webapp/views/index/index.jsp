@@ -45,35 +45,35 @@
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
                                 "nav": true, 
-                                "dots": true,
-                                "margin": 20,
+                                "dots":false,
+                                "margin": 10,
                                 "loop": false,
                                 "responsive": {
                                     "0": {
+                                        "items":1
+                                    },
+                                    "270": {
                                         "items":2
                                     },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
+                                    "790": {
                                         "items":3
                                     },
-                                    "992": {
+                                    "1060": {
                                         "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
                                     }
                                 }
                             }'>
-                            <jsp:include page="../product/item-product.jsp">
-                                <jsp:param name="image" value="images/product-1.jpg" />
-                                <jsp:param name="linkDetail" value="" />
-                                <jsp:param name="title" value="MacBook Pro 13inch Display, i5" />
-                                <jsp:param name="price" value="$1,199.99" />
-                                <jsp:param name="reviewCount" value="(4 Reviews)" />
-                                <jsp:param name="ratingCount" value="4.5" />
-                            </jsp:include>
+                            <c:forEach var="row" items="${listRecommend}">
+                                <fmt:formatNumber value="${row.price}" pattern="###,###,###" var="formattedPrice" />
+                                <jsp:include page="../product/item-product.jsp">
+                                    <jsp:param name="image" value="${row.productColorList[0].images}" />
+                                    <jsp:param name="linkDetail" value="" />
+                                    <jsp:param name="title" value="${row.name}" />
+                                    <jsp:param name="price" value="${formattedPrice}" />
+                                    <jsp:param name="reviewCount" value="(4 Reviews)" />
+                                    <jsp:param name="ratingCount" value="4.5" />
+                                </jsp:include>
+                            </c:forEach> 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->  
                 </div><!-- End .tab-content -->
@@ -87,12 +87,12 @@
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
                                 "nav": true, 
-                                "dots": true,
+                                "dots": false,
                                 "margin": 20,
                                 "loop": false,
                                 "responsive": {
                                     "0": {
-                                        "items":2
+                                        "items":1
                                     },
                                     "480": {
                                         "items":2
@@ -102,9 +102,6 @@
                                     },
                                     "992": {
                                         "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
                                     }
                                 }
                             }'>
@@ -123,44 +120,6 @@
                     </div><!-- .End .tab-pane -->  
                 </div><!-- End .tab-content -->
             </div><!-- End .container sản phẩm mới-->
-            <div class="container">
-                <h2 class="title text-center mb-4">Sản phẩm khác</h2>
-                <div class="tab-content tab-content-carousel just-action-icons-sm">
-                    <div class="tab-pane p-0 fade show active" id="new-all-tab" role="tabpanel" aria-labelledby="new-all-link">
-                        <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                            data-owl-options='{
-                                "nav": true, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    }
-                                }
-                            }'>
-
-
-
-
-
-                        </div><!-- End .owl-carousel -->
-                    </div><!-- .End .tab-pane -->  
-                </div><!-- End .tab-content -->
-            </div><!-- End .container sản phẩm khác-->
-
         </main>
         <jsp:include page="footer.jsp">
             <jsp:param name="" value=""/>

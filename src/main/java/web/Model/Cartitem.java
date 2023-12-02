@@ -41,6 +41,10 @@ public class Cartitem implements Serializable {
     @ManyToOne(optional = false)
     private Cart cart;
 
+    @JoinColumn(name = "ColorID", referencedColumnName = "ColorID", insertable = false, updatable = false)
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
+    @ManyToOne
+    private ProductColor productColor;
 
     @Override
     public int hashCode() {

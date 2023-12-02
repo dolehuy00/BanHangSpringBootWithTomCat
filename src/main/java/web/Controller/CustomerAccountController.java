@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import web.Model.Customer;
 import web.Model.Orders;
+import web.Service.CartService;
 import web.Service.CustomerService;
 import web.Service.EmailSenderService;
 import web.Service.OrderService;
@@ -25,6 +26,7 @@ public class CustomerAccountController {
     @Autowired private HttpSession session;
     @Autowired private EmailSenderService emailServ;
     @Autowired private OrderService orderServ;
+    @Autowired private CartService cartServ;
     
     @GetMapping("register")
     public String Register(){
@@ -63,7 +65,7 @@ public class CustomerAccountController {
             }
             Customer newCustomer = cusServ.addNewCustomer(customer);
             session.setAttribute("CUSTOMER", newCustomer);
-            return "redirect:/"; 
+            return "redirect:/login"; 
         }
     }
     

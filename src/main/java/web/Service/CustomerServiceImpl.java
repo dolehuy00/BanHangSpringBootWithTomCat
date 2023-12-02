@@ -64,5 +64,10 @@ public class CustomerServiceImpl implements CustomerService{
 
         return sb.toString();
     }
-  
+    @Override
+    public void updateSearchLastest(Integer id, String keyword){
+        Customer customer = cusRepo.findById(id).get();
+        customer.setSearchLatest(keyword);
+        cusRepo.save(customer);
+    }
 }

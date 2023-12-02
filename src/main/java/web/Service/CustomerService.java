@@ -13,4 +13,5 @@ public interface CustomerService {
     public boolean checkExitsAccoutByEmail(String email);
     public Customer findCustomerByEmail(String email);
     public Customer updateCustomer(Customer customer);
+    public void updateSearchLastest(Integer id, String keyword);
 }
