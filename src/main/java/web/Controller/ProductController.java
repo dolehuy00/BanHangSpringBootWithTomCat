@@ -25,6 +25,7 @@ public class ProductController {
     @Autowired private HttpSession session;
     @Autowired private CustomerService customerServ;
     
+    //Tìm kiếm bằng thanh tìm kiếm của phần tiêu đề
     @GetMapping("search-product")
     public String SearchProduct(Model model,
                 @RequestParam(defaultValue = "")String keyword,
@@ -52,6 +53,7 @@ public class ProductController {
         return "product/search-product";
     }
     
+    //Lọc sản phẩm
     @GetMapping("search-product-ajax")
     public String SearchProductAjax(Model model,
                 @RequestParam(defaultValue = "")String keyword,
@@ -59,7 +61,7 @@ public class ProductController {
                 @RequestParam(defaultValue = "")List<Integer> colors,
                 @RequestParam(defaultValue = "")BigInteger lower,
                 @RequestParam(defaultValue = "")BigInteger upper,
-                @RequestParam(defaultValue = "1")Integer page)
+                @RequestParam(defaultValue = "1")Integer pageNumber)
     {
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
         if(customer!=null){
@@ -67,8 +69,11 @@ public class ProductController {
             session.setAttribute("CUSTOMER", customer);
             customerServ.updateSearchLastest(customer.getCustomerID(), keyword);
         }
-        model.addAttribute("ListProduct", productServ.searchProduct(
-                "%"+keyword+"%", suppliers, lower, upper, colors, page-1).getContent());
-        return "product/list-product-ajax";
+        Page<Product> page = productServ.searchProduct(
+                "%"+keyword+"%", suppliers, lower, upper, colors, pageNumber-1);
+        model.addAttribute("CountProduct", page.getTotalElements());
+        model.addAttribute("CountPage", page.getTotalPages());
+        model.addAttribute("ListProduct", page.getContent());
+        return "product/search-product-ajax";
     }
 }

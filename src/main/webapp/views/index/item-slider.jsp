@@ -6,14 +6,12 @@
             <div class="col-auto col-sm-7 col-md-6 col-lg-5">
                 <h3 class="intro-subtitle text-third">${param.subTitle}</h3><!-- End .h3 intro-subtitle -->
                 <h1 class="intro-title">${param.titleTop}</h1>
-                <h1 class="intro-title">${param.titleBottom}</h1><!-- End .intro-title -->
                 <div class="intro-price">
-                    <sup class="intro-old-price">${param.oldPrice}</sup>
                     <span class="text-third">
-                        ${param.newPrice}<sup>${param.subNewPrice}</sup>
+                        ${param.newPrice}
                     </span>
                 </div><!-- End .intro-price -->
-                <a href="${param.linkCategory}" class="btn btn-primary btn-round">
+                <a href="${param.link}" class="btn btn-primary btn-round">
                     <span>Mua ngay</span>
                     <i class="icon-long-arrow-right"></i>
                 </a>

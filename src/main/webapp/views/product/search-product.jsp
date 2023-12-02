@@ -2,6 +2,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,8 +53,6 @@
                
                 <div id="aside" class="col-md-2">
                     <form method="get">
-                        <h3>Tong ${CountProduct}</h3>
-                        <h3>Trang ${CountPage}</h3>
                     <h3 class="aside-title">Nhà cung cấp</h3>
                     <c:forEach var="row" items="${ListSupplier}">
                         <div class="form-check">
@@ -86,9 +86,10 @@
                 </div>   
             
                 <div id="store" class="col-md-10">
-                    <div class="store-filter text-end">
-                        <div class="store-sort">
-                            <label>
+                    <div class="store-filter">
+                        <div class="store-sort row ">
+                            <label class="text-start col" id="quantity-result">Tìm thấy ${CountProduct} kết quả</label>
+                            <label class="text-end col">
                                 Sắp xếp theo:
                                 <select class="input-select">
                                     <option value="0">Giá</option>
@@ -122,9 +123,11 @@
                                   <span aria-hidden="true">&laquo;</span>
                                 </a>
                               </li>
-                              <li class="page-item"><button class="page-link" name="page" type="button" value="1">1</button></li>
-                              <li class="page-item"><button class="page-link" name="page" type="button" value="2">2</button></li>
-                              <li class="page-item"><button class="page-link" name="page" type="button" value="3">3</button></li>
+                              <span id="quantity-page">
+                              <c:forEach begin="1" end="${CountPage}" step="1" var="number">
+                                  <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
+                              </c:forEach>
+                              </span>
                               <li class="page-item">
                                 <a class="page-link" href="#" aria-label="Next">
                                   <span aria-hidden="true">&raquo;</span>
@@ -212,10 +215,17 @@
                 const responseContainer = document.createElement('div');
                 responseContainer.innerHTML = data;
                 
-                const specificElement = responseContainer.querySelector('#container-product');
+                const productElements = responseContainer.querySelector('#container-product');
+                const quantityElements = responseContainer.querySelector('#quantity-result');
+                const quantityPages = responseContainer.querySelector('#quantity-page');
                 
                 const containerProduct = document.querySelector('#container-product');
-                containerProduct.innerHTML = specificElement.innerHTML;
+                containerProduct.innerHTML = productElements.innerHTML;
+                const containerQuantity = document.querySelector('#quantity-result');
+                containerQuantity.innerHTML = quantityElements.innerHTML;
+                const containerPages = document.querySelector('#quantity-page');
+                containerPages.innerHTML = quantityPages.innerHTML;
+                
             })
             .catch(error => {
                console.error('Error:', error);

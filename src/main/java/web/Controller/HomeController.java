@@ -20,6 +20,7 @@ public class HomeController {
     @Autowired private SliderService sliderServ;
     @Autowired private HttpSession session;
     
+    //Xem trang chủ
     @GetMapping("/")
     public String Index(Model model){
         Customer customer = (Customer) session.getAttribute("CUSTOMER");

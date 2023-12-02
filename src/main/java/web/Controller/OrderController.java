@@ -14,6 +14,7 @@ public class OrderController {
     @Autowired private OrderService orderServ;
     
     
+    //Khách hàng tự xem các đơn hàng đã đặt
     @GetMapping("profile/view-order")
     public String ViewOrder(Model model, @RequestParam("id") Integer id){
         if(id !=null){

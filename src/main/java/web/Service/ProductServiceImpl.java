@@ -48,10 +48,8 @@ public class ProductServiceImpl implements ProductService{
     
     @Override
     public List<Product> search10ProductRandomByName(String keywordLatest){
-        System.err.println(keywordLatest);
         List<Product> list =  productRepo.searchProductByName("%"+keywordLatest+"%");
         if(list.size()<10){
-            System.err.println(list.size());
             return list;
         }
         Random random = new Random();

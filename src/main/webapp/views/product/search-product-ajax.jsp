@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+<!--Danh sách sản phẩm-->
 <div class="row" id="container-product">
-    <!-- product -->
     <c:forEach var="row" items="${ListProduct}">
         <fmt:formatNumber value="${row.price}" pattern="###,###,###" var="formattedPrice" />
         <jsp:include page="item-product.jsp">
@@ -15,5 +16,12 @@
             <jsp:param name="ratingCount" value="4.5" />
         </jsp:include>
     </c:forEach>
-    <!-- /product -->
 </div>
+<!--Số lượng sản phẩm trả về-->
+<label class="text-start col" id="quantity-result">Tìm thấy ${CountProduct} kết quả</label>
+<!--Số trang-->
+<span id="quantity-page">
+<c:forEach begin="1" end="${CountPage}" step="1" var="number">
+    <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
+</c:forEach>
+</span>

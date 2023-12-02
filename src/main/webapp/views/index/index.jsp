@@ -29,11 +29,8 @@
                             <jsp:param name="image" value="${row.image}"/>
                             <jsp:param name="subTitle" value="${row.title}"/>
                             <jsp:param name="titleTop" value="${row.product.name}"/>
-                            <jsp:param name="titleBottom" value=""/>
-                            <jsp:param name="oldPrice" value=""/>
                             <jsp:param name="newPrice" value="${formattedPrice}"/>
-                            <jsp:param name="subNewPrice" value=""/>
-                            <jsp:param name="linkCategory" value=""/>
+                            <jsp:param name="link" value=""/>
                         </jsp:include>  
                     </c:forEach>     
                 </div>

@@ -4,9 +4,10 @@ body {
 }
 
 a{
-    color: inherit;
+    color: #3d6675;
     font-family: 'Poppins';
     text-decoration: none;
+    font-weight: bold;
     transition: color 0.3s ease;
 }
 

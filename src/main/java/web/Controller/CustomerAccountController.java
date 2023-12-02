@@ -28,11 +28,13 @@ public class CustomerAccountController {
     @Autowired private OrderService orderServ;
     @Autowired private CartService cartServ;
     
+    //Xem trang đăng ký
     @GetMapping("register")
     public String Register(){
         return "account/register";
     }
     
+    //Nhận yêu cầu đăng ký
     @PostMapping("register")
     public String Register(
             @RequestParam("register-name") String name,
@@ -69,15 +71,17 @@ public class CustomerAccountController {
         }
     }
     
+    //Xem trang đăng nhập
     @GetMapping("login")
     public String Login(){
         return "account/login";
     }
 
+    //Nhận yêu cầu đăng nhập
     @PostMapping("login")
     public String Login(@RequestParam("singin-username") String username,
             @RequestParam("singin-password") String password,
-            Model model){  
+            Model model){
         if (cusServ.isValidAccount(username, password)) {
             Customer customer = cusServ.findCustomerByUserName(username);
             if (customer.getStatus().getStatusID()!=1) {
@@ -93,17 +97,20 @@ public class CustomerAccountController {
         } 
     }
     
+    //Nhận yêu cầu đăng xuất
     @GetMapping("logout")
     public String Logout(){
         session.removeAttribute("CUSTOMER");
         return "redirect:/";
     }
     
+    //Xem trang lấy lại mật khẩu
     @GetMapping("forgot")
     public String Forgot(){
         return "account/customer-forgot-password";
     }
     
+    //Nhận yêu cầu lấy lại mật khẩu
     @PostMapping("forgot")
     public String Forgot(@RequestParam("email") String email, Model model){
         Customer customer = cusServ.findCustomerByEmail(email);
@@ -125,6 +132,7 @@ public class CustomerAccountController {
         return "account/customer-forgot-password";
     }
     
+    //Xem thông tin cá nhân
     @GetMapping("profile")
     public String Profile(Model model){
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
@@ -133,6 +141,7 @@ public class CustomerAccountController {
         return "account/account-customer-info";
     }
     
+    //Nhận yêu cầu đổi mật khẩu
     @PostMapping("profile/change-pass")
     @ResponseBody
     public String ChangePass(Model model,
@@ -163,6 +172,7 @@ public class CustomerAccountController {
         }
     }
     
+    //Nhận yêu cầu chỉnh sửa thông tin cá nhân
     @PostMapping("profile/change-info")
     public String ChangeInfo(Model model,
             @RequestParam("name")String name,

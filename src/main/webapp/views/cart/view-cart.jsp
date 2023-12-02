@@ -70,11 +70,11 @@
                             <td><form>
                                     <input class="quantity" type="number" min="1"
                                     max="${row.productColor.quantity}"
-                                    id="${row.cartitemPK.cartID}-${row.cartitemPK.productID}-${row.cartitemPK.colorID}" 
+                                    id="${row.cartitemPK.productID}-${row.cartitemPK.colorID}" 
                                     name="quantity" value="${row.quantity}" />
                                 </form>
                             </td>
-                            <td>${row.product.price}</td>
+                            <td><fmt:formatNumber value="${row.product.price}" pattern="###,###,###"/></td>
                             <td><a href="">Xóa</a></td>
                         </tr>
                         
@@ -82,8 +82,8 @@
                 </tbody>
             </table>
             <div class="row text-end">
-                <div class="col total">
-                    Tổng tiền: <fmt:formatNumber value="${cart.totalPrice}" pattern="###,###,###"/>
+                <div class="col total" >
+                    <p id="total-price">Tổng tiền: <fmt:formatNumber value="${cart.totalPrice}" pattern="###,###,###"/></p>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <!-- đặt về max khi nhập số lượng lớn hơn max    -->
+    <!-- đặt về max khi nhập số lượng lớn hơn max -->
     <script>
         var inputs = document.querySelectorAll('input[name="quantity"]');
 
@@ -106,6 +106,40 @@
                 }
             });
         });
+        
+        //Chỉnh số lượng sản phẩm
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const inputId = input.id;
+                const enteredValue = input.value;
+                const tokens = inputId.split("-");
+                const productId = tokens[0];
+                const colorId = tokens[1];
+                
+                
+                fetch('cart/change?product='+productId+'&color='+colorId+'&quantity='+enteredValue, {
+                  method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    updateDataById('total-price','Tổng tiền: '+data.TotalPrice.toLocaleString());
+                    if(data.Quantity===0){
+                        
+                    } 
+                })
+                .catch(error => {
+                   console.error('Error:', error);
+                });
+            });
+        });
+        
+        function updateDataById(id, value) {
+            const td = document.getElementById(id);
+            if (td) {
+              td.textContent = value;
+            }
+        } 
     </script>
 </body>
 
