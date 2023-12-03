@@ -2,6 +2,7 @@
 package web.Service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.Cart;
@@ -32,5 +33,24 @@ public class CartServiceImpl implements CartService{
         cart.setTotalPrice(newTotal);
         cartRepo.save(cart);
         return newTotal;
+    }
+    
+    @Override
+    public Integer updateTotalQuantity(Integer cartID){
+        Cart cart = cartRepo.findById(cartID).get();
+        Integer quantity = cart.getCartitemList().size();
+        cart.setTotalQuantity(quantity);
+        return quantity;
+    }    
+
+    @Override
+    public Cart createEmptyCartForCustomer(Customer customer) {
+        Cart newCart = new Cart();
+        newCart.setCustomer(customer);
+        newCart.setCreateAt(LocalDateTime.now());
+        newCart.setUpdateAt(LocalDateTime.now());
+        newCart.setTotalPrice(new BigInteger("0"));
+        newCart.setTotalQuantity(0);
+        return cartRepo.save(newCart);   
     }
 }

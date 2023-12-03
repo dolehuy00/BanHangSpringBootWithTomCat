@@ -1,8 +1,3 @@
-<%-- 
-    Document   : register
-    Created on : Nov 4, 2023, 7:15:39 PM
-    Author     : PC
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,39 +29,43 @@
                     </ul>
                     <form action="register" method="post">
                         <div class="form-group">
-                            <label for="register-email">Tên*</label>
-                            <input type="text" class="form-control" id="register-name" name="register-name" required>
+                            <label for="register-email">Tên <span style="color: red">*</span></label>
+                            <input type="text" class="form-control" id="register-name" name="register-name" value="${name}" required>
                         </div><!-- End .form-group -->
-
+                        <br>
                         <div class="form-group">
-                            <label for="register-email">Tên đăng nhập *</label>
-                            <input type="text" class="form-control" id="register-username" name="register-username" required>
+                            <label for="register-email">Tên đăng nhập <span style="color: red">*</span></label>
+                            <input type="text" class="form-control" id="register-username" name="register-username" value="${username}" required>
                         </div><!-- End .form-group -->
-
+                        
+                        <p class="message-error">${messageUsedUsername}</p>
+                        
                         <div class="form-group">
-                            <label for="register-password"> Mật khẩu *</label>
-                            <input type="password" class="form-control" id="register-password" name="register-password" required>
+                            <label for="register-password"> Mật khẩu <span style="color: red">*</span></label>
+                            <input type="password" class="form-control" id="register-password" name="register-password" value="${password}" required>
                         </div><!-- End .form-group -->
                         
                         <p class="message-error">${messageNotLong}</p>
                         
                         <div class="form-group">
-                            <label for="register-password">Xác nhận mật khẩu *</label>
-                            <input type="password" class="form-control" id="register-password-confirm" name="register-password-confirm" required>
+                            <label for="register-password">Xác nhận mật khẩu <span style="color: red">*</span></label>
+                            <input type="password" class="form-control" id="register-password-confirm" name="register-password-confirm" value="${confirm}" required>
                         </div><!-- End .form-group -->
                         
                         <p class="message-error">${messageNotMatch}</p>
                         
                         <div class="form-group">
-                            <label for="register-password">Email *</label>
-                            <input type="email" class="form-control" id="register-email" name="register-email" required>
+                            <label for="register-password">Email <span style="color: red">*</span></label>
+                            <input type="email" class="form-control" id="register-email" name="register-email" value="${email}" required>
                         </div><!-- End .form-group -->
-
+                        
+                        <p class="message-error">${messageUsedEmail}</p>
+                        
                         <div class="form-group">
                             <label for="register-password">Address</label>
-                            <input type="text" class="form-control" id="register-address" name="register-address">
+                            <input type="text" class="form-control" id="register-address" name="register-address" value="${address}">
                         </div><!-- End .form-group -->
-                            
+                        <br>    
                         <div class="form-footer">
                             <button type="submit" class="btn btn-primary">Đăng ký</button>
 

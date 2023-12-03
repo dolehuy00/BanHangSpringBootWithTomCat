@@ -61,11 +61,41 @@ public class CartController {
             Integer cartID =  customer.getCart().getCartID();
             CartitemPK id = new CartitemPK(cartID, productId, colorId);
             cartItemServ.updateQuantityCartItem(id, quantity);
+            //Cập nhật total price
             BigInteger totalPrice = cartServ.updateTotalPrice(cartID);
+            //Trả về cho client
             responseData.put("TotalPrice", totalPrice);
             responseData.put("Quantity", quantity);
         }
         return responseData.toString();
     }
     
+    //Xóa sản phẩm khỏi giỏ hàng
+    @PostMapping("cart/delete")
+    @ResponseBody
+    public String DeleteProductInCart(
+            @RequestParam("product") Integer productId,
+            @RequestParam("color") Integer colorId
+    ){
+        JSONObject responseData = new JSONObject();
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(customer != null){
+            //Xóa sản phẩm trong giỏ hàng
+            Integer cartID =  customer.getCart().getCartID();
+            CartitemPK id = new CartitemPK(cartID, productId, colorId);
+            boolean result = cartItemServ.deleteProductCartItem(id);
+            //Sửa total price
+            BigInteger totalPrice = cartServ.updateTotalPrice(cartID);
+            //Sửa total quantity
+            Integer totalQuantity = cartServ.updateTotalQuantity(cartID);
+            //Cập nhật thông tin total quantity của người dùng trên session
+            customer.getCart().setTotalQuantity(totalQuantity);
+            session.setAttribute("CUSTOMER", customer);
+            //Trả kết quả cho client
+            responseData.put("Reusult", result);
+            responseData.put("TotalPrice", totalPrice);
+            responseData.put("TotalQuantity", totalQuantity);
+        }
+        return responseData.toString();
+    }
 }

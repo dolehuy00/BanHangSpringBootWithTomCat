@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import web.Model.Cart;
 import web.Model.Customer;
 import web.Model.Orders;
 import web.Service.CartService;
@@ -44,14 +45,31 @@ public class CustomerAccountController {
             @RequestParam("register-email") String email,
             @RequestParam("register-address") String address,
             Model model){
-        if (password.length() <6) {
-            model.addAttribute("messageNotLong", "Mật khẩu ít nhất 6 ký tự!");
+        if (cusServ.checkExitsAccoutByUsername(username)) {
+            model.addAttribute("messageUsedUsername", "Tên đăng nhập đã tồn tại!");
+            model.addAttribute("name", name);
+            model.addAttribute("email", email);
+            model.addAttribute("address", address);
             return "account/register";
-        }else if(cusServ.checkExitsAccoutByEmail(email)){
-            model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
+        }else if (password.length() <6) {
+            model.addAttribute("messageNotLong", "Mật khẩu ít nhất 6 ký tự!");
+            model.addAttribute("name", name);
+            model.addAttribute("username", username);
+            model.addAttribute("email", email);
+            model.addAttribute("address", address);
             return "account/register";
         }else if(!password.equals(passwordConfirm)){
             model.addAttribute("messageNotMatch", "Hai mật khẩu không khớp nhau!");
+            model.addAttribute("name", name);
+            model.addAttribute("username", username);
+            model.addAttribute("email", email);
+            model.addAttribute("address", address);
+            return "account/register";
+        }else if(cusServ.checkExitsAccoutByEmail(email)){
+            model.addAttribute("name", name);
+            model.addAttribute("username", username);
+            model.addAttribute("address", address);
+            model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
             return "account/register";
         }else{
             Customer customer = new Customer();
@@ -66,8 +84,10 @@ public class CustomerAccountController {
                 customer.setAddress("Chưa cung cấp");
             }
             Customer newCustomer = cusServ.addNewCustomer(customer);
+            Cart newCart = cartServ.createEmptyCartForCustomer(newCustomer);
+            newCustomer.setCart(newCart);
             session.setAttribute("CUSTOMER", newCustomer);
-            return "redirect:/login"; 
+            return "redirect:/"; 
         }
     }
     

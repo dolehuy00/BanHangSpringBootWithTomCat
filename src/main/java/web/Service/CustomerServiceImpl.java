@@ -70,4 +70,10 @@ public class CustomerServiceImpl implements CustomerService{
         customer.setSearchLatest(keyword);
         cusRepo.save(customer);
     }
+    
+    @Override
+    public boolean checkExitsAccoutByUsername(String username){
+        Customer customer = cusRepo.findByUserName(username);
+        return customer != null;
+    }
 }

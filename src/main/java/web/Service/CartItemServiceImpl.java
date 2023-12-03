@@ -18,5 +18,11 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setQuantity(quantity);
         cartItemRepo.save(cartItem);
     }
+
+    @Override
+    public boolean deleteProductCartItem(CartitemPK id) {
+        int result = cartItemRepo.deleteCartItem(id);
+        return result==1;
+    }
     
 }

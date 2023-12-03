@@ -7,4 +7,5 @@ import web.Model.CartitemPK;
 @Service
 public interface CartItemService {
     public void updateQuantityCartItem(CartitemPK id, Integer quantity);
+    public boolean deleteProductCartItem(CartitemPK id);
 }

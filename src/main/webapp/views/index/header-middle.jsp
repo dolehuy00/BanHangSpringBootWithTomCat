@@ -24,7 +24,7 @@
           <div class="col header-middle-right">  
             <a href="/banhang/cart">
                 <i class="fas fa-shopping-cart">
-                    <span class="badge wishlist-count">
+                    <span class="badge wishlist-count" id="total-quantity">
                         <c:choose>
                             <c:when test="${not empty sessionScope.CUSTOMER}">
                                 ${sessionScope.CUSTOMER.cart.totalQuantity}

@@ -10,4 +10,6 @@ import web.Model.Customer;
 public interface CartService {
     public Cart getCartByCustomer(Customer customer);
     public BigInteger updateTotalPrice(Integer cartID);
+    public Integer updateTotalQuantity(Integer cartID);
+    public Cart createEmptyCartForCustomer(Customer customer);
 }

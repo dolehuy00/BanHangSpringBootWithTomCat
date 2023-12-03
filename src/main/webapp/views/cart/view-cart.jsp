@@ -61,8 +61,7 @@
                 </thead>
                 <tbody>
                     <c:forEach var="row" items="${cart.cartitemList}">
-                    
-                        <tr>
+                        <tr id="row-${row.cartitemPK.productID}-${row.cartitemPK.colorID}">
                             <td>${row.product.productID}</td>
                             <td>${row.product.name}</td>
                             <td>${row.color.name}</td>
@@ -75,9 +74,15 @@
                                 </form>
                             </td>
                             <td><fmt:formatNumber value="${row.product.price}" pattern="###,###,###"/></td>
-                            <td><a href="">Xóa</a></td>
+                            <td><button 
+                                    type="button" class="btn btn-danger"
+                                    name="delete-product-cart" 
+                                    value="${row.cartitemPK.productID}-${row.cartitemPK.colorID}"
+                                    >
+                                    Xóa
+                                </button>
+                            </td>
                         </tr>
-                        
                     </c:forEach>  
                 </tbody>
             </table>
@@ -88,7 +93,7 @@
             </div>
         </div>
     </main>
-    <jsp:include page="../index/footer.jsp"></jsp:include>            
+    <jsp:include page="../index/footer.jsp"></jsp:include>  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -122,10 +127,9 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     updateDataById('total-price','Tổng tiền: '+data.TotalPrice.toLocaleString());
                     if(data.Quantity===0){
-                        
+                        //Xử lý hết hàng
                     } 
                 })
                 .catch(error => {
@@ -140,6 +144,36 @@
               td.textContent = value;
             }
         } 
+    </script>
+    <!--Xóa sản phẩm-->
+    <script>
+        const buttons = document.querySelectorAll('button[name="delete-product-cart"]');
+        buttons.forEach((button) => {
+            button.addEventListener('click', function(){
+                const value  = button.value;
+                const tokens = value.split("-");
+                const productId = tokens[0];
+                const colorId = tokens[1];
+                
+                fetch('cart/delete?product='+productId+'&color='+colorId, {
+                  method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.Reusult===true){
+                        var element = document.getElementById('row-'+value);
+                        if (element) {
+                          element.remove();
+                        }
+                        updateDataById('total-price','Tổng tiền: '+data.TotalPrice.toLocaleString());
+                        updateDataById('total-quantity',data.TotalQuantity);
+                    }
+                })
+                .catch(error => {
+                   console.error('Error:', error);
+                });
+            });
+        });
     </script>
 </body>
 

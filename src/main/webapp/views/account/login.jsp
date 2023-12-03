@@ -29,21 +29,23 @@
                     <div class="tab-content" id="tab-content-5">
                         <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
                             <form action="login" method="POST">
+                                <br>
                                 <div class="form-group">
-                                    <label for="singin-email">Tên đăng nhập *</label>
+                                    <label for="singin-email">Tên đăng nhập <span style="color: red">*</span></label>
                                     <input type="text" class="form-control" id="singin-username" name="singin-username" required>
                                 </div><!-- End .form-group -->
-
+                                <br>
                                 <div class="form-group">
-                                    <label for="singin-password">Mật khẩu *</label>
+                                    <label for="singin-password">Mật khẩu <span style="color: red">*</span></label>
                                     <input type="password" class="form-control" id="singin-password" name="singin-password" required>
                                 </div><!-- End .form-group -->
 
                                 <div class="form-footer"> 
-                                    <p class="message-error">${messageLogin}</p>
-                                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
                                     <br>
                                     <a href="/banhang/forgot" class="forgot-link">Quên mật khẩu?</a>
+                                    <br>
+                                    <p class="message-error">${messageLogin}</p>
+                                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
                                 </div><!-- End .form-footer -->
                             </form>
                         </div><!-- .End .tab-pane -->
