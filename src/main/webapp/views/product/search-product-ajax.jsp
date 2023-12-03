@@ -20,8 +20,8 @@
 <!--Số lượng sản phẩm trả về-->
 <label class="text-start col" id="quantity-result">Tìm thấy ${CountProduct} kết quả</label>
 <!--Số trang-->
-<span id="quantity-page">
-<c:forEach begin="1" end="${CountPage}" step="1" var="number">
-    <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
-</c:forEach>
-</span>
+<ul class="pagination" id="quantity-page">
+    <c:forEach begin="1" end="${CountPage}" step="1" var="number">
+        <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
+    </c:forEach>
+</ul>

@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService{
     public Page<Product> searchProduct(String name,
             List<Integer> suppliers, BigInteger lower,
             BigInteger upper, List<Integer> colors, Integer page) {
-        Pageable pageable = PageRequest.of(page, 12);
+        Pageable pageable = PageRequest.of(page, 1);
         return productRepo.searchProduct(name, suppliers, lower, upper, colors, pageable);
     }
     

@@ -52,6 +52,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         }
         
         criteriaQuery.select(productRoot).where(predicate);
+        criteriaQuery.groupBy(productRoot);
     
         TypedQuery<Product> query = entityManager.createQuery(criteriaQuery);
         

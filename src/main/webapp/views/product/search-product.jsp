@@ -92,8 +92,8 @@
                             <label class="text-end col">
                                 Sắp xếp theo:
                                 <select class="input-select">
-                                    <option value="0">Giá</option>
-                                    <option value="1">Tên</option>
+                                    <option value="0">Giá tăng dần</option>
+                                    <option value="1">Giá giảm dần</option>
                                 </select>
                             </label>
                         </div>
@@ -117,26 +117,13 @@
 
                     <div class="d-flex flex-row-reverse">
                         <nav aria-label="Page navigation example" style="max-width: fit-content;">
-                            <ul class="pagination">
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                  <span aria-hidden="true">&laquo;</span>
-                                </a>
-                              </li>
-                              <span id="quantity-page">
+                            <ul class="pagination" id="quantity-page">
                               <c:forEach begin="1" end="${CountPage}" step="1" var="number">
                                   <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
                               </c:forEach>
-                              </span>
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                  <span aria-hidden="true">&raquo;</span>
-                                </a>
-                              </li>
                             </ul>
                           </nav>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -186,10 +173,9 @@
             html5Slider.noUiSlider.set([null, this.value]);
         });
     </script>
-    <!--ajax search product-->
+    <!--hàm search-->
     <script>
-        const button = document.getElementById('btnFilterPrice');
-        button.addEventListener('click', function(event) {
+        function ajaxSearch(page, filter){
             const keyword = document.getElementById('keyword').value;
             const inputNumberUpper = document.getElementById('input-number-upper').value;
             const inputNumberLower = document.getElementById('input-number-lower').value;
@@ -207,7 +193,7 @@
             
             fetch('search-product-ajax?keyword='+ keyword +
                     querysupplier + querycolor + '&lower='+
-                    inputNumberLower + '&upper=' + inputNumberUpper, {
+                    inputNumberLower + '&upper=' + inputNumberUpper+'&pageNumber='+page, {
               method: 'GET',
             })
             .then(response => response.text())
@@ -223,26 +209,47 @@
                 containerProduct.innerHTML = productElements.innerHTML;
                 const containerQuantity = document.querySelector('#quantity-result');
                 containerQuantity.innerHTML = quantityElements.innerHTML;
-                const containerPages = document.querySelector('#quantity-page');
-                containerPages.innerHTML = quantityPages.innerHTML;
+                if(filter === true){    
+                    const containerPages = document.querySelector('#quantity-page');
+                    containerPages.innerHTML = quantityPages.innerHTML;
+                    setClickButtonPage();
+                }
                 
             })
             .catch(error => {
                console.error('Error:', error);
             });
+        }
+    </script>
+    <!--ajax lọc product-->
+    <script>
+        const button = document.getElementById('btnFilterPrice');
+        button.addEventListener('click', function(event) {
+            ajaxSearch(1, true);
         });
     </script>
     <!--click button page-->
     <script>
-        var buttons = document.querySelectorAll('.page-link');
-
-        buttons.forEach(function(button) {
-          button.addEventListener('click', function() {
-            var value = this.value;
-            console.log(value);
-            // Thực hiện các thao tác khác với giá trị đã lấy được
-          });
-        });
+        function setClickButtonPage(){
+            var buttonPages = document.querySelectorAll('button[name="page"]');
+            buttonPages.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var value = button.value;    
+                    ajaxSearch(value, false);
+                    
+                    const selectedPage = parseInt(button.value);
+                    buttonPages.forEach(buttonPage => {
+                        const page = parseInt(buttonPage.value);
+                        if (page === selectedPage) {
+                            buttonPage.parentElement.classList.add('disabled');
+                        } else {
+                            buttonPage.parentElement.classList.remove('disabled');
+                        }
+                    });
+                });
+            });
+        }
+        setClickButtonPage();
     </script>
 </body>
 
