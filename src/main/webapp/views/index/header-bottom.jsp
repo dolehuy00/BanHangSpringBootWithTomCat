@@ -5,11 +5,11 @@
         <div class="row align-items-center">
             <div class="col text-start dropdown menu-category">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                Danh mục sản phẩm
+                Danh mục nhà cung cấp
                 </button>
                 <ul class="dropdown-menu ">
                     <c:forEach var="row" items="${listSupplier}">
-                        <li><a class="dropdown-i tem" href="#">${row.name}</a></li>
+                        <li><a class="dropdown-i tem" href="/banhang/search-product?suppliers=${row.supplierID}">${row.name}</a></li>
                     </c:forEach> 
                 </ul>
             </div>
