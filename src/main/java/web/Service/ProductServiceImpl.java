@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import web.Model.Product;
 import web.Repository.ProductRepository;
@@ -41,9 +42,9 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Page<Product> searchProduct(String name,
             List<Integer> suppliers, BigInteger lower,
-            BigInteger upper, List<Integer> colors, Integer page) {
-        Pageable pageable = PageRequest.of(page, 1);
-        return productRepo.searchProduct(name, suppliers, lower, upper, colors, pageable);
+            BigInteger upper, List<Integer> colors, Integer page, Sort.Order sort) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return productRepo.searchProduct(name, suppliers, lower, upper, colors, pageable, sort);
     }
     
     @Override

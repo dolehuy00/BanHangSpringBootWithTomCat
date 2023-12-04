@@ -91,9 +91,9 @@
                             <label class="text-start col" id="quantity-result">Tìm thấy ${CountProduct} kết quả</label>
                             <label class="text-end col">
                                 Sắp xếp theo:
-                                <select class="input-select">
-                                    <option value="0">Giá tăng dần</option>
-                                    <option value="1">Giá giảm dần</option>
+                                <select class="input-select" id="sort">
+                                    <option value="asc">Giá tăng dần</option>
+                                    <option value="desc">Giá giảm dần</option>
                                 </select>
                             </label>
                         </div>
@@ -119,7 +119,13 @@
                         <nav aria-label="Page navigation example" style="max-width: fit-content;">
                             <ul class="pagination" id="quantity-page">
                               <c:forEach begin="1" end="${CountPage}" step="1" var="number">
-                                  <li class="page-item"><button class="page-link" name="page" type="button" value="${number}">${number}</button></li>
+                                  <li class="page-item">
+                                      <button class="page-link" name="page"
+                                              type="button" value="${number}"
+                                              id="button-page-${number}">
+                                          ${number}
+                                      </button>
+                                  </li>
                               </c:forEach>
                             </ul>
                           </nav>
@@ -175,7 +181,7 @@
     </script>
     <!--hàm search-->
     <script>
-        function ajaxSearch(page, filter){
+        function ajaxSearch(page, filter, sortPrice){
             const keyword = document.getElementById('keyword').value;
             const inputNumberUpper = document.getElementById('input-number-upper').value;
             const inputNumberLower = document.getElementById('input-number-lower').value;
@@ -192,8 +198,11 @@
             });
             
             fetch('search-product-ajax?keyword='+ keyword +
-                    querysupplier + querycolor + '&lower='+
-                    inputNumberLower + '&upper=' + inputNumberUpper+'&pageNumber='+page, {
+                    querysupplier + querycolor +
+                    '&lower='+ inputNumberLower +
+                    '&upper=' + inputNumberUpper +
+                    '&pageNumber='+page +
+                    '&sortPrice='+sortPrice, {
               method: 'GET',
             })
             .then(response => response.text())
@@ -225,7 +234,8 @@
     <script>
         const button = document.getElementById('btnFilterPrice');
         button.addEventListener('click', function(event) {
-            ajaxSearch(1, true);
+            var select = document.getElementById("sort");
+            ajaxSearch(1, true, select.value);
         });
     </script>
     <!--click button page-->
@@ -234,8 +244,9 @@
             var buttonPages = document.querySelectorAll('button[name="page"]');
             buttonPages.forEach(function(button) {
                 button.addEventListener('click', function() {
-                    var value = button.value;    
-                    ajaxSearch(value, false);
+                    var value = button.value;
+                    var select = document.getElementById("sort");
+                    ajaxSearch(value, false, select.value);
                     
                     const selectedPage = parseInt(button.value);
                     buttonPages.forEach(buttonPage => {
@@ -250,6 +261,14 @@
             });
         }
         setClickButtonPage();
+    </script>
+    <script>
+        var selectElement = document.getElementById("sort");
+
+        selectElement.addEventListener("change", function() {
+          var page1 = document.getElementById("button-page-1");
+          page1.click();
+        });
     </script>
 </body>
 

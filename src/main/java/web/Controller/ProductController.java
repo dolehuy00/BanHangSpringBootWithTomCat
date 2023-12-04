@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,8 @@ public class ProductController {
         model.addAttribute("ListSupplier", supplierServ.getAllSupplier());
         model.addAttribute("ListColor", colorServ.findAllColor());
         Page<Product> page = productServ.searchProduct("%"+keyword+"%",
-                suppliers, lower, upper, colors, 0);
+                suppliers, lower, upper, colors, 0,
+                new Sort.Order(Sort.Direction.ASC, "price"));
         model.addAttribute("CountProduct", page.getTotalElements());
         model.addAttribute("CountPage", page.getTotalPages());
         model.addAttribute("ListProduct", page.getContent());
@@ -61,16 +63,27 @@ public class ProductController {
                 @RequestParam(defaultValue = "")List<Integer> colors,
                 @RequestParam(defaultValue = "")BigInteger lower,
                 @RequestParam(defaultValue = "")BigInteger upper,
-                @RequestParam(defaultValue = "1")Integer pageNumber)
+                @RequestParam(defaultValue = "1")Integer pageNumber,
+                @RequestParam(defaultValue = "") String sortPrice)
     {
+        //Kiểm tra thông tin khách hàng để lưu keyword tìm kiếm gần nhất
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
         if(customer!=null){
             customer.setSearchLatest(keyword);
             session.setAttribute("CUSTOMER", customer);
             customerServ.updateSearchLastest(customer.getCustomerID(), keyword);
         }
+        //Sắp xếp
+        Sort.Order sortOrderPrice = null;
+        if(sortPrice.equals("asc")){
+            sortOrderPrice = new Sort.Order(Sort.Direction.ASC, "price");
+        }else if (sortPrice.equals("desc")) {
+            sortOrderPrice = new Sort.Order(Sort.Direction.DESC, "price");
+        }
+        //Tìm kiếm
         Page<Product> page = productServ.searchProduct(
-                "%"+keyword+"%", suppliers, lower, upper, colors, pageNumber-1);
+                "%"+keyword+"%", suppliers, lower, upper,
+                colors, pageNumber-1,sortOrderPrice);
         model.addAttribute("CountProduct", page.getTotalElements());
         model.addAttribute("CountPage", page.getTotalPages());
         model.addAttribute("ListProduct", page.getContent());
