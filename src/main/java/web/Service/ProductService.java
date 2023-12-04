@@ -20,4 +20,5 @@ public interface ProductService {
             BigInteger lower, BigInteger upper,
             List<Integer> colors, Integer page, Sort.Order sort);
     public List<Product> search10ProductRandomByName(String keywordLatest);
+    public Product getProductById(Integer id);
 }

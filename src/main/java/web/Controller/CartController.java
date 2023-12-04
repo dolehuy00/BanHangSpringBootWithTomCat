@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import web.Model.Cartitem;
 import web.Model.CartitemPK;
+import web.Model.Color;
 import web.Model.Customer;
+import web.Model.Product;
 import web.Model.ProductColorPK;
 import web.Service.CartItemService;
 import web.Service.CartService;
+import web.Service.ColorService;
 import web.Service.ProductColorService;
+import web.Service.ProductService;
 
 @Controller
 public class CartController {
@@ -25,6 +30,8 @@ public class CartController {
     @Autowired private HttpSession session;
     @Autowired private CartItemService cartItemServ;
     @Autowired private ProductColorService proColorServ;
+    @Autowired private ProductService productServ;
+    @Autowired private ColorService colorServ;
     
     //Xem giỏ hàng khách hàng
     @GetMapping("cart")
@@ -34,13 +41,34 @@ public class CartController {
             model.addAttribute("cart", cartServ.getCartByCustomer(customer));
             return "cart/view-cart";
         }
-        return "account/login";
+        return "redirect:/login";
     }
     
     //Thêm sản phẩm vào giỏ hàng
-    @GetMapping("cart/add")
-    public String AddProductToCart(){
-        return "";
+    @PostMapping("cart/add")
+    @ResponseBody
+    public String AddProductToCart(Model model,
+            @RequestParam("product") Integer productId,
+            @RequestParam("color")Integer colorID,
+            @RequestParam("quantity") Integer quantity){
+//        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+//        if(customer == null){
+//            return "redirect:/login";
+//        }
+//        Integer cartID = customer.getCart().getCartID();
+//        CartitemPK cartItemID = new CartitemPK(cartID, productId, colorID);
+//        Cartitem cartItem = new Cartitem();
+//        Product product = productServ.getProductById(productId);
+//        Color color = new Color();
+//        color.setColorID(colorID);
+//        cartItem.setColor(color);
+        //cartItem.setProduct(product);
+//        cartItem.setQuantity(quantity);
+//        cartItem.setCartitemPK(cartItemID);
+//        cartItemServ.addCartItem(cartItem);
+        JSONObject response = new JSONObject();
+        response.put("Success", true);
+        return response.toString();
     }
 
     //Sửa số lượng sản phẩm trong giỏ hàng

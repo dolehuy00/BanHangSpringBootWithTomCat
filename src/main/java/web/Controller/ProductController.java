@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.Model.Customer;
 import web.Model.Product;
@@ -88,5 +89,12 @@ public class ProductController {
         model.addAttribute("CountPage", page.getTotalPages());
         model.addAttribute("ListProduct", page.getContent());
         return "product/search-product-ajax";
+    }
+    //Xem chi tiết sản phẩm
+    @GetMapping("product/{id}")
+    public String ViewDetail(Model model,
+            @PathVariable("id") Integer productId){
+        model.addAttribute("Product", productServ.getProductById(productId));
+        return "product/product-detail";
     }
 }

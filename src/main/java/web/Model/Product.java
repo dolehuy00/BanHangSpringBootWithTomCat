@@ -51,6 +51,11 @@ public class Product implements Serializable {
     @Column(name = "Description")
     private String description;
     
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "Specifications")
+    private String specifications;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<OrderItem> orderItemList;
     

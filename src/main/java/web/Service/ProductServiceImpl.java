@@ -62,4 +62,9 @@ public class ProductServiceImpl implements ProductService{
         
         return listResult;
     }
+
+    @Override
+    public Product getProductById(Integer id) {
+        return productRepo.findById(id).get();
+    }
 }

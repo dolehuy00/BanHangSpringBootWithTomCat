@@ -1,6 +1,7 @@
 
 package web.Service;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.Cartitem;
@@ -23,6 +24,18 @@ public class CartItemServiceImpl implements CartItemService{
     public boolean deleteProductCartItem(CartitemPK id) {
         int result = cartItemRepo.deleteCartItem(id);
         return result==1;
+    }
+
+    @Override
+    public Cartitem addCartItem(Cartitem cartItem) {
+        Optional<Cartitem> optionalItem = cartItemRepo.findById(cartItem.getCartitemPK());
+        if (optionalItem.isPresent()) {
+            Cartitem oldItem = optionalItem.get();
+            oldItem.setQuantity(oldItem.getQuantity()+1);
+            return cartItemRepo.save(oldItem);
+        } else {
+            return cartItemRepo.save(cartItem);
+        }
     }
     
 }
