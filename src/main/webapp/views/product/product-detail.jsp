@@ -143,6 +143,17 @@
                     </div>
                 </div>
             </div>
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="messageAddCartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                    <img src="/banhang/images/green-check.png" class="rounded me-2" alt="...">
+                    <strong class="me-auto">Thông báo</strong>
+                    <small>now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                    <div class="toast-body" id="messageQuantity">Sản phẩm đã có trong giỏ hàng của bạn</div>
+                </div>
+            </div>
         </main>
         <jsp:include page="../index/footer.jsp"></jsp:include>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -200,12 +211,29 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.Success);
+                    if(data.Redirect){
+                        window.location.href = data.Redirect;
+                    }else if(data.Success === true){
+                        const toastLiveExample = document.getElementById('messageAddCartToast');
+                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+                        const messageQuantity = document.getElementById('messageQuantity');
+                        if(data.MessageMaxQuantity){
+                            messageQuantity.innerHTML = data.MessageMaxQuantity;
+                        } 
+                        updateDataById('total-quantity',data.QuantityProductInCart);
+                        toastBootstrap.show();
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
             });
+            function updateDataById(id, value) {
+                const td = document.getElementById(id);
+                if (td) {
+                  td.textContent = value;
+                }
+            }   
         </script>
     </body>
 

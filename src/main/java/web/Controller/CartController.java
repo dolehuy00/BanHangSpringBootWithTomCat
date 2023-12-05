@@ -16,6 +16,7 @@ import web.Model.CartitemPK;
 import web.Model.Color;
 import web.Model.Customer;
 import web.Model.Product;
+import web.Model.ProductColor;
 import web.Model.ProductColorPK;
 import web.Service.CartItemService;
 import web.Service.CartService;
@@ -51,22 +52,44 @@ public class CartController {
             @RequestParam("product") Integer productId,
             @RequestParam("color")Integer colorID,
             @RequestParam("quantity") Integer quantity){
-//        Customer customer = (Customer) session.getAttribute("CUSTOMER");
-//        if(customer == null){
-//            return "redirect:/login";
-//        }
-//        Integer cartID = customer.getCart().getCartID();
-//        CartitemPK cartItemID = new CartitemPK(cartID, productId, colorID);
-//        Cartitem cartItem = new Cartitem();
-//        Product product = productServ.getProductById(productId);
-//        Color color = new Color();
-//        color.setColorID(colorID);
-//        cartItem.setColor(color);
-        //cartItem.setProduct(product);
-//        cartItem.setQuantity(quantity);
-//        cartItem.setCartitemPK(cartItemID);
-//        cartItemServ.addCartItem(cartItem);
         JSONObject response = new JSONObject();
+        //Kiểm tra thông tin khách hàng
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if(customer == null){
+            response.put("Redirect", "/banhang/login");
+            return response.toString();
+        }
+        //Thông tin giỏ hàng
+        Integer cartID = customer.getCart().getCartID();
+        if(cartID == null){
+            cartServ.createEmptyCartForCustomer(customer);
+        }
+        CartitemPK cartItemID = new CartitemPK(cartID, productId, colorID);
+        //Kiểm tra số lượng còn lại
+        ProductColorPK productColor = new ProductColorPK(productId, colorID);
+        ProductColor productInData = proColorServ.getProductColorById(productColor);
+        Cartitem itemExitsInCart = cartItemServ.getCartItemById(cartItemID);   
+        Integer newQuantity = quantity;
+        if(itemExitsInCart != null){
+            newQuantity += itemExitsInCart.getQuantity();
+        }
+        if(newQuantity > productInData.getQuantity()){
+            newQuantity = productInData.getQuantity();
+            response.put("MessageMaxQuantity", "Chỉ có thể thêm tối đa "+newQuantity+" sản phẩm này vào giỏ hàng!");
+        }
+        //Tạo item
+        Cartitem cartItemRequest = new Cartitem();
+        cartItemRequest.setQuantity(newQuantity);
+        cartItemRequest.setCartitemPK(cartItemID);
+        //Thêm vào cơ sở dữ liệu
+        cartItemServ.addCartItem(cartItemRequest);
+        //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
+        Integer totalQuantity = cartServ.updateTotalQuantity(cartID);
+        response.put("QuantityProductInCart", totalQuantity);
+        //Cập nhật thông tin total quantity của người dùng trên session
+        customer.getCart().setTotalQuantity(totalQuantity);
+        session.setAttribute("CUSTOMER", customer);
+        //Trả về phản hồi
         response.put("Success", true);
         return response.toString();
     }

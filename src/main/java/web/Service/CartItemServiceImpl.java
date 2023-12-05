@@ -28,13 +28,16 @@ public class CartItemServiceImpl implements CartItemService{
 
     @Override
     public Cartitem addCartItem(Cartitem cartItem) {
-        Optional<Cartitem> optionalItem = cartItemRepo.findById(cartItem.getCartitemPK());
+        return cartItemRepo.save(cartItem);
+    }
+    
+    @Override
+    public Cartitem getCartItemById(CartitemPK id){
+        Optional<Cartitem> optionalItem = cartItemRepo.findById(id);
         if (optionalItem.isPresent()) {
-            Cartitem oldItem = optionalItem.get();
-            oldItem.setQuantity(oldItem.getQuantity()+1);
-            return cartItemRepo.save(oldItem);
+            return optionalItem.get();
         } else {
-            return cartItemRepo.save(cartItem);
+            return null;
         }
     }
     

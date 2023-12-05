@@ -10,4 +10,5 @@ public interface CartItemService {
     public void updateQuantityCartItem(CartitemPK id, Integer quantity);
     public boolean deleteProductCartItem(CartitemPK id);
     public Cartitem addCartItem(Cartitem cartItem);
+    public Cartitem getCartItemById(CartitemPK id);
 }
