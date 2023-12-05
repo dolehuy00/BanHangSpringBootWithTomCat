@@ -15,6 +15,8 @@
     <class>web.Model.ProductColor</class>
     <class>web.Model.Supplier</class>
     <class>web.Model.Slider</class>
+    <class>web.Model.ReviewDetail</class>
+    <class>web.Model.Review</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banhangj2ee1?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

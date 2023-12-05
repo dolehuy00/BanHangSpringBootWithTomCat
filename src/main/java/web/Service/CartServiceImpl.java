@@ -38,9 +38,12 @@ public class CartServiceImpl implements CartService{
     @Override
     public Integer updateTotalQuantity(Integer cartID){
         Cart cart = cartRepo.findById(cartID).get();
-        Integer quantity = cart.getCartitemList().size();
-        cart.setTotalQuantity(quantity);
-        return quantity;
+        if(cart.getCartitemList() != null){
+            Integer quantity = cart.getCartitemList().size();
+            cart.setTotalQuantity(quantity);
+            return quantity;
+        }
+        return 0;
     }    
 
     @Override

@@ -83,6 +83,10 @@ public class Product implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime updateAt;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
+    private List<Review> reviewList;
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

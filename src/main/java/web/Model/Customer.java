@@ -67,6 +67,9 @@ public class Customer implements Serializable {
     @JoinColumn(name = "Status", referencedColumnName = "StatusID")
     @ManyToOne(optional = false)
     private Status status;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cutomerID")
+    private List<Review> reviewList;
 
    
     @Override

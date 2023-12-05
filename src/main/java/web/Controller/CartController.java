@@ -3,6 +3,7 @@ package web.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.util.Optional;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import web.Model.Cart;
 import web.Model.Cartitem;
 import web.Model.CartitemPK;
 import web.Model.Color;
@@ -60,9 +62,14 @@ public class CartController {
             return response.toString();
         }
         //Thông tin giỏ hàng
-        Integer cartID = customer.getCart().getCartID();
-        if(cartID == null){
-            cartServ.createEmptyCartForCustomer(customer);
+        Cart cart = customer.getCart();
+        Integer cartID;
+        if(cart != null){
+            cartID = cart.getCartID();
+        }else{
+            cart = cartServ.createEmptyCartForCustomer(customer);
+            cartID = cart.getCartID();
+            customer.setCart(cart);
         }
         CartitemPK cartItemID = new CartitemPK(cartID, productId, colorID);
         //Kiểm tra số lượng còn lại

@@ -5,12 +5,9 @@
         <a href="${param.linkDetail}">
             <img src="${param.image}" alt="Product image" width="235px" height="235px" class="product-image">
         </a>
-        <div class="product-action">
-            <a href="#" class="btn-product fas fa-shopping-cart text-center" title="Add to cart"><span>add to cart</span></a>
-        </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
     <div class="product-body">
-        <h3 class="product-title"><a href="product.html">${param.title}</a></h3><!-- End .product-title -->
+        <h3 class="product-title"><a href="${param.linkDetail}">${param.title}</a></h3><!-- End .product-title -->
         <div class="product-price">
             ${param.price}
         </div><!-- End .product-price -->
