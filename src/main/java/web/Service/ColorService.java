@@ -8,4 +8,5 @@ import web.Model.Color;
 @Service
 public interface ColorService {
     public List<Color> findAllColor();
+    public Color getColorById(Integer id);
 }

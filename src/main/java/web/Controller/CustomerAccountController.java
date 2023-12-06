@@ -78,11 +78,7 @@ public class CustomerAccountController {
             customer.setPassword(password);
             customer.setEmail(email);
             customer.setStatus(statusServ.getStatusById(1));
-            if(address.length() > 0){
-                customer.setAddress(address);
-            }else{
-                customer.setAddress("Chưa cung cấp");
-            }
+            customer.setAddress(address);
             Customer newCustomer = cusServ.addNewCustomer(customer);
             Cart newCart = cartServ.createEmptyCartForCustomer(newCustomer);
             newCustomer.setCart(newCart);
@@ -205,11 +201,7 @@ public class CustomerAccountController {
         }
         customer.setName(name);
         customer.setEmail(email);
-        if(address.length() > 0){
-            customer.setAddress(address);
-        }else{
-            customer.setAddress("Chưa cung cấp");
-        }
+        customer.setAddress(address);
         Customer newCustomer = cusServ.updateCustomer(customer);
         session.setAttribute("CUSTOMER", newCustomer);
         return "redirect:/profile";

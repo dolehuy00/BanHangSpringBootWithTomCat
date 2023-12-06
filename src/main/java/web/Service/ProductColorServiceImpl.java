@@ -1,6 +1,7 @@
 
 package web.Service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.ProductColor;
@@ -24,6 +25,16 @@ public class ProductColorServiceImpl implements ProductColorService{
             return quantity;
         }
         return p.getQuantity();
+    }
+
+    @Override
+    public ProductColor saveProductColor(ProductColor productColor) {
+        return productColorRepo.save(productColor);
+    }
+
+    @Override
+    public void saveListProductColor(List<ProductColor> productColors) {
+        productColorRepo.saveAll(productColors);
     }
     
 }

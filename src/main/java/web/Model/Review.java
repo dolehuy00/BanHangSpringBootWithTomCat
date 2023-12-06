@@ -16,7 +16,6 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,8 +50,9 @@ public class Review implements Serializable {
     @JoinColumn(name = "CutomerID", referencedColumnName = "CustomerID")
     @ManyToOne(optional = false)
     private Customer cutomerID;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reviewID")
-    private List<ReviewDetail> reviewDetailList;
+    private List<SellerReplyReview> sellerReplyList;
 
     public Review(Integer reviewID) {
         this.reviewID = reviewID;

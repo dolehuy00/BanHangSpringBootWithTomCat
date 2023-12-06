@@ -41,7 +41,17 @@ public class OrderItem implements Serializable {
     @ManyToOne(optional = false)
     private Orders orders;
 
+    
+    @JoinColumn(name = "ColorID", referencedColumnName = "ColorID", insertable = false, updatable = false)
+    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID", insertable = false, updatable = false)
+    @ManyToOne
+    private ProductColor productColor;
 
+    public OrderItem(OrderItemPK orderItemPK) {
+        this.orderItemPK = orderItemPK;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

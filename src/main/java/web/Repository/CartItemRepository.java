@@ -1,6 +1,7 @@
 
 package web.Repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +11,7 @@ import web.Model.Cartitem;
 import web.Model.CartitemPK;
 
 @Repository
-public interface CartItemRepository extends CrudRepository<Cartitem, CartitemPK>{
+public interface CartItemRepository extends CrudRepository<Cartitem, CartitemPK>, JpaRepository<Cartitem, CartitemPK>{
     
     @Modifying
     @Transactional

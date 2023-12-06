@@ -88,11 +88,13 @@ public class CartController {
         Cartitem cartItemRequest = new Cartitem();
         cartItemRequest.setQuantity(newQuantity);
         cartItemRequest.setCartitemPK(cartItemID);
+        cartItemRequest.setProduct(productServ.getProductById(productId));
         //Thêm vào cơ sở dữ liệu
         cartItemServ.addCartItem(cartItemRequest);
         //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
         Integer totalQuantity = cartServ.updateTotalQuantity(cartID);
         response.put("QuantityProductInCart", totalQuantity);
+        cartServ.updateTotalPrice(cartID);
         //Cập nhật thông tin total quantity của người dùng trên session
         customer.getCart().setTotalQuantity(totalQuantity);
         session.setAttribute("CUSTOMER", customer);

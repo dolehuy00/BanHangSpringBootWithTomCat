@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package web.Model;
 
 import jakarta.persistence.Basic;
@@ -8,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -22,20 +26,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "reviewdetails")
-public class ReviewDetail implements Serializable {
+@Table(name = "sellerreplyreview")
+public class SellerReplyReview implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ReviewDetailID")
-    private Integer reviewDetailID;
+    @Column(name = "ReplyReviewID")
+    private Integer replyReviewID;
     
     @Basic(optional = false)
+    @Lob
     @Column(name = "Reply")
-    private String reply; 
-    
+    private String reply;
+
     @Basic(optional = false)
     @Column(name = "reply_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,26 +54,21 @@ public class ReviewDetail implements Serializable {
     @ManyToOne(optional = false)
     private User userID;
 
-
-    public ReviewDetail(Integer reviewDetailID) {
-        this.reviewDetailID = reviewDetailID;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (reviewDetailID != null ? reviewDetailID.hashCode() : 0);
+        hash += (replyReviewID != null ? replyReviewID.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReviewDetail)) {
+        if (!(object instanceof SellerReplyReview)) {
             return false;
         }
-        ReviewDetail other = (ReviewDetail) object;
-        if ((this.reviewDetailID == null && other.reviewDetailID != null) || (this.reviewDetailID != null && !this.reviewDetailID.equals(other.reviewDetailID))) {
+        SellerReplyReview other = (SellerReplyReview) object;
+        if ((this.replyReviewID == null && other.replyReviewID != null) || (this.replyReviewID != null && !this.replyReviewID.equals(other.replyReviewID))) {
             return false;
         }
         return true;
@@ -76,7 +76,7 @@ public class ReviewDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "web.Model.ReviewDetail[ reviewDetailID=" + reviewDetailID + " ]";
+        return "web.Model.SellerReplyReview[ replyReviewID=" + replyReviewID + " ]";
     }
     
 }

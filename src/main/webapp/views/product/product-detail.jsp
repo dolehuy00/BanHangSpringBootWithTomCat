@@ -213,14 +213,14 @@
                     if(data.Redirect){
                         window.location.href = data.Redirect;
                     }else if(data.Success === true){
-                        const toastLiveExample = document.getElementById('messageAddCartToast');
-                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+                        const toastMessageAddCart = document.getElementById('messageAddCartToast');
+                        const toast = bootstrap.Toast.getOrCreateInstance(toastMessageAddCart);
                         const messageQuantity = document.getElementById('messageQuantity');
                         if(data.MessageMaxQuantity){
                             messageQuantity.innerHTML = data.MessageMaxQuantity;
                         } 
                         updateDataById('total-quantity',data.QuantityProductInCart);
-                        toastBootstrap.show();
+                        toast.show();
                     }
                 })
                 .catch(error => {

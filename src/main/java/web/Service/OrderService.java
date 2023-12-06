@@ -11,5 +11,5 @@ public interface OrderService {
     public List<Orders> findAllOrder();
     public List<Orders> findOrdersByCustomer(Customer customer);
     public Orders findOrderById(Integer id);
-            
+    public Orders saveOrder(Orders order);    
 }

@@ -26,7 +26,7 @@
                 <i class="fas fa-shopping-cart">
                     <span class="badge wishlist-count" id="total-quantity">
                         <c:choose>
-                            <c:when test="${not empty sessionScope.CUSTOMER.cart}">
+                            <c:when test="${sessionScope.CUSTOMER.cart!=null}">
                                 ${sessionScope.CUSTOMER.cart.totalQuantity}
                             </c:when>
                             <c:otherwise>

@@ -53,7 +53,7 @@ public class User implements Serializable {
     private Status status;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
-    private List<ReviewDetail> reviewDetailList;
+    private List<SellerReplyReview> reviewDetailList;
    
     @Override
     public int hashCode() {

@@ -23,6 +23,15 @@
         .title-order{
             color: black;
         }
+        td img{
+            height: 80px;
+            width: 80px;
+        }
+        td a{
+            color: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+        }
     </style>
 </head>
 
@@ -35,13 +44,14 @@
         <h1 class="text-center">Thông tin tài khoản</h1>
         <h3 class="text-center title-order">Đơn hàng #${Order.orderID}</h3>
         <div class="container">
-            <table class="table">
+            <table class="table text-center align-middle">
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Mã SP</th>
                         <th scope="col">Tên SP</th>
                         <th scope="col">Màu</th>
+                        <th scope="col">Hình ảnh</th>
                         <th scope="col">Giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Tổng giá</th>
@@ -53,9 +63,10 @@
                         <tr>
                             <th scope="row">${count}</th>
                             <td>${row.product.productID}</td>
-                            <td>${row.product.name}</td>
+                            <td><a href="/banhang/product/${row.product.productID}">${row.product.name}</a></td>
                             <td>${row.color.name}</td>
                             <td><fmt:formatNumber value="${row.product.price}" pattern="###,###,###"/></td>
+                            <td><img src="/banhang/${row.productColor.images}" /></td>
                             <td>${row.quantity}</td>
                             <td><fmt:formatNumber value="${row.product.price*row.quantity}" pattern="###,###,###"/></td>
                         </tr>

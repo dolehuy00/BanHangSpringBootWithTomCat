@@ -15,8 +15,13 @@
     <class>web.Model.ProductColor</class>
     <class>web.Model.Supplier</class>
     <class>web.Model.Slider</class>
-    <class>web.Model.ReviewDetail</class>
     <class>web.Model.Review</class>
+    <class>web.Model.SellerReplyReview</class>
+    <class>web.Model.OrderStatus</class>
+    <class>web.Model.Orderstatus1111</class>
+    <class>web.Model.Status111</class>
+    <class>web.Model.Customers1111</class>
+    <class>web.Model.Orders1111</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banhangj2ee1?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

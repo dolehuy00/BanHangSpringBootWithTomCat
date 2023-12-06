@@ -79,7 +79,7 @@
                     <form action="profile/change-info" method="post">
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text">Tên</span>
-                            <input type="text" class="form-control" placeholder="Tên của bạn" aria-label="Name"
+                            <input type="text" class="form-control" aria-label="Name"
                                 value="${customer.name}" name="name" aria-describedby="addon-wrapping" required>
                         </div>
                         <div class="input-group flex-nowrap">
@@ -95,12 +95,12 @@
 
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text">Email</span>
-                            <input type="text" class="form-control" placeholder="Email" aria-label="Email"
+                            <input type="email" class="form-control" aria-label="Email"
                                 value="${customer.email}" name="email" aria-describedby="addon-wrapping" required>
                         </div>
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text">Địa chỉ</span>
-                            <input type="text" class="form-control" placeholder="Địa chỉ" aria-label="Username"
+                            <input type="text" class="form-control" aria-label="Username"
                                 value="${customer.address}" name="address" aria-describedby="addon-wrapping">
                         </div>
                         <button class="btn btn-primary" type="submit">Lưu lại</button>
@@ -136,13 +136,16 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="order-tab-pane" role="tabpanel" aria-labelledby="order-tab" tabindex="1">
-                    <table class="table">
+                    <table class="table text-center align-middle">
                         <thead>
                             <tr>
                                 <th scope="col">STT</th>
                                 <th scope="col">Mã đơn hàng</th>
                                 <th scope="col">Ngày đặt</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Số điện thoại</th>
                                 <th scope="col">Tổng tiền</th>
+                                <th scope="col">Trạng thái</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>
@@ -154,7 +157,10 @@
                                     <td>${row.orderID}</td>
                                     <td>${row.date.dayOfMonth}/${row.date.monthValue}/${row.date.year}  
                                         ${row.date.hour}:${row.date.minute}:${row.date.second}</td>
+                                    <td>${row.address}</td>
+                                    <td>${row.phoneNumber}</td>
                                     <td><fmt:formatNumber value="${row.totalPrice}" pattern="###,###,###"/></td>
+                                    <td>${row.status.name}</td>
                                     <td><a href="profile/view-order?id=${row.orderID}">Xem chi tiết</a></td>
                                 </tr>
                             <c:set var="count" value="${count+1}"></c:set>    

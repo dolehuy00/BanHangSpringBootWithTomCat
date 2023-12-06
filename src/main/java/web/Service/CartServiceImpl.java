@@ -41,6 +41,7 @@ public class CartServiceImpl implements CartService{
         if(cart.getCartitemList() != null){
             Integer quantity = cart.getCartitemList().size();
             cart.setTotalQuantity(quantity);
+            cartRepo.save(cart);
             return quantity;
         }
         return 0;
