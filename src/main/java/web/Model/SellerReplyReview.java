@@ -33,7 +33,7 @@ public class SellerReplyReview implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ReplyReviewID")
+    @Column(name = "reply_review_id")
     private Integer replyReviewID;
     
     @Basic(optional = false)

@@ -26,7 +26,9 @@ import web.Model.Product;
 import web.Model.ProductColor;
 import web.Model.ProductColorPK;
 import web.Service.CartItemService;
+import web.Service.CartService;
 import web.Service.ColorService;
+import web.Service.EmailSenderService;
 import web.Service.OrderService;
 import web.Service.ProductColorService;
 import web.Service.ProductService;
@@ -39,6 +41,8 @@ public class OrderController {
     @Autowired private HttpSession session;
     @Autowired private ProductColorService proColServ;
     @Autowired private CartItemService cartItemServ;
+    @Autowired private EmailSenderService emailServ;
+    @Autowired private CartService cartServ;
     
     //Khách hàng tự xem các đơn hàng đã đặt
     @GetMapping("profile/view-order")
@@ -131,6 +135,7 @@ public class OrderController {
             //Đặt thiết lập list item cho order
             List<ProductColor> productColors = new ArrayList<>();
             List<CartitemPK> cartItems = new ArrayList<>();
+            String infoListItemEmail = "";
             for (OrderItem item : orderItem) {
                 item.setOrders(newOrder);
                 item.getOrderItemPK().setOrderID(newOrder.getOrderID());
@@ -142,6 +147,12 @@ public class OrderController {
                 productColor.setQuantity(productColor.getQuantity()-item.getQuantity());
                 productColors.add(productColor);
                 cartItems.add(new CartitemPK(cartId,productId,colorId));
+                infoListItemEmail += "======================"
+                                   + "Mã sản phẩm: " + productId + "\n"
+                                   + "Tên sản phẩm: " + item.getProduct().getName() + "\n"
+                                   + "Màu sắc: " + item.getColor().getName()+ "\n"
+                                   + "Giá: "+item.getProduct().getPrice() + "\n"
+                                   + "Số lượng: "+item.getQuantity() + "\n";
             }
             newOrder.setOrderItemList(orderItem);
             //Lưu lại vào cơ sở dữ liệu
@@ -150,6 +161,21 @@ public class OrderController {
             proColServ.saveListProductColor(productColors);
             //Xóa sản phẩm trong giỏ hàng
             cartItemServ.deleteListCartItemById(cartItems);
+            //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
+            Integer newTotalQuantity = cartServ.updateTotalQuantity(cartId);
+            customer.getCart().setTotalQuantity(newTotalQuantity);
+            session.setAttribute("CUSTOMER", customer);
+            //Gửi email đặt hàng thành công
+            String titleEmail = "Đã đặt hàng thành công, đơn hàng đang chờ xét duyệt!";
+            String bodyEmail = "Mã đơn hàng: #"+newOrder.getOrderID()
+                                +"\n Ngày đặt: "+newOrder.getDate()
+                                +"\n Địa chỉ: "+newOrder.getAddress()
+                                +"\n Số điện thoại: "+newOrder.getPhoneNumber()
+                                +"\n Danh sách sản phẩm:\n"
+                                +infoListItemEmail
+                                +"-----Cảm ơn quý khách đã mua hàng của chúng tôi-----";
+            String emailCustomer = customer.getEmail();
+            emailServ.sendMail(emailCustomer, titleEmail, bodyEmail);
             return "redirect:/checkout-success";
         }
         return "order/view-check-out-error";

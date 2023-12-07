@@ -3,7 +3,6 @@ package web.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
-import java.util.Optional;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import web.Model.Cart;
 import web.Model.Cartitem;
 import web.Model.CartitemPK;
-import web.Model.Color;
 import web.Model.Customer;
-import web.Model.Product;
 import web.Model.ProductColor;
 import web.Model.ProductColorPK;
 import web.Service.CartItemService;

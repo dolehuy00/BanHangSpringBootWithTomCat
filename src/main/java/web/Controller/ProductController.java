@@ -3,6 +3,7 @@ package web.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.Model.Customer;
 import web.Model.Product;
+import web.Model.Review;
 import web.Service.ColorService;
 import web.Service.CustomerService;
 import web.Service.ProductService;
+import web.Service.ReviewService;
 import web.Service.SupplierService;
 
 @Controller
@@ -26,6 +30,7 @@ public class ProductController {
     @Autowired private SupplierService supplierServ;
     @Autowired private HttpSession session;
     @Autowired private CustomerService customerServ;
+    @Autowired private ReviewService reviewServ;
     
     //Tìm kiếm bằng thanh tìm kiếm của phần tiêu đề
     @GetMapping("search-product")
@@ -94,7 +99,29 @@ public class ProductController {
     @GetMapping("product/{id}")
     public String ViewDetail(Model model,
             @PathVariable("id") Integer productId){
-        model.addAttribute("Product", productServ.getProductById(productId));
+        Product product = productServ.getProductById(productId);
+        model.addAttribute("AverageStart", reviewServ.getAverageStarReview(product));
+        model.addAttribute("Product", product);
         return "product/product-detail";
+    }
+    
+    @PostMapping("product/review")
+    public String CustomerReview(
+                    @RequestParam("substance") String substance,
+                    @RequestParam("rating") Float star,
+                    @RequestParam("product") Integer productID){
+        Customer customer = (Customer) session.getAttribute("CUSTOMER");
+        if (customer != null) {
+            Review newReview = new Review();
+            newReview.setCutomerID(customer);
+            newReview.setStar(star);
+            newReview.setSubstance(substance);
+            newReview.setProductID(new Product(productID));
+            newReview.setReviewAt(LocalDateTime.now());
+            reviewServ.saveReview(newReview);
+        } else {
+            return "redirect:/login";
+        }
+        return "redirect:"+productID;
     }
 }

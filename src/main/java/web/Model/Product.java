@@ -85,8 +85,24 @@ public class Product implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productID")
     private List<Review> reviewList;
+
     
     
+    public Product(Integer productID) {
+        this.productID = productID;
+    }
+    
+    
+    public Double getAverageStar(){
+        if(!this.reviewList.isEmpty()){
+            return this.reviewList.stream()
+                .mapToDouble(Review::getStar)
+                .average()
+                .orElse(0.0);
+        }
+        return 5.0;
+    }
+  
     @Override
     public int hashCode() {
         int hash = 0;

@@ -112,34 +112,57 @@
                 <div class="row">
                     <div class="col">
                         <h2>Đánh giá sản phẩm</h2>
-                        <div class="input-group mb-3">
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                                <label for="floatingTextarea2">Viết đánh giá của bạn</label>
+                        <div>Đánh giá tổng thể: 
+                            <c:choose>
+                                <c:when test="${not empty AverageStart}">
+                                    ${AverageStart}/5 <div class="fa-solid fa-star"></div>
+                                </c:when>
+                                <c:otherwise>
+                                    Chưa có đánh giá
+                                </c:otherwise>
+                            </c:choose></div>
+                        <br>
+                        <h4>Thêm đánh giá mới</h4>
+                        <form action="review" method="post">
+                            <input type="hidden" name="product" value="${Product.productID}"/>
+                            <div class="rating">
+                                <label>Chọn sao: </label>
+                                <label for="star1">1</label>
+                                <input type="radio" name="rating" value="1" d="star1" style="margin-right: 20px">
+                                <label for="star2">2</label>
+                                <input type="radio" name="rating" value="2" id="star2" style="margin-right: 20px">
+                                <label for="star3">3</label>
+                                <input type="radio" name="rating" value="3" id="star3" style="margin-right: 20px">
+                                <label for="star4">4</label>
+                                <input type="radio" name="rating" value="4" id="star4" style="margin-right: 20px">
+                                <label for="star5">5</label>
+                                <input type="radio" name="rating" value="5" id="star5" checked style="margin-right: 20px"> 
+                              </div>
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <textarea name="substance" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">Viết đánh giá của bạn</label>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Gửi</button>
                             </div>
-                            <button class="btn btn-primary" type="button">Submit</button>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">John Doe</h5>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec tincidunt mi. Morbi lacinia posuere justo, sit amet gravida risus pulvinar nec.</p>
-                                <div class="card-footer">
-                                    <small class="text-muted">Seller's response: Thank you for your feedback!</small>
+                        </form>
+                        
+                        <c:forEach var="row" items="${Product.reviewList}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${row.cutomerID.name}</h5>
+                                    <c:forEach var="count" begin="1" end="${row.star}">
+                                        <div class="fa-solid fa-star"></div>
+                                    </c:forEach>
+                                    <p class="card-text">${row.substance}</p>
+                                    <div class="card-footer">
+                                        <c:forEach var="item" items="${row.sellerReplyList}">
+                                            <small class="text-muted">${item.userID.name}: ${item.reply}</small>
+                                        </c:forEach>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Jane Smith</h5>
-                                <p class="card-text">Vestibulum id efficitur dolor, in pellentesque leo. Phasellus aliquet massa nisi, sit amet tincidunt enim fermentum eu.</p>
-                                <div class="card-footer">
-                                    <small class="text-muted">Seller's response: We appreciate your review!</small>
-                                </div>
-                            </div>
-                        </div>
-
+                        </c:forEach>
                     </div>
                 </div>
             </div>

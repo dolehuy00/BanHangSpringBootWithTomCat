@@ -34,19 +34,24 @@ public class Review implements Serializable {
     @Basic(optional = false)
     @Column(name = "ReviewID")
     private Integer reviewID;
+    
     @Basic(optional = false)
     @Column(name = "Substance")
     private String substance;
+    
     @Basic(optional = false)
     @Column(name = "Star")
     private float star;
+    
     @Basic(optional = false)
     @Column(name = "ReviewAt")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime reviewAt;
+    
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     @ManyToOne(optional = false)
     private Product productID;
+    
     @JoinColumn(name = "CutomerID", referencedColumnName = "CustomerID")
     @ManyToOne(optional = false)
     private Customer cutomerID;
@@ -57,7 +62,7 @@ public class Review implements Serializable {
     public Review(Integer reviewID) {
         this.reviewID = reviewID;
     }
-
+  
     @Override
     public int hashCode() {
         int hash = 0;
