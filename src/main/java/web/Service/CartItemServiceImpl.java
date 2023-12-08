@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import web.Model.Cart;
 import web.Model.Cartitem;
 import web.Model.CartitemPK;
 import web.Repository.CartItemRepository;
@@ -45,6 +46,11 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public void deleteListCartItemById(List<CartitemPK> cartItems) {
         cartItemRepo.deleteAllById(cartItems);
+    }
+    
+    @Override
+    public void emptyCartById(Integer cartId) {
+        cartItemRepo.deleteAllCartItem(cartId);
     }
     
 }

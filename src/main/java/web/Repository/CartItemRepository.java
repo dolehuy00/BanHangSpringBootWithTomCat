@@ -17,4 +17,9 @@ public interface CartItemRepository extends CrudRepository<Cartitem, CartitemPK>
     @Transactional
     @Query("DELETE FROM Cartitem c WHERE c.cartitemPK = ?1")
     public Integer deleteCartItem(CartitemPK id);
+    
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Cartitem c WHERE c.cartitemPK.cartID = ?1")
+    public Integer deleteAllCartItem(Integer cartId);
 }

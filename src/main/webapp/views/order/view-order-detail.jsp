@@ -65,8 +65,8 @@
                             <td>${row.product.productID}</td>
                             <td><a href="/banhang/product/${row.product.productID}">${row.product.name}</a></td>
                             <td>${row.color.name}</td>
-                            <td><fmt:formatNumber value="${row.product.price}" pattern="###,###,###"/></td>
                             <td><img src="/banhang/${row.productColor.images}" /></td>
+                            <td><fmt:formatNumber value="${row.product.price}" pattern="###,###,###"/></td>   
                             <td>${row.quantity}</td>
                             <td><fmt:formatNumber value="${row.product.price*row.quantity}" pattern="###,###,###"/></td>
                         </tr>

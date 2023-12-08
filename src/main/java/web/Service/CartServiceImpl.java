@@ -3,6 +3,8 @@ package web.Service;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.Cart;
@@ -57,4 +59,19 @@ public class CartServiceImpl implements CartService{
         newCart.setTotalQuantity(0);
         return cartRepo.save(newCart);   
     }
+
+    @Override
+    public List<Cart> findAllCart() {
+        return cartRepo.findAll();
+    }
+
+    @Override
+    public Cart getCartById(Integer cartId) {
+        Optional<Cart> optional = cartRepo.findById(cartId);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+ 
 }
