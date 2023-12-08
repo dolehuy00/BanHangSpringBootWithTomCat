@@ -8,4 +8,6 @@ import web.Model.User;
 @Service
 public interface UserService {
     public List<User> findAllUser();
+    public User isValidAccount(String username, String password);
+    public User findUserByUserName(String username);
 }

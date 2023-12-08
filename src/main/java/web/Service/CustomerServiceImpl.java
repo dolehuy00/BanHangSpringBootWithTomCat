@@ -16,7 +16,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public Customer findCustomerByUserName(String username) {
         try{
-            Customer customer =  cusRepo.findByUserName(username);
+            Customer customer = cusRepo.findByUserName(username);
             return customer;
         }catch(Exception e){
             return null;
