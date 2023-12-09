@@ -11,6 +11,13 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/login-register.css"> 
     </head>
+    <style>
+        .no-spinners::-webkit-inner-spin-button,
+        .no-spinners::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
     <body>
         <header>
             <jsp:include page="../index/header-top.jsp"></jsp:include>
@@ -60,6 +67,11 @@
                         </div><!-- End .form-group -->
                         
                         <p class="message-error">${messageUsedEmail}</p>
+                        
+                        <div class="form-group">
+                            <label for="register-password">Số điện thoại <span style="color: red">*</span></label>
+                            <input type="number" class="form-control no-spinners" id="register-phone-number" name="register-phone-number" value="${phoneNumber}" required>
+                        </div>
                         
                         <div class="form-group">
                             <label for="register-password">Address</label>

@@ -1,6 +1,7 @@
 
 package web.Service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.Status;
@@ -13,5 +14,10 @@ public class StatusServiceImpl implements StatusService{
     @Override
     public Status getStatusById(Integer id) {
         return statusRepo.findById(id).get();
+    }
+
+    @Override
+    public List<Status> findAll() {
+        return (List<Status>) statusRepo.findAll();
     }
 }

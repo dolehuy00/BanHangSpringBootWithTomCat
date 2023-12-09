@@ -49,6 +49,11 @@
             right: 10px;
             cursor: pointer;
         }
+        .no-spinners::-webkit-inner-spin-button,
+        .no-spinners::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -97,6 +102,11 @@
                             <span class="input-group-text">Email</span>
                             <input type="email" class="form-control" aria-label="Email"
                                 value="${customer.email}" name="email" aria-describedby="addon-wrapping" required>
+                        </div>
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">Số điện thoại</span>
+                            <input type="number" class="form-control no-spinners" aria-label="PhoneNumber"
+                                value="${customer.phoneNumber}" name="phone-number" aria-describedby="addon-wrapping" required>
                         </div>
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text">Địa chỉ</span>

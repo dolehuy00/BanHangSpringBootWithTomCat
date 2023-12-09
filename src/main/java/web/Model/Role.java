@@ -35,9 +35,12 @@ public class Role implements Serializable {
     @Column(name = "Name")
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private List<User> userList;
 
+    public Role(Integer roleID) {
+        this.roleID = roleID;
+    }
 
     @Override
     public int hashCode() {

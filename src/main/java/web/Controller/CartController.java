@@ -170,7 +170,7 @@ public class CartController {
     public String ViewCartManagement(Model model){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRoleID().getRoleID()==1){
+        if(user != null && user.getRole().getRoleID()==1){
             model.addAttribute("ListCart", cartServ.findAllCart());
         }
         return "cart/cart-management";
@@ -181,7 +181,7 @@ public class CartController {
     public String CartManagementViewCartDetail(Model model, @PathVariable("id") Integer cartID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRoleID().getRoleID()==1){
+        if(user != null && user.getRole().getRoleID()==1){
             model.addAttribute("Cart", cartServ.getCartById(cartID));   
         }
         return "cart/manage-cart-detail";
@@ -198,7 +198,7 @@ public class CartController {
         JSONObject responseData = new JSONObject();
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRoleID().getRoleID()==1){
+        if(user != null && user.getRole().getRoleID()==1){
             //Xóa sản phẩm trong giỏ hàng
             CartitemPK id = new CartitemPK(cartId, productId, colorId);
             boolean result = cartItemServ.deleteProductCartItem(id);
@@ -218,7 +218,7 @@ public class CartController {
     public String CartManagementEmptyCart(@PathVariable("id") Integer cartID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRoleID().getRoleID()==1){
+        if(user != null && user.getRole().getRoleID()==1){
             cartItemServ.emptyCartById(cartID);
             cartServ.updateTotalPrice(cartID);
             cartServ.updateTotalQuantity(cartID);

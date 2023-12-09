@@ -91,7 +91,7 @@
             </div>
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping">Số điện thoại</span>
-                <input name="phone-number" type="number" class="form-control no-spinners" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
+                <input name="phone-number" value="${sessionScope.CUSTOMER.phoneNumber}" type="number" class="form-control no-spinners" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
             </div>    
             <br>
             <div class="form-floating">

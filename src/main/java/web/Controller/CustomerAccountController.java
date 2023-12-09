@@ -44,11 +44,13 @@ public class CustomerAccountController {
             @RequestParam("register-password-confirm") String passwordConfirm,
             @RequestParam("register-email") String email,
             @RequestParam("register-address") String address,
+            @RequestParam("register-phone-number")String phoneNumber,
             Model model){
         if (cusServ.checkExitsAccoutByUsername(username)) {
             model.addAttribute("messageUsedUsername", "Tên đăng nhập đã tồn tại!");
             model.addAttribute("name", name);
             model.addAttribute("email", email);
+            model.addAttribute("phoneNumber", phoneNumber);
             model.addAttribute("address", address);
             return "account/register";
         }else if (password.length() <6) {
@@ -56,6 +58,7 @@ public class CustomerAccountController {
             model.addAttribute("name", name);
             model.addAttribute("username", username);
             model.addAttribute("email", email);
+            model.addAttribute("phoneNumber", phoneNumber);
             model.addAttribute("address", address);
             return "account/register";
         }else if(!password.equals(passwordConfirm)){
@@ -63,12 +66,14 @@ public class CustomerAccountController {
             model.addAttribute("name", name);
             model.addAttribute("username", username);
             model.addAttribute("email", email);
+            model.addAttribute("phoneNumber", phoneNumber);
             model.addAttribute("address", address);
             return "account/register";
         }else if(cusServ.checkExitsAccoutByEmail(email)){
             model.addAttribute("name", name);
             model.addAttribute("username", username);
             model.addAttribute("address", address);
+            model.addAttribute("phoneNumber", phoneNumber);
             model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
             return "account/register";
         }else{
@@ -77,6 +82,7 @@ public class CustomerAccountController {
             customer.setUsername(username);
             customer.setPassword(password);
             customer.setEmail(email);
+            customer.setPhoneNumber(phoneNumber);
             customer.setStatus(statusServ.getStatusById(1));
             customer.setAddress(address);
             Customer newCustomer = cusServ.addNewCustomer(customer);
@@ -193,7 +199,8 @@ public class CustomerAccountController {
     public String ChangeInfo(Model model,
             @RequestParam("name")String name,
             @RequestParam("email")String email,
-            @RequestParam("address")String address){
+            @RequestParam("address")String address,
+            @RequestParam("phone-number")String phoneNumber){
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
         if(!email.equals(customer.getEmail()) && cusServ.checkExitsAccoutByEmail(email)){
             model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
@@ -202,6 +209,7 @@ public class CustomerAccountController {
         customer.setName(name);
         customer.setEmail(email);
         customer.setAddress(address);
+        customer.setPhoneNumber(phoneNumber);
         Customer newCustomer = cusServ.updateCustomer(customer);
         session.setAttribute("CUSTOMER", newCustomer);
         return "redirect:/profile";

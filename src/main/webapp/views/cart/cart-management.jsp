@@ -45,7 +45,7 @@
               <thead>
                 <tr>
                   <th scope="col">STT</th>
-                  <th scope="col">Mã</th>
+                  <th scope="col">Mã giỏ</th>
                   <th scope="col">Khách hàng</th>
                   <th scope="col">Tổng giá</th>
                   <th scope="col">Tổng SL</th>

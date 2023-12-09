@@ -10,4 +10,8 @@ public interface UserService {
     public List<User> findAllUser();
     public User isValidAccount(String username, String password);
     public User findUserByUserName(String username);
+    public void lockUserById(Integer userId);
+    public List<User> findAllUserExceptAdmin();
+    public User findUserById(Integer userID);
+    public User saveUser(User user);
 }

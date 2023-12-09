@@ -50,6 +50,10 @@ public class Customer implements Serializable {
     @Column(name = "Email")
     private String email;
     
+    @Basic(optional = false)
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    
     @Column(name = "Address")
     private String address;
     

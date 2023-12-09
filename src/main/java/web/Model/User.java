@@ -44,9 +44,20 @@ public class User implements Serializable {
     @Column(name = "Password")
     private String password;
     
+    @Basic(optional = false)
+    @Column(name = "email")
+    private String email;
+    
+    @Basic(optional = false)
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    
+    @Column(name = "address")
+    private String address;
+    
     @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
     @ManyToOne(optional = false)
-    private Role roleID;
+    private Role role;
     
     @JoinColumn(name = "Status", referencedColumnName = "StatusID")
     @ManyToOne(optional = false)
