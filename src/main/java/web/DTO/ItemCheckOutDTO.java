@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemCheckOut {
+public class ItemCheckOutDTO {
     private Integer product;
     private Integer color;
     private Integer quantity;

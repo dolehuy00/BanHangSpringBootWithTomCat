@@ -12,7 +12,7 @@ import web.Model.User;
 import web.Service.UserService;
 
 @Controller
-public class AdminAccountController {
+public class ManagerAccountController {
     @Autowired private UserService userServ;
     @Autowired private HttpSession session;
     

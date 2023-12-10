@@ -64,4 +64,34 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         return userRepo.save(user);
     }
+
+    @Override
+    public boolean checkExitsAccoutByUsername(String username) {
+        return userRepo.findByUsername(username) != null;
+    }
+
+    @Override
+    public boolean checkExitsAccoutByEmail(String email) {
+        return userRepo.findByEmail(email) != null;
+    }
+
+    @Override
+    public boolean checkExitsAccoutByPhoneNumber(String phoneNumber) {
+        return userRepo.findByPhoneNumber(phoneNumber) != null;
+    }
+
+    @Override
+    public void unlockUserById(Integer userId) {
+        userRepo.unlockUserById(userId);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
+    @Override
+    public User findByPhoneNumber(String phoneNumber) {
+        return userRepo.findByPhoneNumber(phoneNumber);
+    }
 }

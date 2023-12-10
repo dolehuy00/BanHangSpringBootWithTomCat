@@ -10,6 +10,7 @@
     <title>Quản lý nhân viên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="../../css/admin.css" rel="stylesheet">
     <style>
         main {
             margin-top: 30px;
@@ -29,6 +30,9 @@
             -webkit-appearance: none;
             margin: 0;
         }
+        .error-message{
+            color: red;
+        }
     </style>
 </head>
 
@@ -41,7 +45,7 @@
             </div>
             <div class="row text-center">
                 <div class="col">
-                    <a href="">Danh sách nhân viên</a>
+                    <a href="../manager-management">Danh sách nhân viên</a>
                 </div>
             </div>
             <div class="row align-items-center">
@@ -49,59 +53,155 @@
                     Thêm nhân viên
                 </div>
             </div>
-            <form>
+            <form id="add-form">
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Tên</span>
-                    <input type="text" class="form-control" name="name" value="${User.name}" aria-label="Name" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="name" value="${User.name}" aria-label="Name" aria-describedby="addon-wrapping" required>
                 </div>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Tài khoản</span>
-                    <input type="text" class="form-control" name="username" value="${User.username}" aria-label="Username" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="username" value="${User.username}" aria-label="Username" aria-describedby="addon-wrapping" required>
                 </div>
+                <p class="error-message" id="error-username"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Mật khẩu</span>
-                    <input type="password" class="form-control" name="password" value="${User.username}" aria-label="Password" aria-describedby="addon-wrapping" required>
+                    <input type="password" class="form-control" id="password" value="${User.username}" aria-label="Password" aria-describedby="addon-wrapping" required>
                 </div>
+                <p class="error-message" id="error-password"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Xác nhân mật khẩu</span>
-                    <input type="password" class="form-control" name="password-confirm" value="${User.username}" aria-label="PasswordConfirm" aria-describedby="addon-wrapping" required>
+                    <input type="password" class="form-control" id="password-confirm" value="${User.username}" aria-label="PasswordConfirm" aria-describedby="addon-wrapping" required>
                 </div>
+                <p class="error-message" id="error-password-confirm"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Email</span>
-                    <input type="text" class="form-control" name="email" value="${User.email}" aria-label="Email" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="email" value="${User.email}" aria-label="Email" aria-describedby="addon-wrapping" required>
                 </div>
+                <p class="error-message" id="error-email"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Số điện thoại</span>
-                    <input type="number" class="form-control no-spinners" name="phone-number" value="${User.phoneNumber}" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
+                    <input type="number" class="form-control no-spinners" id="phone-number" value="${User.phoneNumber}" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
                 </div>
+                <p class="error-message" id="error-phone-number"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Địa chỉ</span>
-                    <input type="text" class="form-control" name="address" value="${User.address}" aria-label="Address" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="address" value="${User.address}" aria-label="Address" aria-describedby="addon-wrapping" required>
                 </div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">Quyền</label>
-                    <select class="form-select" id="inputGroupSelect01" name="role" required>
+                    <select class="form-select" id="role" required>
+                        <option value="" selected>Chọn...</option>
                         <c:forEach var="row" items="${ListRole}">
                             <option value="${row.roleID}">${row.name}</option>
                         </c:forEach>
                     </select>
                 </div>
+                <p class="error-message" id="error-role"></p>
                 <div class="input-group mb-3">
                   <label class="input-group-text" for="inputGroupSelect01">Trạng thái</label>
-                  <select class="form-select" id="inputGroupSelect01" name="status" required>
+                  <select class="form-select" id="status" required>
+                      <option value="" selected>Chọn...</option>
                       <c:forEach var="row" items="${ListStatus}">
                           <option value="${row.statusID}">${row.name}</option>   
                       </c:forEach>
                   </select>
                 </div>
-
+                <p class="error-message" id="error-status"></p>
                 <button class="btn btn-primary" type="submit">Thêm nhân viên</button>
             </form>
-        </div>
+        </div>   
     </main>
+    <jsp:include page="../index/footer-admin-page.jsp"/>            
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"> 
+    </script>
+    <script>
+        document.getElementById("add-form").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            const name = document.getElementById('name').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('password-confirm').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phone-number').value;
+            const address = document.getElementById('address').value;
+            const role = document.getElementById('role').value;
+            const status = document.getElementById('status').value;
+ 
+            var account = {
+                name: name,
+                username: username,
+                password: password,
+                passwordConfirm: passwordConfirm,
+                email: email,
+                phoneNumber: phoneNumber,
+                address: address,
+                role: role,
+                status: status
+            };
+            
+            fetch('add', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(account),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.ExitsUsername){
+                    updateDataById('error-username', 'Tên tài khoản đã tồn tại!');
+                }else{
+                    updateDataById('error-username', '');
+                }
+                if(data.PasswordNotLong){
+                    updateDataById('error-password', 'Mật khẩu phải từ 6 ký tự!');
+                }else{
+                    updateDataById('error-password', '');
+                }
+                if(data.PasswordNotEquals){
+                    updateDataById('error-password-confirm', 'Hai mật khẩu không khớp nhau!');
+                }else{
+                    updateDataById('error-password-confirm', '');
+                }
+                if(data.ExitsEmail){
+                    updateDataById('error-email', 'Email đã được sử dụng!');
+                }else{
+                    updateDataById('error-email', '');
+                }
+                if(data.ExitsPhoneNumber){
+                    updateDataById('error-phone-number', 'Số điện thoại đã được sử dụng!');
+                }else{
+                    updateDataById('error-phone-number', '');
+                }
+                if(data.ErrorStatus){
+                    updateDataById('error-status', 'Vui lòng chọn trạng thái tài khoản!');
+                }else{
+                    updateDataById('error-status', '');
+                }
+                if(data.ErrorRole){
+                    updateDataById('error-role', 'Vui lòng chọn quyền tài khoản!');
+                }else{
+                    updateDataById('error-role', '');
+                }
+                if(data.Success){
+                    alert('Thêm nhân viên thành công');
+                    window.location.replace("add");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        function updateDataById(id, value) {
+            const td = document.getElementById(id);
+            if (td) {
+              td.textContent = value;
+            }
+        }
+    </script>
+    
 </body>
 
 </html>

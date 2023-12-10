@@ -27,7 +27,7 @@ import web.Service.ProductColorService;
 import web.Service.ProductService;
 
 @Controller
-public class CartController {
+public class CustomerCartController {
     
     @Autowired private CartService cartServ;    
     @Autowired private HttpSession session;
@@ -162,68 +162,4 @@ public class CartController {
         }
         return responseData.toString();
     }
-    ///
-    ///QUẢN LÝ
-    ///
-    //Xem danh sách các giỏ hàng
-    @GetMapping("admin/cart-management")
-    public String ViewCartManagement(Model model){
-        //Kiểm tra quyền
-        User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRole().getRoleID()==1){
-            model.addAttribute("ListCart", cartServ.findAllCart());
-        }
-        return "cart/cart-management";
-    }
-    
-    //Xem chi tiết giỏ hàng
-    @GetMapping("admin/cart-management/view/{id}")
-    public String CartManagementViewCartDetail(Model model, @PathVariable("id") Integer cartID){
-        //Kiểm tra quyền
-        User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRole().getRoleID()==1){
-            model.addAttribute("Cart", cartServ.getCartById(cartID));   
-        }
-        return "cart/manage-cart-detail";
-    }
-    
-    //Xóa sản phẩm khỏi giỏ hàng
-    @PostMapping("admin/cart-management/delete")
-    @ResponseBody
-    public String ManagerDeleteProductInCart(
-            @RequestParam("product") Integer productId,
-            @RequestParam("color") Integer colorId,
-            @RequestParam("cart") Integer cartId
-    ){
-        JSONObject responseData = new JSONObject();
-        //Kiểm tra quyền
-        User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRole().getRoleID()==1){
-            //Xóa sản phẩm trong giỏ hàng
-            CartitemPK id = new CartitemPK(cartId, productId, colorId);
-            boolean result = cartItemServ.deleteProductCartItem(id);
-            //Sửa total price
-            BigInteger totalPrice = cartServ.updateTotalPrice(cartId);
-            //Sửa total quantity
-            Integer totalQuantity = cartServ.updateTotalQuantity(cartId);
-            //Trả kết quả cho client
-            responseData.put("Reusult", result);
-            responseData.put("TotalPrice", totalPrice);
-            responseData.put("TotalQuantity", totalQuantity);
-        }
-        return responseData.toString();
-    }
-    //Làm rỗng giỏ hàng bằng id
-    @GetMapping("admin/cart-management/empty/{id}")
-    public String CartManagementEmptyCart(@PathVariable("id") Integer cartID){
-        //Kiểm tra quyền
-        User user = (User) session.getAttribute("ADMIN");
-        if(user != null && user.getRole().getRoleID()==1){
-            cartItemServ.emptyCartById(cartID);
-            cartServ.updateTotalPrice(cartID);
-            cartServ.updateTotalQuantity(cartID);
-        }
-        return "redirect:../view/" + cartID;
-    }
-    
 }

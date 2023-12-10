@@ -9,7 +9,6 @@ public interface CustomerService {
     public Customer findCustomerByUserName(String username);
     public Customer addNewCustomer(Customer customer);
     public boolean isValidAccount(String username, String password);
-    public String generateRandomPassword(int length);
     public boolean checkExitsAccoutByEmail(String email);
     public Customer findCustomerByEmail(String email);
     public Customer updateCustomer(Customer customer);

@@ -123,7 +123,7 @@
               </div>
                 <div class="toast-body" id="messageQuantity">Bạn chưa chọn sản phẩm nào!</div>
             </div>
-        </div>        
+        </div>
     </main>
     <jsp:include page="../index/footer.jsp"></jsp:include>  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

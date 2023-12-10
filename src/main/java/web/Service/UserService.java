@@ -14,4 +14,10 @@ public interface UserService {
     public List<User> findAllUserExceptAdmin();
     public User findUserById(Integer userID);
     public User saveUser(User user);
+    public boolean checkExitsAccoutByUsername(String username);
+    public boolean checkExitsAccoutByEmail(String email);
+    public boolean checkExitsAccoutByPhoneNumber(String phoneNumber);
+    public void unlockUserById(Integer userId);
+    public User findByEmail(String email);
+    public User findByPhoneNumber(String phoneNumber);
 }

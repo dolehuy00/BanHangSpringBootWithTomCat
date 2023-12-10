@@ -18,6 +18,7 @@ import web.Service.CartService;
 import web.Service.CustomerService;
 import web.Service.EmailSenderService;
 import web.Service.OrderService;
+import web.Service.RandomService;
 import web.Service.StatusService;
 
 @Controller
@@ -28,6 +29,7 @@ public class CustomerAccountController {
     @Autowired private EmailSenderService emailServ;
     @Autowired private OrderService orderServ;
     @Autowired private CartService cartServ;
+    @Autowired private RandomService randomServ;
     
     //Xem trang đăng ký
     @GetMapping("register")
@@ -38,14 +40,14 @@ public class CustomerAccountController {
     //Nhận yêu cầu đăng ký
     @PostMapping("register")
     public String Register(
-            @RequestParam("register-name") String name,
-            @RequestParam("register-username") String username,
-            @RequestParam("register-password") String password,
-            @RequestParam("register-password-confirm") String passwordConfirm,
-            @RequestParam("register-email") String email,
-            @RequestParam("register-address") String address,
-            @RequestParam("register-phone-number")String phoneNumber,
-            Model model){
+                @RequestParam("register-name") String name,
+                @RequestParam("register-username") String username,
+                @RequestParam("register-password") String password,
+                @RequestParam("register-password-confirm") String passwordConfirm,
+                @RequestParam("register-email") String email,
+                @RequestParam("register-address") String address,
+                @RequestParam("register-phone-number")String phoneNumber,
+                Model model){
         if (cusServ.checkExitsAccoutByUsername(username)) {
             model.addAttribute("messageUsedUsername", "Tên đăng nhập đã tồn tại!");
             model.addAttribute("name", name);
@@ -138,7 +140,7 @@ public class CustomerAccountController {
         Customer customer = cusServ.findCustomerByEmail(email);
         if(customer != null){
             //Cập nhật mật khẩu
-            String newPass = cusServ.generateRandomPassword(6);
+            String newPass = randomServ.generateRandomPassword(10);
             customer.setPassword(newPass);
             cusServ.updateCustomer(customer);
             //Gửi mail

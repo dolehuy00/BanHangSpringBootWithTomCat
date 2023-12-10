@@ -24,7 +24,7 @@ import web.Service.ReviewService;
 import web.Service.SupplierService;
 
 @Controller
-public class ProductController {
+public class CustomerProductController {
     @Autowired private ProductService productServ;
     @Autowired private ColorService colorServ;
     @Autowired private SupplierService supplierServ;

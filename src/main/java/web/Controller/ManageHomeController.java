@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import web.Service.UserService;
 
 @Controller
-public class AdminHomeController {
+public class ManageHomeController {
     @Autowired private UserService userServ;
     
     @GetMapping("admin")

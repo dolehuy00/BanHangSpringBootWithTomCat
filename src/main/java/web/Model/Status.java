@@ -35,6 +35,9 @@ public class Status implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
     private List<User> userList;
 
+    public Status(Integer statusID) {
+        this.statusID = statusID;
+    } 
     
     @Override
     public int hashCode() {

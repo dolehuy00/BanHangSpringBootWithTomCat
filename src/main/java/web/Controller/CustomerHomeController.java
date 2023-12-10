@@ -13,7 +13,7 @@ import web.Service.SupplierService;
 
 
 @Controller
-public class HomeController {
+public class CustomerHomeController {
     
     @Autowired private ProductService prodServ;
     @Autowired private SupplierService supplierServ;

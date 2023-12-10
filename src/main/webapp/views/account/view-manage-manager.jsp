@@ -11,6 +11,7 @@
     <title>Quản lý nhân viên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="../css/admin.css" rel="stylesheet">
     <style>
         .title {
             font-size: 50px;
@@ -50,7 +51,7 @@
             </div>
             <div class="row text-center">
                 <div class="col">
-                    <a href="">Thêm nhân viên</a>
+                    <a href="manager-management/add">Thêm nhân viên</a>
                 </div>
             </div>
             <div class="row align-items-center">
@@ -92,7 +93,7 @@
                             <tr>
                               <th scope="row">${count}</th>
                               <td>${row.userID}</td>
-                              <td><a href="">${row.name}</a></td>
+                              <td>${row.name}</td>
                               <td>${row.username}</td>
                               <td>${row.email}</td>
                               <td>${row.phoneNumber}</td>
@@ -101,10 +102,20 @@
                               <td>${row.status.name}</td>
                               <td>
                                   <a href="manager-management/edit/${row.userID}"><button type="button" class="btn btn-info">Sửa</button></a>
-                                  <button type="submit" formaction="manager-management/lock" 
+                                  <c:choose>
+                                      <c:when test="${row.status.statusID == 1}">
+                                        <button type="submit" formaction="manager-management/lock" 
                                           formmethod="post" value="${row.userID}" 
                                           name="id" class="btn btn-danger">Khóa
-                                  </button>
+                                        </button>
+                                      </c:when>
+                                      <c:otherwise>
+                                          <button type="submit" formaction="manager-management/unlock" 
+                                          formmethod="post" value="${row.userID}" 
+                                          name="id" class="btn btn-danger">Mở khóa
+                                        </button>
+                                      </c:otherwise>
+                                  </c:choose>
                               </td>
                             </tr>
                             <c:set var="count" value="${count+1}"/>
@@ -114,9 +125,7 @@
             </form>
         </div>
     </main>
-
-
-
+    <jsp:include page="../index/footer-admin-page.jsp"/>   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

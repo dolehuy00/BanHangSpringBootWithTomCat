@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import web.DTO.ItemCheckOut;
+import web.DTO.ItemCheckOutDTO;
 import web.Model.CartitemPK;
 import web.Model.Color;
 import web.Model.Customer;
@@ -34,7 +34,7 @@ import web.Service.ProductColorService;
 import web.Service.ProductService;
 
 @Controller
-public class OrderController {
+public class CustomerOrderController {
     @Autowired private OrderService orderServ;
     @Autowired private ColorService colorServ;
     @Autowired private ProductService proServ;
@@ -57,7 +57,7 @@ public class OrderController {
     
     //Gửi yêu cầu tạo đơn hàng
     @PostMapping("pre-checkout")
-    public String preCheckOut(@RequestBody()ItemCheckOut[] items , RedirectAttributes redirectAttributes){
+    public String preCheckOut(@RequestBody()ItemCheckOutDTO[] items , RedirectAttributes redirectAttributes){
         //Gửi list item của nhận từ request sang view-checkout
         redirectAttributes.addFlashAttribute("list", items);
         return "redirect:/view-checkout";
@@ -66,7 +66,7 @@ public class OrderController {
     //Preview đơn hàng
     @GetMapping("view-checkout")
     public String ViewCheckOut(Model model){   
-        ItemCheckOut[] listItem = (ItemCheckOut[]) model.asMap().get("list");
+        ItemCheckOutDTO[] listItem = (ItemCheckOutDTO[]) model.asMap().get("list");
         //Kiểm tra thông tin khách hàng
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
         if(customer != null){
@@ -78,7 +78,7 @@ public class OrderController {
                 List<OrderItem> listOrderItem = new ArrayList<>();
                 BigInteger totalPrice = new BigInteger("0");
                 //Tạo các item cho đơn hàng
-                for (ItemCheckOut item : listItem) {
+                for (ItemCheckOutDTO item : listItem) {
                     OrderItem orderItem =  new OrderItem(new OrderItemPK());
                     //Màu
                     Color color = colorServ.getColorById(item.getColor());

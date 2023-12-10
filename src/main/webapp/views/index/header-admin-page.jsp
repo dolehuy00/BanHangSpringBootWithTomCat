@@ -6,19 +6,19 @@
           <a class="navbar-brand" href="/banhang/admin">Trang quản lý</a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!--                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
-                    </li>
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        <a class="nav-link dropdown-toggle" style="font-size: 20px" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Các chức năng
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/cart-management">Quản lý giỏ hàng</a></li>
+                        <li><a class="dropdown-item" href="#">Quản lý sản phẩm</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/manager-management">Quản lý nhân viên</a></li>
+                        <li><a class="dropdown-item" href="#">Quản lý khách hàng</a></li>
+                        <li><a class="dropdown-item" href="#">Quản lý đơn hàng</a></li>
+                        <li><a class="dropdown-item" href="#">Thống kê</a></li>
                       </ul>
-                    </li>-->
+                    </li>
                 </ul>
             <%
                 User user = (User)session.getAttribute("ADMIN");

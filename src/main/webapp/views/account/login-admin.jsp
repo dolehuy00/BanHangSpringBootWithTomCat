@@ -30,7 +30,7 @@
                         <input type="password" name="password" class="form-control" id="password">
                     </div>
                     <p class="message-error">${messageLogin}</p>
-                    <a href="">Quên mật khẩu?</a>
+                    <a href="forgot">Quên mật khẩu?</a>
                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                 </div>
             </form>

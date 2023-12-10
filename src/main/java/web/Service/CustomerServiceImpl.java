@@ -49,21 +49,7 @@ public class CustomerServiceImpl implements CustomerService{
     public Customer updateCustomer(Customer customer){
         return cusRepo.save(customer);
     }
-    
-    @Override
-    public String generateRandomPassword(int length) {
-        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder(length);
-        Random random = new Random();
 
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(CHARACTERS.length());
-            char randomChar = CHARACTERS.charAt(randomIndex);
-            sb.append(randomChar);
-        }
-
-        return sb.toString();
-    }
     @Override
     public void updateSearchLastest(Integer id, String keyword){
         Customer customer = cusRepo.findById(id).get();

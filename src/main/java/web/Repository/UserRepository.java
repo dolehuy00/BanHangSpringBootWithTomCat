@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import web.Model.Role;
 import web.Model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer>, JpaRepository<User, Integer> {
     
     public User findByUsername(String username);
+    public User findByPhoneNumber(String phoneNumber);
+    public User findByEmail(String email);
     
     @Modifying
     @Transactional
@@ -23,5 +24,10 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaReposi
     
     @Query("FROM User u WHERE u.role.roleID != 1")
     public List<User> findAllUserExceptAdmin();
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.status.statusID = 1 WHERE u.userID = ?1")
+    public void unlockUserById(Integer userId);
     
 }
