@@ -1,6 +1,8 @@
 
 package web.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public Customer addNewCustomer(Customer customer) {
+    public Customer saveCustomer(Customer customer) {
         return cusRepo.save(customer);
     }
     
@@ -61,5 +63,29 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean checkExitsAccoutByUsername(String username){
         Customer customer = cusRepo.findByUserName(username);
         return customer != null;
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return (List<Customer>) cusRepo.findAll();
+    }
+
+    @Override
+    public void lockById(Integer Id) {
+        cusRepo.lockById(Id);
+    }
+
+    @Override
+    public void unlockById(Integer Id) {
+         cusRepo.unlockById(Id);
+    }
+
+    @Override
+    public Customer findById(Integer customerId) {
+        Optional<Customer> customer = cusRepo.findById(customerId);
+        if(customer.isPresent()){
+            return customer.get();
+        }
+        return null;
     }
 }

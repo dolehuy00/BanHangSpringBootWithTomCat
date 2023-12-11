@@ -38,6 +38,9 @@ public class Orders implements Serializable {
     @Column(name = "OrderID")
     private Integer orderID;
     
+    @JoinColumn(name = "seller", referencedColumnName = "userID")
+    private User seller;
+    
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)

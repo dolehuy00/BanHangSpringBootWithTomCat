@@ -67,4 +67,28 @@ public class ProductServiceImpl implements ProductService{
     public Product getProductById(Integer id) {
         return productRepo.findById(id).get();
     }
+
+    @Override
+    public void lockById(Integer id) {
+        productRepo.lockById(id);
+    }
+
+    @Override
+    public void unlockById(Integer id) {
+        productRepo.unlockById(id);
+    }
+
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepo.save(product);
+    }
+    @Override
+    public void lockBySupplierId(Integer id) {
+        productRepo.lockBySupplierId(id);
+    }
+
+    @Override
+    public void unlockBySupplierId(Integer id) {
+        productRepo.unlockBySupplierId(id);
+    }
 }

@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import web.DTO.UserDTO;
-import web.Model.Role;
+import web.DTO.CustomerDTO;
+import web.Model.Customer;
 import web.Model.Status;
 import web.Model.User;
-import web.Service.RoleService;
+import web.Service.CartService;
+import web.Service.CustomerService;
 import web.Service.StatusService;
-import web.Service.UserService;
 
 @Controller
-public class ManageManagerAccountController {
+public class ManageCustomerAccountController {
     
-    @Autowired private UserService userServ;
-    @Autowired private RoleService roleServ;
+    @Autowired private CustomerService customerServ;
     @Autowired private StatusService statusServ;
     @Autowired private HttpSession session;
+    @Autowired private CartService cartServ;
     
-    //Hiển thị trang quản lý nhân viên
-    @GetMapping("admin/manager-management")
+    //Hiển thị trang quản lý khách hàng
+    @GetMapping("admin/customer-management")
     public String ViewAllAccount(Model model){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -38,14 +38,14 @@ public class ManageManagerAccountController {
         } else if(user.getRole().getRoleID()!=1){
             return "account/view-role-not-permission";
         }else{
-            model.addAttribute("ListUser", userServ.findAllUserExceptAdmin());
-            return "account/view-manage-manager";
+            model.addAttribute("ListCustomer", customerServ.findAll());
+            return "account/view-manage-customer";
         }
     }
     
-    //Nhận yêu cầu khóa tài khoản nhân viên
-    @PostMapping("admin/manager-management/lock")
-    public String LockAccount(@RequestParam("id") Integer userId){
+    //Nhận yêu cầu khóa tài khoản khách hàng
+    @PostMapping("admin/customer-management/lock")
+    public String LockAccount(@RequestParam("id") Integer Id){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -53,14 +53,14 @@ public class ManageManagerAccountController {
         } else if(user.getRole().getRoleID()!=1){
             return "account/view-role-not-permission";
         }else{
-            userServ.lockUserById(userId);
-            return "redirect:../manager-management";
+            customerServ.lockById(Id);
+            return "redirect:../customer-management";
         }
     }
     
-    //Nhận yêu cầu mở khóa tài khoản nhân viên
-    @PostMapping("admin/manager-management/unlock")
-    public String UnlockAccount(@RequestParam("id") Integer userId){
+    //Nhận yêu cầu mở khóa tài khoản khách hàng
+    @PostMapping("admin/customer-management/unlock")
+    public String UnlockAccount(@RequestParam("id") Integer Id){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -68,14 +68,14 @@ public class ManageManagerAccountController {
         } else if(user.getRole().getRoleID()!=1){
             return "account/view-role-not-permission";
         }else{
-            userServ.unlockUserById(userId);
-            return "redirect:../manager-management";
+            customerServ.unlockById(Id);
+            return "redirect:../customer-management";
         }
     }
     
-    //Hiển thị trang sửa nhân viên
-    @GetMapping("admin/manager-management/edit/{id}")
-    public String ViewEditAccount(Model model, @PathVariable("id") Integer userID){ 
+    //Hiển thị trang sửa khách hàng
+    @GetMapping("admin/customer-management/edit/{id}")
+    public String ViewEditAccount(Model model, @PathVariable("id") Integer customerId){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -83,19 +83,18 @@ public class ManageManagerAccountController {
         } else if(user.getRole().getRoleID()!=1){
             return "account/view-role-not-permission";
         }else{
-            model.addAttribute("User", userServ.findUserById(userID));
-            model.addAttribute("ListRole", roleServ.findAllExceptAdmin());
+            model.addAttribute("Customer", customerServ.findById(customerId));
             model.addAttribute("ListStatus", statusServ.findAll());
-            return "account/view-edit-manager";
+            return "account/view-edit-customer";
         }
     }
     
-    //Nhận yêu cầu sửa nhân viên
-    @PostMapping("admin/manager-management/edit/{id}")
+    //Nhận yêu cầu sửa khách hàng
+    @PostMapping("admin/customer-management/edit/{id}")
     @ResponseBody
     public String EditAccount(Model model,
-            @PathVariable("id") Integer userID,
-            @RequestBody() UserDTO newUserDTO){ 
+            @PathVariable("id") Integer customerId,
+            @RequestBody() CustomerDTO newCusDTO){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -105,47 +104,37 @@ public class ManageManagerAccountController {
         }else{
             JSONObject response = new JSONObject();
             boolean isValid = true;
-            User oldUser = userServ.findUserById(userID);
-            String email = newUserDTO.getEmail();
-            String phoneNumber = newUserDTO.getPhoneNumber();
-            if(!email.equals(oldUser.getEmail())
-                    && userServ.checkExitsAccoutByEmail(email)){
+            Customer oldCustomer = customerServ.findById(customerId);
+            String email = newCusDTO.getEmail();
+            
+            if(!email.equals(oldCustomer.getEmail())
+                    && customerServ.checkExitsAccoutByEmail(email)){
                 response.put("ExitsEmail", true);
                 isValid = false;
             }
-            if(!phoneNumber.equals(oldUser.getPhoneNumber())
-                    && userServ.checkExitsAccoutByPhoneNumber(phoneNumber)){
-                response.put("ExitsPhoneNumber", true);
-                isValid = false;
-            }
-            if(newUserDTO.getRole() == null){
-                response.put("ErrorRole", true);
-                isValid = false;
-            }
-            if(newUserDTO.getStatus() == null){
+            if(newCusDTO.getStatus() == null){
                 response.put("ErrorStatus", true);
                 isValid = false;
             }
             if (!isValid) {
                 return response.toString();
             } else { 
-                oldUser.setName(newUserDTO.getName());
-                oldUser.setEmail(email);
-                oldUser.setPhoneNumber(phoneNumber);
-                oldUser.setAddress(newUserDTO.getAddress());
-                oldUser.setRole(new Role(newUserDTO.getRole()));
-                oldUser.setStatus(new Status(newUserDTO.getStatus()));
-                userServ.saveUser(oldUser);
+                oldCustomer.setName(newCusDTO.getName());
+                oldCustomer.setEmail(email);
+                oldCustomer.setPhoneNumber(newCusDTO.getPhoneNumber());
+                oldCustomer.setAddress(newCusDTO.getAddress());
+                oldCustomer.setStatus(new Status(newCusDTO.getStatus()));
+                customerServ.saveCustomer(oldCustomer);
                 response.put("Success", true);
                 return response.toString();
             }
         }
     }
     
-    //Nhận yêu cầu thêm nhân viên
-    @PostMapping("admin/manager-management/add")
+    //Nhận yêu cầu thêm khách hàng
+    @PostMapping("admin/customer-management/add")
     @ResponseBody
-    public String AddAccount(Model model, @RequestBody() UserDTO newUserDTO){
+    public String AddAccount(Model model, @RequestBody() CustomerDTO newCusDTO){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -155,55 +144,47 @@ public class ManageManagerAccountController {
         }else{
             JSONObject response = new JSONObject();
             boolean isValid = true;
-            if (userServ.checkExitsAccoutByUsername(newUserDTO.getUsername())) {
+            if (customerServ.checkExitsAccoutByUsername(newCusDTO.getUsername())) {
                 response.put("ExitsUsername", true);
                 isValid = false;
             }
-            if (newUserDTO.getPassword().length() <6) {
+            if (newCusDTO.getPassword().length() <6) {
                 response.put("PasswordNotLong", true);
                 isValid = false;
             }
-            if(!newUserDTO.getPassword().equals(newUserDTO.getPasswordConfirm())){
+            if(!newCusDTO.getPassword().equals(newCusDTO.getPasswordConfirm())){
                 response.put("PasswordNotEquals", true);
                 isValid = false;
             }
-            if(userServ.checkExitsAccoutByEmail(newUserDTO.getEmail())){
+            if(customerServ.checkExitsAccoutByEmail(newCusDTO.getEmail())){
                 response.put("ExitsEmail", true);
                 isValid = false;
             }
-            if(userServ.checkExitsAccoutByPhoneNumber(newUserDTO.getPhoneNumber())){
-                response.put("ExitsPhoneNumber", true);
-                isValid = false;
-            }
-            if(newUserDTO.getRole()==null){
-                response.put("ErrorRole", true);
-                isValid = false;
-            }
-            if(newUserDTO.getStatus()==null){
+            if(newCusDTO.getStatus()==null){
                 response.put("ErrorStatus", true);
                 isValid = false;
             }
             if (!isValid) {
                 return response.toString();
             } else {
-                User newUser =  new User();
-                newUser.setName(newUserDTO.getName());
-                newUser.setUsername(newUserDTO.getUsername());
-                newUser.setPassword(newUserDTO.getPassword());
-                newUser.setEmail(newUserDTO.getEmail());
-                newUser.setPhoneNumber(newUserDTO.getPhoneNumber());
-                newUser.setAddress(newUserDTO.getAddress());
-                newUser.setRole(new Role(newUserDTO.getRole()));
-                newUser.setStatus(new Status(newUserDTO.getStatus()));
-                userServ.saveUser(newUser);
+                Customer newCustomer =  new Customer();
+                newCustomer.setName(newCusDTO.getName());
+                newCustomer.setUsername(newCusDTO.getUsername());
+                newCustomer.setPassword(newCusDTO.getPassword());
+                newCustomer.setEmail(newCusDTO.getEmail());
+                newCustomer.setPhoneNumber(newCusDTO.getPhoneNumber());
+                newCustomer.setAddress(newCusDTO.getAddress());
+                newCustomer.setStatus(new Status(newCusDTO.getStatus()));
+                Customer customerCreated = customerServ.saveCustomer(newCustomer);
+                cartServ.createEmptyCartForCustomer(customerCreated);
                 response.put("Success", true);
                 return response.toString();
             }
         }
     }
     
-    //Hiển thị trang thêm nhân viên
-    @GetMapping("admin/manager-management/add")
+    //Hiển thị trang thêm khách hàng
+    @GetMapping("admin/customer-management/add")
     public String ViewAddAccount(Model model){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -212,10 +193,8 @@ public class ManageManagerAccountController {
         } else if(user.getRole().getRoleID()!=1){
             return "account/view-role-not-permission";
         }else{
-            model.addAttribute("ListRole", roleServ.findAllExceptAdmin());
             model.addAttribute("ListStatus", statusServ.findAll());
-            return "account/view-add-manager";
+            return "account/view-add-customer";
         }
     }
- 
 }

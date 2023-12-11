@@ -13,5 +13,6 @@ import web.Model.Orders;
 public interface OrderRepository extends CrudRepository<Orders, Integer>{
     
     @Query("FROM Orders o WHERE o.customerID = :customer")
-    public List<Orders> findOrdersByCustomer(@Param("customer") Customer customer);
+    public List<Orders> findOrdersByCustomer(@Param("customer") Customer customer); 
+     
 }

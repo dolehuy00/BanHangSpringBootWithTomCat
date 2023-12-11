@@ -87,7 +87,7 @@ public class CustomerAccountController {
             customer.setPhoneNumber(phoneNumber);
             customer.setStatus(statusServ.getStatusById(1));
             customer.setAddress(address);
-            Customer newCustomer = cusServ.addNewCustomer(customer);
+            Customer newCustomer = cusServ.saveCustomer(customer);
             Cart newCart = cartServ.createEmptyCartForCustomer(newCustomer);
             newCustomer.setCart(newCart);
             session.setAttribute("CUSTOMER", newCustomer);

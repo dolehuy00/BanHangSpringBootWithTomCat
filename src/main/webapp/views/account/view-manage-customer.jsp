@@ -12,10 +12,6 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="../css/admin.css" rel="stylesheet">
     <style>
-        .container {
-            background-color: antiquewhite;
-        }
-
         .title {
             font-size: 50px;
         }
@@ -37,6 +33,9 @@
         td a {
             margin-left: 10px;
         }
+        .btn-danger{
+            margin-left: 10px
+        }
     </style>
 </head>
 
@@ -44,6 +43,16 @@
     <jsp:include page="../index/header-admin-page.jsp"/>
     <main>
         <div class="container">
+            <div class="row align-items-center">
+                <div class="col text-center title">
+                    Quản lý khách hàng
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <a href="customer-management/add">Thêm khách hàng</a>
+                </div>
+            </div>
             <div class="row align-items-center">
                 <div class="col text-center" style="font-size: 30px">
                     Danh sách khách hàng
@@ -58,47 +67,62 @@
                                 aria-describedby="inputGroup-sizing-default">
                             <button type="">Tìm</button>
                         </div>
-                </div>
-                </form>
+                    </form>
+                </div>  
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Mã KH</th>
-                        <th scope="col">Tên khách hàng</th>
-                        <th scope="col">Tài khoản</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:set var="count" value="1"/>
-                    <c:forEach var="row" items="${ListCustomer}">
-                      <tr>
-                        <th scope="row">${count}</th>
-                        <td>${row.customerID}</td>
-                        <td><a href="">${row.name}</a></td>
-                        <td>${row.username}</td>
-                        <td>${row.email}</td>
-                        <td>${row.address}</td>
-                        <td>${row.status.name}</td>
-                        <td>
-                            <a href="">Sửa</a>
-                            <a href="" style="color: red; margin-left: 50px">Cấm</a>
-                        </td>
-                      </tr>
-                      <c:set var="count" value="${count+1}"/>
-                    </c:forEach>
-                </tbody>
-            </table>
+            <form>
+                <table class="table text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã KH</th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Tài khoản</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:set var="count" value="1"/>
+                        <c:forEach var="row" items="${ListCustomer}">
+                            <tr>
+                              <th scope="row">${count}</th>
+                              <td>${row.customerID}</td>
+                              <td>${row.name}</td>
+                              <td>${row.username}</td>
+                              <td>${row.email}</td>
+                              <td>${row.phoneNumber}</td>
+                              <td>${row.address}</td>
+                              <td>${row.status.name}</td>
+                              <td>
+                                  <a href="customer-management/edit/${row.customerID}"><button type="button" class="btn btn-info">Sửa</button></a>
+                                  <c:choose>
+                                      <c:when test="${row.status.statusID == 1}">
+                                        <button type="submit" formaction="customer-management/lock" 
+                                          formmethod="post" value="${row.customerID}" 
+                                          name="id" class="btn btn-danger">Khóa
+                                        </button>
+                                      </c:when>
+                                      <c:otherwise>
+                                          <button type="submit" formaction="customer-management/unlock" 
+                                          formmethod="post" value="${row.customerID}" 
+                                          name="id" class="btn btn-danger">Mở khóa
+                                        </button>
+                                      </c:otherwise>
+                                  </c:choose>
+                              </td>
+                            </tr>
+                            <c:set var="count" value="${count+1}"/>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </main>
-
-
-
+    <jsp:include page="../index/footer-admin-page.jsp"/>                   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

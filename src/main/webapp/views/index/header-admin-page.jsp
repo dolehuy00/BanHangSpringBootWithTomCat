@@ -12,11 +12,12 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/banhang/admin/cart-management">Quản lý giỏ hàng</a></li>
-                        <li><a class="dropdown-item" href="#">Quản lý sản phẩm</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/product-management">Quản lý sản phẩm</a></li>
                         <li><a class="dropdown-item" href="/banhang/admin/manager-management">Quản lý nhân viên</a></li>
-                        <li><a class="dropdown-item" href="#">Quản lý khách hàng</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/customer-management">Quản lý khách hàng</a></li>
                         <li><a class="dropdown-item" href="#">Quản lý đơn hàng</a></li>
-                        <li><a class="dropdown-item" href="#">Thống kê</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/supplier-management">Quản lý nhà cung cấp</a></li>
+                        <li><a class="dropdown-item" href="/banhang/admin/statistic">Thống kê</a></li>
                       </ul>
                     </li>
                 </ul>

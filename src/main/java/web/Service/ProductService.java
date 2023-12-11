@@ -21,4 +21,9 @@ public interface ProductService {
             List<Integer> colors, Integer page, Sort.Order sort);
     public List<Product> search10ProductRandomByName(String keywordLatest);
     public Product getProductById(Integer id);
+    public void lockById(Integer id);
+    public void unlockById(Integer id);
+    public Product saveProduct(Product product);
+    public void lockBySupplierId(Integer Id);
+    public void unlockBySupplierId(Integer Id);
 }

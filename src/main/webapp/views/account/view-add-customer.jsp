@@ -1,15 +1,14 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quản lý nhân viên</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản lý nhà cung cấp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="../../css/admin.css" rel="stylesheet">
     <style>
         main {
@@ -34,33 +33,32 @@
             color: red;
         }
     </style>
-</head>
-
-<body>
+  </head>
+  <body>
     <jsp:include page="../index/header-admin-page.jsp"/>
     <main>
         <div class="container">
             <div class="row align-items-center">
-                <div class="col text-center title">Quản lý nhân viên</div>
+                <div class="col text-center title">Quản lý khách hàng</div>
             </div>
             <div class="row text-center">
                 <div class="col">
-                    <a href="../manager-management">Danh sách nhân viên</a>
+                    <a href="../customer-management">Danh sách khách hàng</a>
                 </div>
             </div>
             <div class="row align-items-center">
                 <div class="col text-center" style="font-size: 30px">
-                    Thêm nhân viên
+                    Thêm khách hàng
                 </div>
             </div>
             <form id="add-form">
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Tên</span>
-                    <input type="text" class="form-control" id="name" value="${User.name}" aria-label="Name" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="name" value="${Customer.name}" aria-label="Name" aria-describedby="addon-wrapping" required>
                 </div>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Tài khoản</span>
-                    <input type="text" class="form-control" id="username" value="${User.username}" aria-label="Username" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="username" value="${Customer.username}" aria-label="Username" aria-describedby="addon-wrapping" required>
                 </div>
                 <p class="error-message" id="error-username"></p>
                 <div class="input-group flex-nowrap">
@@ -75,28 +73,18 @@
                 <p class="error-message" id="error-password-confirm"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Email</span>
-                    <input type="text" class="form-control" id="email" value="${User.email}" aria-label="Email" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="email" value="${Customer.email}" aria-label="Email" aria-describedby="addon-wrapping" required>
                 </div>
                 <p class="error-message" id="error-email"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Số điện thoại</span>
-                    <input type="number" class="form-control no-spinners" id="phone-number" value="${User.phoneNumber}" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
+                    <input type="number" class="form-control no-spinners" id="phone-number" value="${Customer.phoneNumber}" aria-label="PhoneNumber" aria-describedby="addon-wrapping" required>
                 </div>
                 <p class="error-message" id="error-phone-number"></p>
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Địa chỉ</span>
-                    <input type="text" class="form-control" id="address" value="${User.address}" aria-label="Address" aria-describedby="addon-wrapping" required>
+                    <input type="text" class="form-control" id="address" value="${Customer.address}" aria-label="Address" aria-describedby="addon-wrapping" required>
                 </div>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">Quyền</label>
-                    <select class="form-select" id="role" required>
-                        <option value="" selected>Chọn...</option>
-                        <c:forEach var="row" items="${ListRole}">
-                            <option value="${row.roleID}">${row.name}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <p class="error-message" id="error-role"></p>
                 <div class="input-group mb-3">
                   <label class="input-group-text" for="inputGroupSelect01">Trạng thái</label>
                   <select class="form-select" id="status" required>
@@ -107,7 +95,7 @@
                   </select>
                 </div>
                 <p class="error-message" id="error-status"></p>
-                <button class="btn btn-primary" type="submit">Thêm nhân viên</button>
+                <button class="btn btn-primary" type="submit">Thêm khách hàng</button>
             </form>
         </div>   
     </main>
@@ -126,7 +114,6 @@
             const email = document.getElementById('email').value;
             const phoneNumber = document.getElementById('phone-number').value;
             const address = document.getElementById('address').value;
-            const role = document.getElementById('role').value;
             const status = document.getElementById('status').value;
  
             var account = {
@@ -137,7 +124,6 @@
                 email: email,
                 phoneNumber: phoneNumber,
                 address: address,
-                role: role,
                 status: status
             };
             
@@ -180,13 +166,8 @@
                 }else{
                     updateDataById('error-status', '');
                 }
-                if(data.ErrorRole){
-                    updateDataById('error-role', 'Vui lòng chọn quyền tài khoản!');
-                }else{
-                    updateDataById('error-role', '');
-                }
                 if(data.Success){
-                    alert('Thêm nhân viên thành công');
+                    alert('Thêm khách hàng thành công');
                     window.location.replace("add");
                 }
             })
@@ -201,7 +182,5 @@
             }
         }
     </script>
-    
-</body>
-
+  </body>
 </html>

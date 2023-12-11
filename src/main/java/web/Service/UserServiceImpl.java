@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.Model.Customer;
-import web.Model.Role;
 import web.Model.User;
 import web.Repository.UserRepository;
 
