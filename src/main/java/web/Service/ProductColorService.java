@@ -12,4 +12,7 @@ public interface ProductColorService {
     public Integer checkValidQuantity(ProductColorPK id, Integer quantity);
     public ProductColor saveProductColor(ProductColor productColor);
     public void saveListProductColor(List<ProductColor> productColors);
+    public ProductColor checkExitsPKInListProductColor(List<ProductColor> list, ProductColorPK id);
+    public void lockById(ProductColorPK Id);
+    public void unlockById(ProductColorPK Id);
 }

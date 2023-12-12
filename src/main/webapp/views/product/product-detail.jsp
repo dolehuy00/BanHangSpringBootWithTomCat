@@ -91,7 +91,6 @@
                             </c:forEach>
                         </div>
                         <input type="hidden" id="product-id" name="product-id" value="${Product.productID}">
-                        <button type="button" class="btn btn-success">Mua ngay</button>
                         <button type="button" class="btn btn-success" id="btn-add-to-cart">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
@@ -137,7 +136,7 @@
                                 <input type="radio" name="rating" value="4" id="star4" style="margin-right: 20px">
                                 <label for="star5">5</label>
                                 <input type="radio" name="rating" value="5" id="star5" checked style="margin-right: 20px"> 
-                              </div>
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="form-floating">
                                     <textarea name="substance" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
@@ -146,7 +145,7 @@
                                 <button class="btn btn-primary" type="submit">Gửi</button>
                             </div>
                         </form>
-                        
+
                         <c:forEach var="row" items="${Product.reviewList}">
                             <div class="card">
                                 <div class="card-body">
@@ -156,9 +155,19 @@
                                     </c:forEach>
                                     <p class="card-text">${row.substance}</p>
                                     <div class="card-footer">
-                                        <c:forEach var="item" items="${row.sellerReplyList}">
-                                            <small class="text-muted">${item.userID.name}: ${item.reply}</small>
-                                        </c:forEach>
+                                    <c:if test="${not empty row.sellerReplyList}">
+                                        <c:set value="${row.sellerReplyList.get(0)}" var="item"/>
+                                        <small class="text-muted">${item.userID.name}: ${item.reply}</small>
+                                    </c:if>
+                                    <c:if test="${empty row.sellerReplyList && not empty sessionScope.ADMIN}">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here" id="seller-reply-${row.reviewID}" style="height: 100px"></textarea>
+                                            <label for="floatingTextarea">Viết câu trả lời</label> 
+                                        </div>
+                                        <div class="text-end" style="margin-top: 10px">
+                                            <button type="button" name="review" value="${row.reviewID}" class="btn btn-primary" id="btn-seller-reply">Trả lời</button>
+                                        </div>
+                                    </c:if> 
                                     </div>
                                 </div>
                             </div>
@@ -168,11 +177,11 @@
             </div>
             <div class="toast-container position-fixed bottom-0 end-0 p-3">
                 <div id="messageAddCartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                  <div class="toast-header">
-                    <strong class="me-auto">Thông báo</strong>
-                    <small>now</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                  </div>
+                    <div class="toast-header">
+                        <strong class="me-auto">Thông báo</strong>
+                        <small>now</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
                     <div class="toast-body" id="messageQuantity">Sản phẩm đã có trong giỏ hàng của bạn</div>
                 </div>
             </div>
@@ -181,6 +190,28 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+        <script>
+            const btnReplya = document.querySelectorAll('#btn-seller-reply');
+            btnReplya.forEach(button => {
+                button.addEventListener('click', function () {
+                    var reviewId = button.value;
+                    var reply = document.getElementById('seller-reply-'+reviewId).value;
+                    fetch('reply-review?reply='+reply+'&review='+reviewId, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.success){
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                       console.error('Error:', error);
+                    });
+                });
+            });
+            
+        </script>
         <script>
             function setClickButtonColor() {
                 var buttonColors = document.querySelectorAll('button[name="color"]');
@@ -231,31 +262,31 @@
                 fetch('../cart/add?product=' + product + '&color=' + color + '&quantity=' + quantity, {
                     method: 'POST',
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.Redirect){
-                        window.location.href = data.Redirect;
-                    }else if(data.Success === true){
-                        const toastMessageAddCart = document.getElementById('messageAddCartToast');
-                        const toast = bootstrap.Toast.getOrCreateInstance(toastMessageAddCart);
-                        const messageQuantity = document.getElementById('messageQuantity');
-                        if(data.MessageMaxQuantity){
-                            messageQuantity.innerHTML = data.MessageMaxQuantity;
-                        } 
-                        updateDataById('total-quantity',data.QuantityProductInCart);
-                        toast.show();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.Redirect) {
+                                window.location.href = data.Redirect;
+                            } else if (data.Success === true) {
+                                const toastMessageAddCart = document.getElementById('messageAddCartToast');
+                                const toast = bootstrap.Toast.getOrCreateInstance(toastMessageAddCart);
+                                const messageQuantity = document.getElementById('messageQuantity');
+                                if (data.MessageMaxQuantity) {
+                                    messageQuantity.innerHTML = data.MessageMaxQuantity;
+                                }
+                                updateDataById('total-quantity', data.QuantityProductInCart);
+                                toast.show();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
             });
             function updateDataById(id, value) {
                 const td = document.getElementById(id);
                 if (td) {
-                  td.textContent = value;
+                    td.textContent = value;
                 }
-            }   
+            }
         </script>
     </body>
 

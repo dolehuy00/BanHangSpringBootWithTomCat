@@ -14,16 +14,16 @@ import web.Model.Product;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Integer>, ProductRepositoryCustom{
     
-    @Query("FROM Product p ORDER BY p.createAt DESC LIMIT :limit")
+    @Query("FROM Product p WHERE p.status.statusID = 1 ORDER BY p.createAt DESC LIMIT :limit")
     public List<Product> getProductNewest(@Param("limit") Integer limit);
     
-    @Query("SELECT MAX(price) FROM Product")
+    @Query("SELECT MAX(price) FROM Product WHERE status.statusID = 1")
     public BigInteger getMaxPrice();
     
-    @Query("SELECT MIN(price) FROM Product")
+    @Query("SELECT MIN(price) FROM Product WHERE status.statusID = 1")
     public BigInteger getMinPrice();
     
-    @Query("FROM Product p WHERE p.name LIKE ?1")
+    @Query("FROM Product p WHERE p.name LIKE ?1 AND p.status.statusID = 1")
     public List<Product> searchProductByName(String name);  
     
     @Modifying

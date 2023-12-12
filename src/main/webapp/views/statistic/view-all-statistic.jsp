@@ -162,7 +162,7 @@
             },
 
             title: {
-                text: '<a href="#">Top 5 khách hàng mua nhiều nhất</a>',
+                text: '<a href="/banhang/admin/view-statistic-5-customer">Top 5 khách hàng mua nhiều nhất</a>',
                 align: 'center',
                 useHTML: true
             },
@@ -214,7 +214,7 @@
                 },
 
                 title: {
-                    text: '<a href="#">Top 5 nhân viên bán nhiều nhất</a>',
+                    text: '<a href="/banhang/admin/view-statistic-5-seller">Top 5 nhân viên bán nhiều nhất</a>',
                     align: 'center',
                     useHTML: true
                 },
@@ -261,7 +261,7 @@
             Highcharts.chart('container-chart-revenue-in-year', {
 
                 title: {
-                    text: '<a href="#">Doanh thu theo tháng trong năm</a>',
+                    text: '<a href="/banhang/admin/view-statistic-revenue-in-year">Doanh thu theo tháng trong năm</a>',
                     align: 'center',
                     useHTML: true
                 },
@@ -328,7 +328,7 @@
             },
 
             title: {
-                text: '<a href="#">Top 10 sản phẩm bán chạy nhất</a>',
+                text: '<a href="/banhang/admin/view-statistic-10-product">Top 10 sản phẩm bán chạy nhất</a>',
                 align: 'center',
                 useHTML: true
             },

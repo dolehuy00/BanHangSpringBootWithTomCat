@@ -73,11 +73,15 @@
                 
                 <tbody>
                     <c:forEach var="row" items="${cart.cartitemList}">
+                        <c:if test="${row.productColor.quantity < 1 || row.productColor.status.statusID != 1}">
+                            <c:set value="disabled" var="lock"/>
+                        </c:if>
                         <tr id="row-${row.cartitemPK.productID}-${row.cartitemPK.colorID}">
-                            <td><input class="form-check-input" type="checkbox"
-                                       value="${row.cartitemPK.productID}-${row.cartitemPK.colorID}"
-                                       id="check-${row.cartitemPK.productID}-${row.cartitemPK.colorID}"
-                                       name="choose-product">
+                            <td>
+                                <input class="form-check-input" type="checkbox"
+                                    value="${row.cartitemPK.productID}-${row.cartitemPK.colorID}"
+                                    id="check-${row.cartitemPK.productID}-${row.cartitemPK.colorID}"
+                                    name="choose-product" ${lock}/>
                             </td>
                             <td>${row.product.productID}</td>
                             <td><a href="/banhang/product/${row.product.productID}">${row.product.name}</a></td>

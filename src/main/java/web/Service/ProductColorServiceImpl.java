@@ -36,5 +36,25 @@ public class ProductColorServiceImpl implements ProductColorService{
     public void saveListProductColor(List<ProductColor> productColors) {
         productColorRepo.saveAll(productColors);
     }
+
+    @Override
+    public ProductColor checkExitsPKInListProductColor(List<ProductColor> list, ProductColorPK id) {
+        for (ProductColor productColor : list) {
+            if (productColor.getProductColorPK().toString().equals(id.toString())) {
+                return productColor;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void lockById(ProductColorPK Id) {
+        productColorRepo.lockById(Id);
+    }
+
+    @Override
+    public void unlockById(ProductColorPK Id) {
+        productColorRepo.unlockById(Id);
+    }
     
 }

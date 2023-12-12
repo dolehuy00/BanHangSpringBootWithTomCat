@@ -137,6 +137,7 @@ public class CustomerOrderController {
             List<CartitemPK> cartItems = new ArrayList<>();
             String infoListItemEmail = "";
             for (OrderItem item : orderItem) {
+                //Thêm thông order cho các item
                 item.setOrders(newOrder);
                 item.getOrderItemPK().setOrderID(newOrder.getOrderID());
                 //Tru so luong trong kho

@@ -22,6 +22,12 @@
     <class>web.Model.Status111</class>
     <class>web.Model.Customers1111</class>
     <class>web.Model.Orders1111</class>
+    <class>web.Model.Users1</class>
+    <class>web.Model.Orders1</class>
+    <class>web.Model.status1</class>
+    <class>web.Model.Orderstatus1</class>
+    <class>web.Model.Customers1</class>
+    <class>web.Model.Roles1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banhangj2ee1?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

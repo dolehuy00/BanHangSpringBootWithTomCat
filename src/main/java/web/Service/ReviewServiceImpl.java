@@ -1,6 +1,7 @@
 
 package web.Service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.Model.Product;
@@ -19,6 +20,11 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Review saveReview(Review review) {
         return reviewRepo.save(review);
+    }
+
+    @Override
+    public List<Review> getReviewsNotReplied() {
+        return reviewRepo.getReviewsNotReplied();
     }
     
     

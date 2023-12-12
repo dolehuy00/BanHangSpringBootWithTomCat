@@ -67,7 +67,7 @@
                                     <jsp:param name="linkDetail" value="product/${row.productID}" />
                                     <jsp:param name="title" value="${row.name}" />
                                     <jsp:param name="price" value="${formattedPrice}" />
-                                    <jsp:param name="reviewCount" value="(${row.reviewList.size()} Reviews)" />
+                                    <jsp:param name="reviewCount" value="(${row.reviewList.size()} Đánh giá)" />
                                     <jsp:param name="ratingCount" value="${row.getAverageStar()}" />
                                 </jsp:include>
                             </c:forEach> 
@@ -109,7 +109,7 @@
                                     <jsp:param name="linkDetail" value="product/${row.productID}" />
                                     <jsp:param name="title" value="${row.name}" />
                                     <jsp:param name="price" value="${formattedPrice}" />
-                                    <jsp:param name="reviewCount" value="(${row.reviewList.size()} Reviews)" />
+                                    <jsp:param name="reviewCount" value="(${row.reviewList.size()} Đánh giá)" />
                                     <jsp:param name="ratingCount" value="${row.getAverageStar()}" />
                                 </jsp:include>
                             </c:forEach>

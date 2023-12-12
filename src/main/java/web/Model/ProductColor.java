@@ -33,6 +33,10 @@ public class ProductColor implements Serializable {
     @Column(name = "Images")
     private String images;
     
+    @JoinColumn(name = "Status", referencedColumnName = "StatusID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Status status;
+    
     @JoinColumn(name = "ColorID", referencedColumnName = "ColorID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Color color;

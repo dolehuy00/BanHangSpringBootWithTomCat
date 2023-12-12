@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import web.Model.Cart;
 import web.Model.Cartitem;
@@ -19,10 +17,8 @@ import web.Model.CartitemPK;
 import web.Model.Customer;
 import web.Model.ProductColor;
 import web.Model.ProductColorPK;
-import web.Model.User;
 import web.Service.CartItemService;
 import web.Service.CartService;
-import web.Service.ColorService;
 import web.Service.ProductColorService;
 import web.Service.ProductService;
 
@@ -34,7 +30,6 @@ public class CustomerCartController {
     @Autowired private CartItemService cartItemServ;
     @Autowired private ProductColorService proColorServ;
     @Autowired private ProductService productServ;
-    @Autowired private ColorService colorServ;
     
     
     ///

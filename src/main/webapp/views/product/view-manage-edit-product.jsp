@@ -108,11 +108,25 @@
                                         <input type="file" class="form-control" accept=".jpg, .png" id="image"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 container-btn-action d-flex align-items-center">
-                                    <button type="button" class="btn btn-danger" id="btn-lock">Ngừng kinh doanh</button>
-                                </div>
+                                <c:choose>
+                                    <c:when test="${row.status.statusID == 1}">
+                                        <div class="col-sm-2 container-btn-action d-flex align-items-center">
+                                            <button type="button"
+                                                    onclick="lockColor(${Product.productID},${row.color.colorID})" 
+                                                    class="btn btn-danger">Ngừng kinh doanh
+                                            </button>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-sm-2 container-btn-action d-flex align-items-center">
+                                            <button type="button"
+                                                    onclick="unlockColor(${Product.productID},${row.color.colorID})" 
+                                                    class="btn btn-danger">Tiếp tục kinh doanh
+                                            </button>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
-
                         </c:forEach>
                     </div>
                     <div class="row text-center">
@@ -151,6 +165,7 @@
 
                     <button class="btn btn-primary" type="submit">Lưu lại</button>
                 </form>
+                <form id="lock-color"></form>
             </div>
             <div id="popupInsertSupplier" class="popupInsertSupplier">
                 <div class="popup-content-supplier">
@@ -195,6 +210,31 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function lockColor(proId, colorId) {
+                var form = document.getElementById("lock-color");
+                form.action = "../lock-color/" +proId;
+                var input = document.createElement("input");
+                input.type = "number";
+                input.name = "id";
+                input.value = colorId;
+                form.appendChild(input);
+                form.method = "post";
+                form.submit();
+                console.log(form);
+            }
+            function unlockColor(proId, colorId) {
+                var form = document.getElementById("lock-color");
+                form.action = "../unlock-color/" +proId;
+                var input = document.createElement("input");
+                input.type = "number";
+                input.name = "id";
+                input.value = colorId;
+                form.appendChild(input);
+                form.method = "post";
+                form.submit();
+            }
+        </script>
         <script>
             function addNewRow() {
                 // Sao chép row hiện tại

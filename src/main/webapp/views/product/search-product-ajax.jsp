@@ -12,8 +12,8 @@
             <jsp:param name="linkDetail" value="" />
             <jsp:param name="title" value="${row.name}" />
             <jsp:param name="price" value="${formattedPrice}" />
-            <jsp:param name="reviewCount" value="(4 Reviews)" />
-            <jsp:param name="ratingCount" value="4.5" />
+            <jsp:param name="reviewCount" value="(${row.reviewList.size()} Đánh giá)" />
+            <jsp:param name="ratingCount" value="${row.getAverageStar()}" />
         </jsp:include>
     </c:forEach>
 </div>

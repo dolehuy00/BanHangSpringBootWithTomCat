@@ -141,7 +141,7 @@ public class ManageProductController {
                     ProductColorPK id = new ProductColorPK();
                     id.setProductID(oldProduct.getProductID());
                     id.setColorID(proColorDTO.getColor());
-                    ProductColor oldProductColor = checkExitsPKInList(listOldProColor, id);
+                    ProductColor oldProductColor = proColorServ.checkExitsPKInListProductColor(listOldProColor, id);
                     if(oldProductColor != null){
                         oldProductColor.setQuantity(proColorDTO.getQuantity());
                         String base64Image = proColorDTO.getImage();
@@ -152,10 +152,11 @@ public class ManageProductController {
                         }
                         listNewProColor.add(oldProductColor);
                     }else{
-                        //Tạo ProductColor
+                        //Tạo ProductColor mới
                         ProductColor proColor = new ProductColor();
                         proColor.setProductColorPK(id);
                         proColor.setQuantity(proColorDTO.getQuantity());
+                        proColor.setStatus(new Status(1));
                         //Lưu hình ảnh
                         String base64Image = proColorDTO.getImage();
                         String fileName = oldProduct.getProductID() +"-"+ proColorDTO.getColor() + ".png";
@@ -174,16 +175,7 @@ public class ManageProductController {
             return response.toString();
         }
     }
-    private static ProductColor checkExitsPKInList(List<ProductColor> list, ProductColorPK id){
-        for (ProductColor productColor : list) {
-            if (productColor.getProductColorPK().toString().equals(id.toString())) {
-                return productColor;
-            }
-        }
-        return null;
-    }
-    
-    
+     
     //Hiển thị trang thêm sản phẩm
     @GetMapping("admin/product-management/add")
     public String ViewAddProduct(Model model) {
@@ -201,7 +193,7 @@ public class ManageProductController {
         }
     }
 
-    //Nhận yêu cầu thêm nhân viên
+    //Nhận yêu cầu thêm sản phẩm
     @RequestMapping("admin/product-management/add")
     @ResponseBody
     public String AddAccount(@RequestBody ProductDTO newProductDTO) {
@@ -237,6 +229,7 @@ public class ManageProductController {
                     ProductColor proColor = new ProductColor();
                     proColor.setProductColorPK(id);
                     proColor.setQuantity(proColorDTO.getQuantity());
+                    proColor.setStatus(new Status(1));
                     String base64Image = proColorDTO.getImage();
                     //Lưu hình ảnh
                     String fileName = productCreated.getProductID() +"-"+ proColorDTO.getColor() + ".png";
@@ -252,6 +245,39 @@ public class ManageProductController {
             response.put("Success", false);
             return response.toString();
         }
+    }
+    
+    //Nhận yêu cầu ngừng kinh doanh màu của sản phẩm
+    @PostMapping("admin/product-management/lock-color/{proId}")
+    public String LockProductColor(@PathVariable("proId") Integer proID,
+            @RequestParam("id") Integer colorId) {
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if (user == null) {
+            return "redirect:/admin/login";
+        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+            return "account/view-role-not-permission";
+        } else {
+            ProductColorPK id = new ProductColorPK(proID, colorId);
+            proColorServ.lockById(id);
+            return "redirect:../edit/"+proID;
+        }
+    }
 
+    //Nhận yêu cầu tiếp tục kinh doanh màu của sản phẩm
+    @PostMapping("admin/product-management/unlock-color/{proId}")
+    public String UnlockProductColor(@PathVariable("proId") Integer proID,
+            @RequestParam("id") Integer colorId) {
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if (user == null) {
+            return "redirect:/admin/login";
+        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+            return "account/view-role-not-permission";
+        } else {
+            ProductColorPK id = new ProductColorPK(proID, colorId);
+            proColorServ.unlockById(id);
+            return "redirect:../edit/"+proID;
+        }
     }
 }

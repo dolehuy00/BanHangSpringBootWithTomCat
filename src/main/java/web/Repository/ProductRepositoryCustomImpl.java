@@ -57,6 +57,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                     criteriaBuilder.lessThanOrEqualTo(productRoot.get("price"), upper));
         }
         
+        predicate = criteriaBuilder.and(predicate, 
+                    criteriaBuilder.equal(productRoot.get("status").get("statusID"), 1));
         criteriaQuery.select(productRoot).where(predicate);
         criteriaQuery.groupBy(productRoot);
         if (sort != null) {

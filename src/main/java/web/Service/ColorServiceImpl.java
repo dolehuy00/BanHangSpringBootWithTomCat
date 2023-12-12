@@ -26,4 +26,9 @@ public class ColorServiceImpl implements ColorService{
         }
         return null;
     }
+
+    @Override
+    public Color saveColor(Color color) {
+        return colorRepo.save(color);
+    }
 }

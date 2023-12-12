@@ -4,6 +4,7 @@ package web.Controller;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.Model.Customer;
 import web.Model.Product;
+import web.Model.ProductColor;
 import web.Model.Review;
 import web.Service.ColorService;
 import web.Service.CustomerService;
@@ -100,6 +102,13 @@ public class CustomerProductController {
     public String ViewDetail(Model model,
             @PathVariable("id") Integer productId){
         Product product = productServ.getProductById(productId);
+        List<ProductColor> newListPC = new ArrayList<>();
+        for (ProductColor productColor : product.getProductColorList()) {
+            if (productColor.getStatus().getStatusID() == 1) {
+                newListPC.add(productColor);
+            }
+        }
+        product.setProductColorList(newListPC);
         model.addAttribute("AverageStart", reviewServ.getAverageStarReview(product));
         model.addAttribute("Product", product);
         return "product/product-detail";

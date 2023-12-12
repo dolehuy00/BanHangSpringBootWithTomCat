@@ -21,6 +21,7 @@ public class StatisticRepositoryImpl implements StatisticRepository{
         String queryString = "SELECT orders.CustomerID, customers.name, SUM(total_price) AS total"+ 
                 " FROM orders" +
                 " JOIN customers on customers.CustomerID = orders.CustomerID"+
+                " WHERE orders.Status = 4"+
                 " GROUP BY CustomerID" +
                 " ORDER BY total DESC" +
                 " LIMIT :limit";
@@ -36,6 +37,7 @@ public class StatisticRepositoryImpl implements StatisticRepository{
         String queryString = "SELECT orders.seller, users.name, SUM(total_price) AS total"
                 + " FROM orders"
                 + " JOIN users on users.UserID = orders.seller"
+                + " WHERE orders.Status = 4"
                 + " GROUP BY seller"
                 + " ORDER BY total DESC"
                 + " LIMIT :limit";
@@ -50,6 +52,7 @@ public class StatisticRepositoryImpl implements StatisticRepository{
     public List<RevenueInYear> getRevenueInYear() {
         String queryString = "SELECT MONTH(date) AS month, SUM(total_price) AS total" +
                 " FROM orders" +
+                " WHERE orders.Status = 4"+
                 " GROUP BY MONTH(date)";
         Query query = entityManager.createNativeQuery(queryString, RevenueInYear.class);
         List<RevenueInYear> result = query.getResultList();
@@ -61,6 +64,8 @@ public class StatisticRepositoryImpl implements StatisticRepository{
                     + " SUM(Quantity) AS quantity, SUM(products.Price*Quantity) AS total" +
                     " FROM orderitems" +
                     " JOIN products on products.ProductID = orderitems.ProductID" +
+                    " JOIN orders ON orders.OrderID = orderitems.OrderID"+
+                    " WHERE orders.Status = 4"+
                     " GROUP BY ProductID" +
                     " ORDER BY quantity DESC" +
                     " LIMIT :limit";
