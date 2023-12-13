@@ -10,9 +10,9 @@ import web.Service.UserService;
 public class ManagerHomeController {
     @Autowired private UserService userServ;
     
+    //Hiển thị trang chủ dành cho quản lý
     @GetMapping("admin")
-    public String ViewIndex(){
-        
+    public String ViewIndex(){   
        return "index/index-admin";
     }
 }

@@ -76,7 +76,8 @@ public class CustomerAccountController {
             model.addAttribute("username", username);
             model.addAttribute("address", address);
             model.addAttribute("phoneNumber", phoneNumber);
-            model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
+            model.addAttribute("messageUsedEmail",
+                    "Email đã được sử dụng, vui lòng nhập email khác!");
             return "account/register";
         }else{
             Customer customer = new Customer();
@@ -205,7 +206,8 @@ public class CustomerAccountController {
             @RequestParam("phone-number")String phoneNumber){
         Customer customer = (Customer) session.getAttribute("CUSTOMER");
         if(!email.equals(customer.getEmail()) && cusServ.checkExitsAccoutByEmail(email)){
-            model.addAttribute("messageUsedEmail", "Email đã được sử dụng, vui lòng nhập email khác!");
+            model.addAttribute("messageUsedEmail",
+                    "Email đã được sử dụng, vui lòng nhập email khác!");
             return "account/account-customer-info";
         }
         customer.setName(name);

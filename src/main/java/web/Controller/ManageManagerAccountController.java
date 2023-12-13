@@ -75,7 +75,8 @@ public class ManageManagerAccountController {
     
     //Hiển thị trang sửa nhân viên
     @GetMapping("admin/manager-management/edit/{id}")
-    public String ViewEditAccount(Model model, @PathVariable("id") Integer userID){ 
+    public String ViewEditAccount(Model model,
+            @PathVariable("id") Integer userID){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -220,7 +221,8 @@ public class ManageManagerAccountController {
  
     //Tìm kiếm
     @GetMapping("admin/manager-management/search")
-    public String SearchAccount(Model model, @RequestParam("keyword") String keyword){ 
+    public String SearchAccount(Model model,
+            @RequestParam("keyword") String keyword){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){

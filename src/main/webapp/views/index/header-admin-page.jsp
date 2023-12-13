@@ -19,14 +19,14 @@
                                     <li><a class="dropdown-item" href="/banhang/admin/product-management/view">Quản lý sản phẩm</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/color-management/view">Quản lý màu sản phẩm</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-awaiting">Đơn hàng đang chờ</a></li>
-                                    <li><a class="dropdown-item" href="/banhang/admin/order-confirmed">Đơn hàng đã tiếp nhận</a></li>
+                                    <li><a class="dropdown-item" href="/banhang/admin/order-confirmed">Đơn hàng đang tiếp nhận</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-delivering">Đơn hàng đang giao</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-finished">Đơn hàng đã hoàn thành</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/review-management">Đánh giá sản phẩm chưa phản hồi</a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-awaiting">Đơn hàng đang chờ</a></li>
-                                    <li><a class="dropdown-item" href="/banhang/admin/order-confirmed">Đơn hàng đã tiếp nhận</a></li>
+                                    <li><a class="dropdown-item" href="/banhang/admin/order-confirmed">Đơn hàng đang tiếp nhận</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-delivering">Đơn hàng đang giao</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/order-finished">Đơn hàng đã hoàn thành</a></li>
                                     <li><a class="dropdown-item" href="/banhang/admin/review-management">Đánh giá sản phẩm chưa phản hồi</a></li>

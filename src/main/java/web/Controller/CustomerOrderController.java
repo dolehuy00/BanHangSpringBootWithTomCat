@@ -57,7 +57,8 @@ public class CustomerOrderController {
     
     //Gửi yêu cầu tạo đơn hàng
     @PostMapping("pre-checkout")
-    public String preCheckOut(@RequestBody()ItemCheckOutDTO[] items , RedirectAttributes redirectAttributes){
+    public String preCheckOut(@RequestBody()ItemCheckOutDTO[] items ,
+            RedirectAttributes redirectAttributes){
         //Gửi list item của nhận từ request sang view-checkout
         redirectAttributes.addFlashAttribute("list", items);
         return "redirect:/view-checkout";
@@ -75,7 +76,7 @@ public class CustomerOrderController {
                 Orders newOrder = new Orders();
                 newOrder.setCustomerID(customer);
                 newOrder.setDate(LocalDateTime.now());
-                List<OrderItem> listOrderItem = new ArrayList<>();
+                    List<OrderItem> listOrderItem = new ArrayList<>();
                 BigInteger totalPrice = new BigInteger("0");
                 //Tạo các item cho đơn hàng
                 for (ItemCheckOutDTO item : listItem) {
@@ -97,12 +98,12 @@ public class CustomerOrderController {
                     if (quantity > productColor.getQuantity()) {
                         quantity = productColor.getQuantity();
                     }
-                    //xu ly het hang
                     orderItem.setProductColor(productColor);
                     //Số lượng
                     orderItem.setQuantity(quantity);
                     //Giá
-                    totalPrice = totalPrice.add(product.getPrice().multiply(BigInteger.valueOf(quantity)));
+                    totalPrice = totalPrice.add(product.getPrice().
+                            multiply(BigInteger.valueOf(quantity)));
                     listOrderItem.add(orderItem);
                 }
                 //Gửi lên session

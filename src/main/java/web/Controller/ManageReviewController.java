@@ -31,7 +31,8 @@ public class ManageReviewController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("ListReview", reviewServ.getReviewsNotReplied());
@@ -48,7 +49,8 @@ public class ManageReviewController {
         if (user == null) {
             response.put("message", "Bạn không có quyền truy cập");
             return response.toString();
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             response.put("message", "Bạn không có quyền thực hiện");
             return response.toString();
         } else {

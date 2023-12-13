@@ -75,7 +75,8 @@ public class ManageCustomerAccountController {
     
     //Hiển thị trang sửa khách hàng
     @GetMapping("admin/customer-management/edit/{id}")
-    public String ViewEditAccount(Model model, @PathVariable("id") Integer customerId){ 
+    public String ViewEditAccount(Model model,
+            @PathVariable("id") Integer customerId){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -106,7 +107,6 @@ public class ManageCustomerAccountController {
             boolean isValid = true;
             Customer oldCustomer = customerServ.findById(customerId);
             String email = newCusDTO.getEmail();
-            
             if(!email.equals(oldCustomer.getEmail())
                     && customerServ.checkExitsAccoutByEmail(email)){
                 response.put("ExitsEmail", true);
@@ -134,7 +134,8 @@ public class ManageCustomerAccountController {
     //Nhận yêu cầu thêm khách hàng
     @PostMapping("admin/customer-management/add")
     @ResponseBody
-    public String AddAccount(Model model, @RequestBody() CustomerDTO newCusDTO){
+    public String AddAccount(Model model,
+            @RequestBody() CustomerDTO newCusDTO){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -199,7 +200,8 @@ public class ManageCustomerAccountController {
     }
     //Tìm kiếm
     @GetMapping("admin/customer-management/search")
-    public String SearchAccount(Model model, @RequestParam("keyword") String keyword){ 
+    public String SearchAccount(Model model,
+            @RequestParam("keyword") String keyword){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){

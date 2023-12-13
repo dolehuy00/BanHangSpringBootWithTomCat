@@ -115,7 +115,7 @@
         <jsp:include page="../index/header-admin-page.jsp"/>
         <main>
             <div class="container">
-                <h1 class="text-center">Top 5 sản phẩm bán chạy nhất</h1>
+                <h1 class="text-center">Top 10 sản phẩm bán chạy nhất</h1>
                 <figure class="highcharts-figure">
                     <div class="row">
                         <div id="container-chart-hot-product"></div>

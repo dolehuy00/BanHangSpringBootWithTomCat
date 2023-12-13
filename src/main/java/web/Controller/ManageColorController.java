@@ -26,7 +26,8 @@ public class ManageColorController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("ListColor", colorServ.findAllColor());
@@ -40,7 +41,8 @@ public class ManageColorController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 && 
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             return "color/view-manage-add-color";
@@ -54,7 +56,8 @@ public class ManageColorController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             Color color = new Color();
@@ -72,11 +75,13 @@ public class ManageColorController {
     
     //Hiển thị trang sửa màu của sản phẩm
     @GetMapping("admin/color-management/edit/{id}")
-    public String ViewEditColor(Model model, @PathVariable("id") Integer colorId){
+    public String ViewEditColor(Model model,
+            @PathVariable("id") Integer colorId){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {  
             model.addAttribute("Color", colorServ.getColorById(colorId));
@@ -92,7 +97,8 @@ public class ManageColorController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             try{
@@ -111,11 +117,13 @@ public class ManageColorController {
     
     //Tìm kiếm
     @GetMapping("admin/color-management/search")
-    public String SearchColor(Model model, @RequestParam("keyword") String keyword){
+    public String SearchColor(Model model,
+            @RequestParam("keyword") String keyword){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("ListColor", colorServ.searchInManage(keyword));

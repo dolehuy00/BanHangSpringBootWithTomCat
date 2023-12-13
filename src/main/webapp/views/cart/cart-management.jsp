@@ -63,8 +63,8 @@
                         <td>${row.totalPrice}</td>
                         <td>${row.totalQuantity}</td>
                         <td>
-                            <a href="view/${row.cartID}">Chi tiết</a>
-                            <a href="empty/${row.cartID}" style="color: red; margin-left: 50px">Làm rỗng</a>
+                            <a href="view/${row.cartID}"><button type="button" class="btn btn-info">Chi tiết</button></a>
+                            <a href="empty/${row.cartID}" style="color: red; margin-left: 50px"><button type="button" class="btn btn-danger">Làm rỗng</button></a>
                         </td>
                       </tr>
                       <c:set var="count" value="${count+1}"/>

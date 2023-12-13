@@ -21,11 +21,13 @@ public class ManagerAccountController {
     @Autowired private RandomService randomServ;
     @Autowired private EmailSenderService emailServ;
     
+    //Hiển thị trang đăng nhập
     @GetMapping("admin/login")
     public String ViewLogin(){  
         return "account/login-admin";
     }
     
+    //Nhận yêu cầu đăng nhập
     @PostMapping("admin/login")
     public String Login(@RequestParam("username") String username,
                         @RequestParam("password") String password,

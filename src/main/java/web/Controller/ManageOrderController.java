@@ -46,7 +46,8 @@ public class ManageOrderController {
     
     //Xem chi tiết đơn hàng
     @GetMapping("admin/order-management/view/{id}")
-    public String OrderManagementViewOrderDetail(Model model, @PathVariable("id") Integer orderID){
+    public String OrderManagementViewOrderDetail(Model model,
+            @PathVariable("id") Integer orderID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -66,7 +67,8 @@ public class ManageOrderController {
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
             return "redirect:/admin/login";
-        } else if(user.getRole().getRoleID()!=1 && user.getRole().getRoleID() != 2){
+        } else if(user.getRole().getRoleID()!=1 &&
+                  user.getRole().getRoleID() != 2){
             return "account/view-role-not-permission";
         }else{
             model.addAttribute("view", "awaiting");
@@ -77,12 +79,14 @@ public class ManageOrderController {
     }
     //Xem chi tiết đơn hàng đang chờ
     @GetMapping("admin/order-awaiting/view/{id}")
-    public String ViewOrderDetailAwaiting(Model model, @PathVariable("id") Integer orderID){
+    public String ViewOrderDetailAwaiting(Model model,
+            @PathVariable("id") Integer orderID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
             return "redirect:/admin/login";
-        } else if(user.getRole().getRoleID()!=1 && user.getRole().getRoleID() != 2){
+        } else if(user.getRole().getRoleID()!=1 &&
+                  user.getRole().getRoleID() != 2){
             return "account/view-role-not-permission";
         }else{
             model.addAttribute("view", "awaiting");
@@ -93,12 +97,14 @@ public class ManageOrderController {
     
     //Xác nhận đơn hàng đang chờ
     @PostMapping("admin/order-awaiting/confirm")
-    public String ConfirmOrderAwaiting(Model model, @RequestParam("id") Integer orderID){
+    public String ConfirmOrderAwaiting(Model model,
+            @RequestParam("id") Integer orderID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
             return "redirect:/admin/login";
-        } else if(user.getRole().getRoleID()!=1 && user.getRole().getRoleID() != 2){
+        } else if(user.getRole().getRoleID()!=1 &&
+                  user.getRole().getRoleID() != 2){
             return "account/view-role-not-permission";
         }else{
             Orders order = orderServ.findOrderById(orderID);
@@ -106,7 +112,8 @@ public class ManageOrderController {
             order.setStatus(new OrderStatus(2));
             orderServ.saveOrder(order);
             //Gửi email cho khách hàng
-            String titleEmail = "Đơn hàng của bạn đã được tiếp nhận, nhân viên của chúng tôi sẽ gọi điện cho bạn để xác nhận!";
+            String titleEmail = "Đơn hàng của bạn đã được tiếp nhận,"
+                    + " nhân viên của chúng tôi sẽ gọi điện cho bạn để xác nhận!";
             String bodyEmail = "Mã đơn hàng: #"+order.getOrderID()
                                 +"\n Nhân viên: "+order.getSeller().getName()
                                 +"\n Ngày đặt: "+order.getDate()
@@ -197,7 +204,8 @@ public class ManageOrderController {
     
     //Xem chi tiết đơn hàng đang giao
     @GetMapping("admin/order-delivering/view/{id}")
-    public String ViewOrderDetailDelivering(Model model, @PathVariable("id") Integer orderID){
+    public String ViewOrderDetailDelivering(Model model,
+            @PathVariable("id") Integer orderID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -256,9 +264,10 @@ public class ManageOrderController {
         }     
     }
     
-    //Xem chi tiết đơn hàng đang giao
+    //Xem chi tiết đơn hàng đã hoàn thành
     @GetMapping("admin/order-finished/view/{id}")
-    public String ViewOrderDetailFinished(Model model, @PathVariable("id") Integer orderID){
+    public String ViewOrderDetailFinished(Model model,
+            @PathVariable("id") Integer orderID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -316,7 +325,8 @@ public class ManageOrderController {
     }
     //Tìm kiếm
     @GetMapping("admin/order-management/search")
-    public String SearchOrder(Model model, @RequestParam("keyword") String keyword){
+    public String SearchOrder(Model model,
+            @RequestParam("keyword") String keyword){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){

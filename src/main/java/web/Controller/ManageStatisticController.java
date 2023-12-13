@@ -23,6 +23,7 @@ public class ManageStatisticController {
     @Autowired StatisticService stServ;
     @Autowired private HttpSession session;
     
+    //Hiển thị trang thống kê
     @GetMapping("admin/statistic")
     public String ViewAll(){
         User user = (User) session.getAttribute("ADMIN");
@@ -34,7 +35,7 @@ public class ManageStatisticController {
             return "statistic/view-all-statistic";
         }
     }
-    
+    //Lấy dữ liệu 5 khách hàng mua nhiều nhất
     @GetMapping("admin/statistic-5-customer")
     @ResponseBody
     public String GetStatisticFiveCustomerBuyTheMost(){
@@ -61,7 +62,7 @@ public class ManageStatisticController {
             return response.toString();
         }
     }
-    
+    //Lấy dữ liệu 5 nhân viên đem lại doanh thu nhiều nhất
     @GetMapping("admin/statistic-5-seller")
     @ResponseBody
     public String GetStatisticFiveSellerSellTheMost(){
@@ -88,7 +89,7 @@ public class ManageStatisticController {
             return response.toString();
         }
     }
-    
+    //Lấy dữ liệu doanh thu theo tháng
     @GetMapping("admin/statistic-revenue-in-year")
     @ResponseBody
     public String GetRevenueInYear(){
@@ -113,7 +114,7 @@ public class ManageStatisticController {
             return response.toString();
         }
     }
-    
+    //Lấy dữ liệu 10 sản phẩm bán chạy nhất
     @GetMapping("admin/statistic-10-product")
     @ResponseBody
     public String GetStatisticTenPurchasedQuantityTheMost(){
@@ -144,6 +145,7 @@ public class ManageStatisticController {
         }
     }
     
+    //Hiển thị trang thống kê 10 sản phẩm bán chạy nhất
     @GetMapping("admin/view-statistic-10-product")
     public String ViewStatisticTenPurchasedQuantityTheMost(Model model){
         User user = (User) session.getAttribute("ADMIN");
@@ -170,7 +172,7 @@ public class ManageStatisticController {
             return "statistic/view-statistic-purchase-quantity-the-most";
         }
     }
-    
+    //Hiển thị trang thống kê doanh thu theo tháng
     @GetMapping("admin/view-statistic-revenue-in-year")
     public String ViewRevenueInYear(Model model){
         User user = (User) session.getAttribute("ADMIN");
@@ -192,7 +194,7 @@ public class ManageStatisticController {
             return "statistic/view-statistic-revenue-in-year";
         } 
     }
-    
+    //Hiển thị trang thống kê 5 nhân viên có doanh số cao nhất
     @GetMapping("admin/view-statistic-5-seller")
     public String ViewStatisticFiveSellerSellTheMost(Model model){
         User user = (User) session.getAttribute("ADMIN");
@@ -216,7 +218,7 @@ public class ManageStatisticController {
             return "statistic/view-statistic-seller";
         }  
     }
-    
+    //Hiển thị trang thống kê 5 khách hàng mua nhiều nhất
     @GetMapping("admin/view-statistic-5-customer")
     public String ViewStatisticFiveCustomerBuyTheMost(Model model){
         User user = (User) session.getAttribute("ADMIN");

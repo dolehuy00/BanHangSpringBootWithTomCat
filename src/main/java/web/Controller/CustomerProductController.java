@@ -114,6 +114,7 @@ public class CustomerProductController {
         return "product/product-detail";
     }
     
+    //Nhận yêu cầu đánh giá sản phẩm
     @PostMapping("product/review")
     public String CustomerReview(
                     @RequestParam("substance") String substance,

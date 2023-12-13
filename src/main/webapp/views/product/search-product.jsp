@@ -105,7 +105,7 @@
                             <fmt:formatNumber value="${row.price}" pattern="###,###,###" var="formattedPrice" />
                             <jsp:include page="item-product.jsp">
                                 <jsp:param name="image" value="${row.productColorList[0].images}" />
-                                <jsp:param name="linkDetail" value="" />
+                                <jsp:param name="linkDetail" value="product/${row.productID}" />
                                 <jsp:param name="title" value="${row.name}" />
                                 <jsp:param name="price" value="${formattedPrice}" />
                                 <jsp:param name="reviewCount" value="(${row.reviewList.size()} Đánh giá)" />

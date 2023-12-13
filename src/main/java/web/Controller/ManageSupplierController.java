@@ -81,7 +81,8 @@ public class ManageSupplierController {
     
     //Hiển thị trang sửa nhà cung cấp
     @GetMapping("admin/supplier-management/edit/{id}")
-    public String ViewEditSupplier(Model model, @PathVariable("id") Integer supplierId){
+    public String ViewEditSupplier(Model model,
+            @PathVariable("id") Integer supplierId){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
@@ -154,9 +155,10 @@ public class ManageSupplierController {
         }
     }
     
-    //Hiển thị danh sách nhà cung cấp
+    //Tìm kiếm
     @GetMapping("admin/supplier-management/search")
-    public String SearchSupplier(Model model, @RequestParam("keyword") String keyword){
+    public String SearchSupplier(Model model,
+            @RequestParam("keyword") String keyword){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";

@@ -41,7 +41,8 @@ public class ManageCartController {
     
     //Xem chi tiết giỏ hàng
     @GetMapping("admin/cart-management/view/{id}")
-    public String CartManagementViewCartDetail(Model model, @PathVariable("id") Integer cartID){
+    public String CartManagementViewCartDetail(Model model,
+            @PathVariable("id") Integer cartID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -86,7 +87,8 @@ public class ManageCartController {
     }
     //Làm rỗng giỏ hàng bằng id
     @GetMapping("admin/cart-management/empty/{id}")
-    public String CartManagementEmptyCart(@PathVariable("id") Integer cartID){
+    public String CartManagementEmptyCart(
+            @PathVariable("id") Integer cartID){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){
@@ -103,7 +105,8 @@ public class ManageCartController {
     
     //Tìm kiếm
     @GetMapping("admin/cart-management/search")
-    public String SearchCart(Model model, @RequestParam("keyword") String keyword){
+    public String SearchCart(Model model,
+            @RequestParam("keyword") String keyword){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if(user == null){

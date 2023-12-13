@@ -81,7 +81,8 @@ public class CustomerCartController {
         }
         if(newQuantity > productInData.getQuantity()){
             newQuantity = productInData.getQuantity();
-            response.put("MessageMaxQuantity", "Chỉ có thể thêm tối đa "+newQuantity+" sản phẩm này vào giỏ hàng!");
+            response.put("MessageMaxQuantity",
+                    "Chỉ có thể thêm tối đa "+newQuantity+" sản phẩm này vào giỏ hàng!");
         }
         //Tạo item
         Cartitem cartItemRequest = new Cartitem();

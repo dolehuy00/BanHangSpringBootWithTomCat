@@ -54,7 +54,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("ListProduct", proServ.findAllProduct());
@@ -69,7 +70,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             proServ.lockById(proID);
@@ -84,7 +86,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             proServ.unlockById(proID);
@@ -94,12 +97,14 @@ public class ManageProductController {
 
     //Hiển thị trang sửa sản phẩm
     @GetMapping("admin/product-management/edit/{id}")
-    public String ViewEditProduct(Model model, @PathVariable("id") Integer productId) {
+    public String ViewEditProduct(Model model,
+            @PathVariable("id") Integer productId) {
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("Product", proServ.getProductById(productId));
@@ -122,7 +127,8 @@ public class ManageProductController {
             User user = (User) session.getAttribute("ADMIN");
             if (user == null) {
                 return "redirect:/admin/login";
-            } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+            } else if (user.getRole().getRoleID() != 1 &&
+                       user.getRole().getRoleID() != 2) {
                 return "account/view-role-not-permission";
             } else {
                 Product oldProduct = proServ.getProductById(productId);
@@ -141,12 +147,14 @@ public class ManageProductController {
                     ProductColorPK id = new ProductColorPK();
                     id.setProductID(oldProduct.getProductID());
                     id.setColorID(proColorDTO.getColor());
-                    ProductColor oldProductColor = proColorServ.checkExitsPKInListProductColor(listOldProColor, id);
+                    ProductColor oldProductColor = proColorServ
+                            .checkExitsPKInListProductColor(listOldProColor, id);
                     if(oldProductColor != null){
                         oldProductColor.setQuantity(proColorDTO.getQuantity());
                         String base64Image = proColorDTO.getImage();
                         if(!base64Image.isEmpty()){
-                            String fileName = oldProduct.getProductID() +"-"+ proColorDTO.getColor() + ".png";
+                            String fileName = oldProduct.getProductID() +
+                                    "-"+ proColorDTO.getColor() + ".png";
                             fileServ.saveFileWithBase64String(base64Image, fileName);
                             oldProductColor.setImages("images/" + fileName);
                         }
@@ -159,7 +167,8 @@ public class ManageProductController {
                         proColor.setStatus(new Status(1));
                         //Lưu hình ảnh
                         String base64Image = proColorDTO.getImage();
-                        String fileName = oldProduct.getProductID() +"-"+ proColorDTO.getColor() + ".png";
+                        String fileName = oldProduct.getProductID() +
+                                "-"+ proColorDTO.getColor() + ".png";
                         fileServ.saveFileWithBase64String(base64Image, fileName);
                         proColor.setImages("images/" + fileName);
                         listNewProColor.add(proColor);
@@ -183,7 +192,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             model.addAttribute("ListStatus", statusServ.findAll());
@@ -232,7 +242,8 @@ public class ManageProductController {
                     proColor.setStatus(new Status(1));
                     String base64Image = proColorDTO.getImage();
                     //Lưu hình ảnh
-                    String fileName = productCreated.getProductID() +"-"+ proColorDTO.getColor() + ".png";
+                    String fileName = productCreated.getProductID() +
+                            "-"+ proColorDTO.getColor() + ".png";
                     fileServ.saveFileWithBase64String(base64Image, fileName);
                     proColor.setImages("images/" + fileName);
                     listNewProColor.add(proColor);
@@ -255,7 +266,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             ProductColorPK id = new ProductColorPK(proID, colorId);
@@ -272,7 +284,8 @@ public class ManageProductController {
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
             ProductColorPK id = new ProductColorPK(proID, colorId);
@@ -281,17 +294,20 @@ public class ManageProductController {
         }
     }
     
-    //Tifm kiếm
+    //Tìm kiếm
     @GetMapping("admin/product-management/search")
-    public String SearchProduct(Model model, @RequestParam("keyword") String keyword) {
+    public String SearchProduct(Model model,
+            @RequestParam("keyword") String keyword) {
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
             return "redirect:/admin/login";
-        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+        } else if (user.getRole().getRoleID() != 1 &&
+                   user.getRole().getRoleID() != 2) {
             return "account/view-role-not-permission";
         } else {
-            model.addAttribute("ListProduct", proServ.searchProductInManage(keyword));
+            model.addAttribute("ListProduct",
+                    proServ.searchProductInManage(keyword));
             return "product/view-manage-product";
         } 
     }
