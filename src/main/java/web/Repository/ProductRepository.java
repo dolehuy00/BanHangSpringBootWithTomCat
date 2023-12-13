@@ -45,4 +45,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer>, Pro
     @Transactional
     @Query("UPDATE Product p SET p.status.statusID = 0 WHERE p.supplier.supplierID = ?1")
     public void lockBySupplierId(Integer supplierId);
+    
+    @Query("FROM Product p WHERE p.name LIKE ?1"
+            + " OR p.supplier.name LIKE ?1"
+            + " OR p.status.name LIKE ?1"
+            + " OR p.productID LIKE ?1")
+    public List<Product> searchProductInManage(String keyword);
 }

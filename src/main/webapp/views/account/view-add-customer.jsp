@@ -43,7 +43,7 @@
             </div>
             <div class="row text-center">
                 <div class="col">
-                    <a href="../customer-management">Danh sách khách hàng</a>
+                    <a href="view">Danh sách khách hàng</a>
                 </div>
             </div>
             <div class="row align-items-center">

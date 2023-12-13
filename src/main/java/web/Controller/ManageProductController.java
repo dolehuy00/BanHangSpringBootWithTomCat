@@ -48,7 +48,7 @@ public class ManageProductController {
     @Autowired
     private ProductColorService proColorServ;
 
-    @GetMapping("admin/product-management")
+    @GetMapping("admin/product-management/view")
     public String ViewAllProduct(Model model) {
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -73,7 +73,7 @@ public class ManageProductController {
             return "account/view-role-not-permission";
         } else {
             proServ.lockById(proID);
-            return "redirect:../product-management";
+            return "redirect:view";
         }
     }
 
@@ -88,7 +88,7 @@ public class ManageProductController {
             return "account/view-role-not-permission";
         } else {
             proServ.unlockById(proID);
-            return "redirect:../product-management";
+            return "redirect:view";
         }
     }
 
@@ -279,5 +279,20 @@ public class ManageProductController {
             proColorServ.unlockById(id);
             return "redirect:../edit/"+proID;
         }
+    }
+    
+    //Tifm kiếm
+    @GetMapping("admin/product-management/search")
+    public String SearchProduct(Model model, @RequestParam("keyword") String keyword) {
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if (user == null) {
+            return "redirect:/admin/login";
+        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+            return "account/view-role-not-permission";
+        } else {
+            model.addAttribute("ListProduct", proServ.searchProductInManage(keyword));
+            return "product/view-manage-product";
+        } 
     }
 }

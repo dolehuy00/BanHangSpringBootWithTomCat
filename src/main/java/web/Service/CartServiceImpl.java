@@ -73,5 +73,10 @@ public class CartServiceImpl implements CartService{
         }
         return null;
     }
+
+    @Override
+    public List<Cart> searchInManage(String keyword) {
+        return cartRepo.searchInManage("%"+keyword+"%");
+    }
  
 }

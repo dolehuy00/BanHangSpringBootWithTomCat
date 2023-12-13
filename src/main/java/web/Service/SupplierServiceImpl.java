@@ -42,4 +42,10 @@ public class SupplierServiceImpl implements SupplierService{
     public void unlockById(Integer Id) {
         supplierRepo.unlockById(Id);
     }
+
+    @Override
+    public List<Supplier> searchInManage(String keyword) {
+        return supplierRepo.searchInManage("%"+keyword+"%");
+    }
+    
 }

@@ -12,4 +12,5 @@ public interface SupplierService {
     public Supplier findById(Integer supplierId);
     public void lockById(Integer Id);
     public void unlockById(Integer Id);
+    public List<Supplier> searchInManage(String keyword);
 }

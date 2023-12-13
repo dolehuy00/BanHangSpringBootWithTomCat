@@ -18,10 +18,8 @@ import web.Model.ProductColor;
 import web.Model.ProductColorPK;
 import web.Model.User;
 import web.Service.OrderService;
-import web.Service.ColorService;
 import web.Service.EmailSenderService;
 import web.Service.ProductColorService;
-import web.Service.ProductService;
 
 @Controller
 public class ManageOrderController {
@@ -32,7 +30,7 @@ public class ManageOrderController {
     @Autowired private ProductColorService proColorServ;
         
     //Xem danh sách các đơn hàng
-    @GetMapping("admin/order-management")
+    @GetMapping("admin/order-management/view")
     public String ViewOrderManagement(Model model){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -315,5 +313,19 @@ public class ManageOrderController {
             }
             return "redirect:/admin/order-finished";
         }      
+    }
+    //Tìm kiếm
+    @GetMapping("admin/order-management/search")
+    public String SearchOrder(Model model, @RequestParam("keyword") String keyword){
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if(user == null){
+            return "redirect:/admin/login";
+        } else if(user.getRole().getRoleID()!=1){
+            return "account/view-role-not-permission";
+        }else{
+            model.addAttribute("ListOrder", orderServ.searchInManage(keyword));
+             return "order/view-order-management";
+        }  
     }
 }

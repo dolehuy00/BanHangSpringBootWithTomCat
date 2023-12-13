@@ -45,7 +45,7 @@
             </div>
             <div class="row text-center">
                 <div class="col">
-                    <a href="../manager-management">Danh sách nhân viên</a>
+                    <a href="view">Danh sách nhân viên</a>
                 </div>
             </div>
             <div class="row align-items-center">

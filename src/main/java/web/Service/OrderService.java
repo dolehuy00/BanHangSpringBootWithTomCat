@@ -18,4 +18,5 @@ public interface OrderService {
     public List<Orders> findOrdersConfirmed(Integer userId); 
     public List<Orders> findOrdersDelivering(Integer userId);
     public List<Orders> findOrdersFinished(Integer userId);
+    public List<Orders> searchInManage(String keyword);
 }

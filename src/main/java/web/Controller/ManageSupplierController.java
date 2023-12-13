@@ -26,7 +26,7 @@ public class ManageSupplierController {
     
     
     //Hiển thị danh sách nhà cung cấp
-    @GetMapping("admin/supplier-management")
+    @GetMapping("admin/supplier-management/view")
     public String ViewAllSupplier(Model model){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
@@ -134,7 +134,7 @@ public class ManageSupplierController {
         } else {
             proServ.lockBySupplierId(supID);
             supServ.lockById(supID);
-            return "redirect:../supplier-management";
+            return "redirect:view";
         }
     }
 
@@ -150,7 +150,21 @@ public class ManageSupplierController {
         } else {
             proServ.unlockBySupplierId(supID);
             supServ.unlockById(supID);
-            return "redirect:../supplier-management";
+            return "redirect:view";
+        }
+    }
+    
+    //Hiển thị danh sách nhà cung cấp
+    @GetMapping("admin/supplier-management/search")
+    public String SearchSupplier(Model model, @RequestParam("keyword") String keyword){
+        User user = (User) session.getAttribute("ADMIN");
+        if (user == null) {
+            return "redirect:/admin/login";
+        } else if (user.getRole().getRoleID() != 1) {
+            return "account/view-role-not-permission";
+        } else {
+            model.addAttribute("ListSupplier", supServ.searchInManage(keyword));
+            return "supplier/view-manage-supplier";
         }
     }
 }

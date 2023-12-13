@@ -31,7 +31,7 @@
                 </div>
                 <div class="row justify-content-md-center menu">
                     <div class="col text-center">
-                        <a href="../color-management">Danh sách màu của sản phẩm</a>
+                        <a href="view">Danh sách màu của sản phẩm</a>
                     </div>
                 </div>
                 <div class="row align-items-center">

@@ -30,4 +30,14 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaReposi
     @Query("UPDATE User u SET u.status.statusID = 1 WHERE u.userID = ?1")
     public void unlockUserById(Integer userId);
     
+    
+    @Query("FROM User u WHERE (u.name LIKE ?1"
+            + " OR u.userID LIKE ?1"
+            + " OR u.username LIKE ?1"
+            + " OR u.phoneNumber LIKE ?1"
+            + " OR u.role.name LIKE ?1"
+            + " OR u.status.name LIKE ?1"
+            + " OR u.email LIKE ?1)"
+            + " AND u.role.roleID != 1")
+    public List<User> searchInManage(String keyword);
 }

@@ -29,7 +29,7 @@
                 </div>
                 <div class="row justify-content-md-center menu">
                     <div class="col col-lg-2">
-                        <a href="../product-management">Danh sách sản phẩm</a>
+                        <a href="view">Danh sách sản phẩm</a>
                     </div>
                 </div>
                 <div class="row align-items-center">

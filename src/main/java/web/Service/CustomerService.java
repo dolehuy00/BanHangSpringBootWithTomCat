@@ -19,4 +19,5 @@ public interface CustomerService {
     public void lockById(Integer Id);
     public void unlockById(Integer Id);
     public Customer findById(Integer customerId);
+    public List<Customer> searchInManage(String keyword);
 }

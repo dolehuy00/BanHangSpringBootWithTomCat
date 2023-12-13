@@ -11,8 +11,8 @@
         <title>Quản lý sản phẩm</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link href="../css/manage-product.css" rel="stylesheet">
-        <link href="../css/admin.css" rel="stylesheet">
+        <link href="../../css/manage-product.css" rel="stylesheet">
+        <link href="../../css/admin.css" rel="stylesheet">
     </head>
 
     <body>
@@ -26,17 +26,17 @@
                 </div>
                 <div class="row text-center menu">
                     <div class="col">
-                        <a href="product-management/add">Thêm sản phẩm</a>
+                        <a href="add">Thêm sản phẩm</a>
                     </div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col text-center search">
-                        <form action="" method="">
+                        <form action="search" method="get">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Tìm kiếm</span>
-                                <input type="text" name="search" class="form-control" aria-label="Sizing example input"
+                                <input type="text" name="keyword" class="form-control" aria-label="Sizing example input"
                                        aria-describedby="inputGroup-sizing-default">
-                                <button type="">Tìm</button>
+                                <button type="submit">Tìm</button>
                             </div>
                         </form>
                     </div>
@@ -65,16 +65,16 @@
                               <td><fmt:formatNumber value="${row.price}" pattern="###,###,###"/></td>
                               <td>${row.status.name}</td>
                               <td>
-                                  <a href="product-management/edit/${row.productID}"><button type="button" class="btn btn-info">Sửa</button></a>
+                                  <a href="edit/${row.productID}"><button type="button" class="btn btn-info">Sửa</button></a>
                                   <c:choose>
                                       <c:when test="${row.status.statusID == 1}">
-                                        <button type="submit" formaction="product-management/lock" 
+                                        <button type="submit" formaction="lock" 
                                           formmethod="post" value="${row.productID}" 
                                           name="id" class="btn btn-danger">Ngừng kinh doanh
                                         </button>
                                       </c:when>
                                       <c:otherwise>
-                                        <button type="submit" formaction="product-management/unlock" 
+                                        <button type="submit" formaction="unlock" 
                                           formmethod="post" value="${row.productID}" 
                                           name="id" class="btn btn-danger">Tiếp tục kinh doanh
                                         </button>

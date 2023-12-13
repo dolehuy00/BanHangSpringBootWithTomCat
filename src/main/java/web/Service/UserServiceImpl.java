@@ -92,4 +92,9 @@ public class UserServiceImpl implements UserService {
     public User findByPhoneNumber(String phoneNumber) {
         return userRepo.findByPhoneNumber(phoneNumber);
     }
+
+    @Override
+    public List<User> searchInManage(String keyword) {
+        return userRepo.searchInManage("%"+keyword+"%");
+    }
 }

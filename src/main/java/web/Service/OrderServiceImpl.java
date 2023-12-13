@@ -58,4 +58,9 @@ public class OrderServiceImpl implements OrderService{
     public List<Orders> findOrdersFinished(Integer userId) {
         return orderRepo.findOrdersFinished(userId);
     } 
+
+    @Override
+    public List<Orders> searchInManage(String keyword) {
+        return orderRepo.searchInManage("%"+keyword+"%");
+    }
 }

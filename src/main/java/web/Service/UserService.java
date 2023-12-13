@@ -20,4 +20,5 @@ public interface UserService {
     public void unlockUserById(Integer userId);
     public User findByEmail(String email);
     public User findByPhoneNumber(String phoneNumber);
+    public List<User> searchInManage(String keyword);
 }

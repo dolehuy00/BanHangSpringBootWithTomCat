@@ -91,4 +91,9 @@ public class ProductServiceImpl implements ProductService{
     public void unlockBySupplierId(Integer id) {
         productRepo.unlockBySupplierId(id);
     }
+
+    @Override
+    public List<Product> searchProductInManage(String keyword) {
+        return productRepo.searchProductInManage("%"+keyword+"%");
+    }
 }

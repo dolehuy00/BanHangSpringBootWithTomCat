@@ -29,7 +29,7 @@ public class ManageManagerAccountController {
     @Autowired private HttpSession session;
     
     //Hiển thị trang quản lý nhân viên
-    @GetMapping("admin/manager-management")
+    @GetMapping("admin/manager-management/view")
     public String ViewAllAccount(Model model){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -54,7 +54,7 @@ public class ManageManagerAccountController {
             return "account/view-role-not-permission";
         }else{
             userServ.lockUserById(userId);
-            return "redirect:../manager-management";
+            return "redirect:view";
         }
     }
     
@@ -69,7 +69,7 @@ public class ManageManagerAccountController {
             return "account/view-role-not-permission";
         }else{
             userServ.unlockUserById(userId);
-            return "redirect:../manager-management";
+            return "redirect:view";
         }
     }
     
@@ -218,4 +218,18 @@ public class ManageManagerAccountController {
         }
     }
  
+    //Tìm kiếm
+    @GetMapping("admin/manager-management/search")
+    public String SearchAccount(Model model, @RequestParam("keyword") String keyword){ 
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if(user == null){
+            return "redirect:/admin/login";
+        } else if(user.getRole().getRoleID()!=1){
+            return "account/view-role-not-permission";
+        }else{
+             model.addAttribute("ListUser", userServ.searchInManage(keyword));
+            return "account/view-manage-manager";
+        }
+    }
 }

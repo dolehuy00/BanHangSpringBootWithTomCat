@@ -54,7 +54,7 @@
             </div>
             <div class="row justify-content-md-center menu">
                 <div class="col col-lg-2">
-                    <a href="../../manager-management">Danh sách nhân viên</a>
+                    <a href="../view">Danh sách nhân viên</a>
                 </div>
                 <div class="col col-lg-2">
                     <a href="../add">Thêm nhân viên</a>

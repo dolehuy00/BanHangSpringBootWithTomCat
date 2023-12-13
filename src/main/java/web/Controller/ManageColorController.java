@@ -21,7 +21,7 @@ public class ManageColorController {
     
     
     //Hiển thị danh sách màu của sản phẩm
-    @GetMapping("admin/color-management")
+    @GetMapping("admin/color-management/view")
     public String ViewAllColor(Model model){
         User user = (User) session.getAttribute("ADMIN");
         if (user == null) {
@@ -106,6 +106,20 @@ public class ManageColorController {
                 model.addAttribute("message", "Thêm thất bại");
             }
             return "color/view-manage-edit-color";
+        }
+    }
+    
+    //Tìm kiếm
+    @GetMapping("admin/color-management/search")
+    public String SearchColor(Model model, @RequestParam("keyword") String keyword){
+        User user = (User) session.getAttribute("ADMIN");
+        if (user == null) {
+            return "redirect:/admin/login";
+        } else if (user.getRole().getRoleID() != 1 && user.getRole().getRoleID() != 2) {
+            return "account/view-role-not-permission";
+        } else {
+            model.addAttribute("ListColor", colorServ.searchInManage(keyword));
+            return "color/view-manage-color";
         }
     }
 }

@@ -15,4 +15,5 @@ public interface CartService {
     public Cart createEmptyCartForCustomer(Customer customer);
     public List<Cart> findAllCart();
     public Cart getCartById(Integer cartId);
+    public List<Cart> searchInManage(String keyword);
 }

@@ -29,7 +29,7 @@ public class ManageCustomerAccountController {
     @Autowired private CartService cartServ;
     
     //Hiển thị trang quản lý khách hàng
-    @GetMapping("admin/customer-management")
+    @GetMapping("admin/customer-management/view")
     public String ViewAllAccount(Model model){ 
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -54,7 +54,7 @@ public class ManageCustomerAccountController {
             return "account/view-role-not-permission";
         }else{
             customerServ.lockById(Id);
-            return "redirect:../customer-management";
+            return "redirect:view";
         }
     }
     
@@ -69,7 +69,7 @@ public class ManageCustomerAccountController {
             return "account/view-role-not-permission";
         }else{
             customerServ.unlockById(Id);
-            return "redirect:../customer-management";
+            return "redirect:view";
         }
     }
     
@@ -195,6 +195,20 @@ public class ManageCustomerAccountController {
         }else{
             model.addAttribute("ListStatus", statusServ.findAll());
             return "account/view-add-customer";
+        }
+    }
+    //Tìm kiếm
+    @GetMapping("admin/customer-management/search")
+    public String SearchAccount(Model model, @RequestParam("keyword") String keyword){ 
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if(user == null){
+            return "redirect:/admin/login";
+        } else if(user.getRole().getRoleID()!=1){
+            return "account/view-role-not-permission";
+        }else{
+            model.addAttribute("ListCustomer", customerServ.searchInManage(keyword));
+            return "account/view-manage-customer";
         }
     }
 }

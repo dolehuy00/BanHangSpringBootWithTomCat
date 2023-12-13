@@ -30,4 +30,12 @@ public interface OrderRepository extends CrudRepository<Orders, Integer>{
     
     @Query("FROM Orders o WHERE o.status.orderStatusId = 4 OR o.status.orderStatusId = 5 AND o.seller.userID = ?1")
     public List<Orders> findOrdersFinished(Integer userId);
+    
+    @Query("FROM Orders o WHERE o.customerID.name LIKE ?1"
+            + " OR o.customerID.customerID LIKE ?1"
+            + " OR o.seller.userID LIKE ?1"
+            + " OR o.seller.name LIKE ?1"
+            + " OR o.phoneNumber LIKE ?1"
+            + " OR o.status.name LIKE ?1")
+    public List<Orders> searchInManage(String keyword);
 }

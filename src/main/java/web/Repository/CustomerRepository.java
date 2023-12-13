@@ -28,5 +28,13 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer>{
     @Transactional
     @Query("UPDATE Customer c SET c.status.statusID = 1 WHERE c.customerID = ?1")
     public void unlockById(Integer Id);
+    
+    @Query("FROM Customer c WHERE c.name LIKE ?1"
+            + " OR c.customerID LIKE ?1"
+            + " OR c.username LIKE ?1"
+            + " OR c.phoneNumber LIKE ?1"
+            + " OR c.status.name LIKE ?1"
+            + " OR c.email LIKE ?1")
+    public List<Customer> searchInManage(String keyword);
       
 }

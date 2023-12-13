@@ -31,7 +31,7 @@
                 </div>
                 <div class="row justify-content-md-center menu">
                     <div class="col col-lg-2">
-                        <a href="../../supplier-management">Danh sách nhà cung cấp</a>
+                        <a href="../view">Danh sách nhà cung cấp</a>
                     </div>
                     <div class="col col-lg-2">
                         <a href="../add">Thêm nhà cung cấp</a>

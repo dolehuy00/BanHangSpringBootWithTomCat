@@ -26,4 +26,5 @@ public interface ProductService {
     public Product saveProduct(Product product);
     public void lockBySupplierId(Integer Id);
     public void unlockBySupplierId(Integer Id);
+    public List<Product> searchProductInManage(String keyword);
 }

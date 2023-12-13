@@ -54,7 +54,7 @@
             </div>
             <div class="row justify-content-md-center menu">
                 <div class="col col-lg-2">
-                    <a href="../../customer-management">Danh sách khách hàng</a>
+                    <a href="../view">Danh sách khách hàng</a>
                 </div>
                 <div class="col col-lg-2">
                     <a href="../add">Thêm khách hàng</a>

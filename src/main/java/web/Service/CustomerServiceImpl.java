@@ -88,4 +88,10 @@ public class CustomerServiceImpl implements CustomerService{
         }
         return null;
     }
+
+    @Override
+    public List<Customer> searchInManage(String keyword) {
+        return cusRepo.searchInManage("%"+keyword+"%");
+    }
+    
 }

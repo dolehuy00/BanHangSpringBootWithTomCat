@@ -31,4 +31,9 @@ public class ColorServiceImpl implements ColorService{
     public Color saveColor(Color color) {
         return colorRepo.save(color);
     }
+
+    @Override
+    public List<Color> searchInManage(String keyword) {
+        return colorRepo.searchInManage("%"+keyword+"%");
+    }
 }

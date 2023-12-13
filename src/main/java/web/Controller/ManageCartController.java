@@ -16,9 +16,6 @@ import web.Model.CartitemPK;
 import web.Model.User;
 import web.Service.CartItemService;
 import web.Service.CartService;
-import web.Service.ColorService;
-import web.Service.ProductColorService;
-import web.Service.ProductService;
 
 @Controller
 public class ManageCartController {
@@ -26,12 +23,9 @@ public class ManageCartController {
     @Autowired private CartService cartServ;    
     @Autowired private HttpSession session;
     @Autowired private CartItemService cartItemServ;
-    @Autowired private ProductColorService proColorServ;
-    @Autowired private ProductService productServ;
-    @Autowired private ColorService colorServ;
     
     //Xem danh sách các giỏ hàng
-    @GetMapping("admin/cart-management")
+    @GetMapping("admin/cart-management/view")
     public String ViewCartManagement(Model model){
         //Kiểm tra quyền
         User user = (User) session.getAttribute("ADMIN");
@@ -106,4 +100,19 @@ public class ManageCartController {
             return "redirect:../view/" + cartID;
         }
     } 
+    
+    //Tìm kiếm
+    @GetMapping("admin/cart-management/search")
+    public String SearchCart(Model model, @RequestParam("keyword") String keyword){
+        //Kiểm tra quyền
+        User user = (User) session.getAttribute("ADMIN");
+        if(user == null){
+            return "redirect:/admin/login";
+        } else if(user.getRole().getRoleID()!=1){
+            return "account/view-role-not-permission";
+        }else{
+            model.addAttribute("ListCart", cartServ.searchInManage(keyword));
+            return "cart/cart-management";   
+        }  
+    }
 }
