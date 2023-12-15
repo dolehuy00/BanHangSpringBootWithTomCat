@@ -111,6 +111,11 @@ public class ManageSupplierController {
                 Supplier suplier = supServ.findById(supplierId);
                 suplier.setName(name);
                 suplier.setStatus(new Status(status));
+                if(status  != 1){
+                    proServ.lockBySupplierId(supplierId);
+                }else{
+                    proServ.unlockBySupplierId(supplierId);
+                }
                 Supplier suplierSaved = supServ.saveSupplier(suplier);
                 model.addAttribute("Supplier", suplierSaved);
                 model.addAttribute("message", "Sửa thành công");
