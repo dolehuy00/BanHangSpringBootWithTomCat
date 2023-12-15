@@ -78,7 +78,12 @@
                         Tổng tiền: <fmt:formatNumber value="${Order.totalPrice}" pattern="###,###,###"/>
                     </div>
                 </div>
-                    <div class="row d-flex justify-content-end" style="margin-top: 20px">
+                <div class="row d-flex justify-content-end" style="margin-top: 20px">
+                    <c:if test="${view == 'delivering' || view == 'confirmed'}">
+                        <div class="col col-md-2 text-end">
+                            <a href="/banhang/admin/export-excel/${Order.orderID}"><button type="button" class="btn btn-info">Xuất excel</button></a>
+                        </div>
+                    </c:if>
                     <div class="col col-md-2 text-end">
                         <c:choose>
                             <c:when test="${view == 'awaiting'}">
@@ -103,6 +108,9 @@
                             <form action="/banhang/admin/order/cancel" method="post">
                                 <button type="submit" name="id" value="${Order.orderID}" class="btn btn-danger">Hủy đơn</button> 
                             </form>
+                        </c:if>
+                        <c:if test="${view=='finished'}">
+                            <a href="/banhang/admin/export-excel/${Order.orderID}"><button type="button" class="btn btn-info">Xuất excel</button></a>
                         </c:if>
                     </div>    
                 </div>   
